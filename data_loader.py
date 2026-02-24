@@ -23,7 +23,7 @@ def load_data(filepath):
     birth_col = 'data_nascimento' if 'data_nascimento' in df.columns else 'Data de Nascimento'
     df[birth_col] = pd.to_datetime(df[birth_col], errors='coerce')
     current_year = datetime.now().year
-    df['Idade'] = df[birth_col].apply(lambda x: current_year - x.year if pd.notnull(x) else None)
+    df['Idade'] = df[birth_col].apply(lambda x: current_year - x.year if pd.notnull(x) else None).astype('Int64')
     
     def get_age_group(age):
         if age is None: return "Não informado"

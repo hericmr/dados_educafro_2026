@@ -49,7 +49,7 @@ section = st.sidebar.radio("Ir para:", [
 ])
 
 # Load Data
-CSV_PATH = 'entrevistas_educafro_2026_clean.csv' if os.path.exists('entrevistas_educafro_2026_clean.csv') else 'entrevistas_educafro_2026-02-10.csv'
+CSV_PATH = 'entrevistas_educafro_2026-02-10.csv'
 try:
     df = load_data(CSV_PATH)
 except Exception as e:
@@ -83,9 +83,9 @@ if section == "Resumo Geral":
 
     # Apply styling and set index for sticky column
     if 'nome_completo' in df.columns:
-        # Bold the index (nome_completo) using set_table_styles
+        # Bold and Black index (nome_completo) using set_table_styles
         styled_df = df.set_index('nome_completo').style.apply(highlight_workers, axis=1)\
-            .set_table_styles([{'selector': 'th.row_heading', 'props': [('font-weight', 'bold')]}])
+            .set_table_styles([{'selector': 'th.row_heading', 'props': [('font-weight', 'bold'), ('color', 'black')]}])
         st.dataframe(styled_df, use_container_width=True)
     else:
         styled_df = df.style.apply(highlight_workers, axis=1)
