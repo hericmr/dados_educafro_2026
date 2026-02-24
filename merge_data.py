@@ -51,7 +51,7 @@ def merge_data():
         'A Internet possui um sinal estável?*': 'internet_sinal',
         'Tem alguma atividade remunerada?*\nSim': 'trabalho_renda_semana',
         'Se sim, qual tipo de vínculo?*': 'trabalho_vinculo',
-        'Onde trabalha e qual a função?': 'trabalho_uso_dinheiro',
+        'Onde trabalha e qual a função?': 'trabalho_vinculo_outro',
         'Qual a renda familiar?\nObs:  Valor aproximado da soma de todos os rendimentos mensais das pessoas que moram na mesma casa.': 'renda_familiar',
         'Recebe algum Benefício Social?\n': 'beneficios_recebe',
         'Qual/Quais tipo de benefício?': 'beneficios_tipo',
