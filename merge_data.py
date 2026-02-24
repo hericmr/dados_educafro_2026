@@ -1,12 +1,32 @@
 import pandas as pd
 import uuid
 import os
+import re
 from datetime import datetime
 
 # File paths
 MAIN_CSV = 'entrevistas_educafro_2026-02-10.csv'
 NEW_CSV = 'Entrevista Social 2026- N.A.E (1° Semestre ).csv'
 BACKUP_CSV = f'entrevistas_educafro_backup_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv'
+
+def normalize_age(age_val):
+    if pd.isna(age_val):
+        return pd.NA
+    # Extract first number found
+    match = re.search(r'\d+', str(age_val))
+    if match:
+        return int(match.group())
+    return pd.NA
+
+def normalize_gender(gender_val):
+    if pd.isna(gender_val):
+        return gender_val
+    g = str(gender_val).strip()
+    if 'Mulher Cis' in g or g == 'Feminino':
+        return 'Feminina'
+    if 'Homem Cis' in g or g == 'Masculino':
+        return 'Masculina'
+    return g
 
 def merge_data():
     print(f"Loading {MAIN_CSV}...")
@@ -51,9 +71,9 @@ def merge_data():
         'A Internet possui um sinal estável?*': 'internet_sinal',
         'Tem alguma atividade remunerada?*\nSim': 'trabalho_renda_semana',
         'Se sim, qual tipo de vínculo?*': 'trabalho_vinculo',
-        'Onde trabalha e qual a função?': 'trabalho_vinculo_outro',
+        'Onde trabalha e qual a função?': 'trabalho_vinculo_outro', # Fixed per user request
         'Qual a renda familiar?\nObs:  Valor aproximado da soma de todos os rendimentos mensais das pessoas que moram na mesma casa.': 'renda_familiar',
-        'Recebe algum Benefício Social?\n': 'beneficios_recebe',
+        'Recebe algum Benefício Social?\n': 'beneficios_recebe', # Fixed: Main CSV uses beneficios_recebe
         'Qual/Quais tipo de benefício?': 'beneficios_tipo',
         'Se sim, você tem CadÚnico*': 'beneficios_cadunico',
         'Precisa de Cesta Básica?*\n': 'cesta_basica',
@@ -67,7 +87,7 @@ def merge_data():
         'Utiliza alguns desses serviços do SUS?': 'saude_servicos',
         'Sabe qual o seu tipo sanguíneo? Se sim, qual?': 'saude_tipo_sanguineo',
         'Já fez algum tipo de psicoterapia?*': 'saude_psicoterapia',
-        'Faz algum tipo de psicoterapia?*': 'saude_psicoterapia_atual', # New column or map to something else?
+        'Faz algum tipo de psicoterapia?*': 'saude_psicoterapia_atual',
         'Se sim, por quanto tempo? Há quanto tempo terminou?\n': 'saude_psicoterapia_tempo',
         'Tem algum problema de saúde? Se sim, qual?\n': 'saude_problemas_qual',
         'Possui alguma alergia?\n': 'saude_alergias_qual',
@@ -83,27 +103,38 @@ def merge_data():
         'Que temas você gostaria que fossem trabalhados coletivamente aqui na Educafro?': 'objetivo_temas',
         'Como será a frequência na Educafro, em quais dias pretende/poderá comparecer?': 'objetivo_frequencia',
         'Possui alguma deficiência com ou sem laudo médico ?*': 'saude_deficiencia',
-        'Possui algum familiar com deficiência? Se sim, Qual?': 'saude_familiar_deficiencia'
+        'Possui algum familiar com deficiência? Se sim, Qual?': 'saude_familiar_deficiencia',
+        'Idade': 'Idade' # Raw age to extract later
     }
 
     # Transform new data
-    df_transformed = pd.DataFrame()
+    new_data_dict = {}
     for new_col, main_col in mapping.items():
         if new_col in df_new.columns:
-            df_transformed[main_col] = df_new[new_col]
-        else:
-            print(f"Warning: Column {new_col} not found in new data.")
+            new_data_dict[main_col] = df_new[new_col]
+            
+    df_transformed = pd.DataFrame(new_data_dict)
+
+    # Normalization
+    if 'genero' in df_transformed.columns:
+        df_transformed['genero'] = df_transformed['genero'].apply(normalize_gender)
+    
+    if 'Idade' in df_transformed.columns:
+        df_transformed['Idade'] = df_transformed['Idade'].apply(normalize_age)
 
     # Fill technical columns
     df_transformed['status_formulario'] = 'completo'
     df_transformed['form_uuid'] = [str(uuid.uuid4()) for _ in range(len(df_transformed))]
-    df_transformed['id'] = range(len(df_main) + 1, len(df_main) + len(df_transformed) + 1)
+    
+    # Calculate starting ID
+    max_id = df_main['id'].max() if not df_main.empty else 1000
+    df_transformed['id'] = range(int(max_id) + 1, int(max_id) + len(df_transformed) + 1)
     
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     df_transformed['created_at'] = now
     df_transformed['updated_at'] = now
 
-    # Ensure all columns from main are present in transformed (filled with NaN if missing)
+    # Ensure all columns from main are present (filled with NA if missing)
     for col in df_main.columns:
         if col not in df_transformed.columns:
             df_transformed[col] = pd.NA

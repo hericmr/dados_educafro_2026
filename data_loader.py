@@ -46,14 +46,39 @@ def load_data(filepath):
             # Clean up: strip whitespace
             df[main_col] = df[main_col].astype(str).str.strip().replace('nan', np.nan)
 
+    # Normalization of values
+    if 'genero' in df.columns:
+        df['genero'] = df['genero'].replace({
+            'Mulher Cis': 'Feminina',
+            'Homem Cis': 'Masculina',
+            'Feminino': 'Feminina',
+            'Masculino': 'Masculina'
+        }).str.strip()
+
+    if 'internet_tipo' in df.columns:
+        df['internet_tipo'] = df['internet_tipo'].replace({
+            'Wi-fi': 'Wi-Fi (Banda Larga)',
+            'Dados móveis e wi-fi': 'Wi-Fi (Banda Larga)' # Or keep separate? User highlighted repetition.
+        }).str.strip()
+
     # 1. Processing Age
     birth_col = 'data_nascimento' if 'data_nascimento' in df.columns else 'Data de Nascimento'
-    df[birth_col] = pd.to_datetime(df[birth_col], errors='coerce')
-    current_year = datetime.now().year
-    df['Idade'] = df[birth_col].apply(lambda x: current_year - x.year if pd.notnull(x) else None).astype('Int64')
+    if birth_col in df.columns:
+        df[birth_col] = pd.to_datetime(df[birth_col], errors='coerce')
+        current_year = datetime.now().year
+        
+        # Calculate age only for those with missing or null Idade, or recalculate if possible
+        def calculate_age(row):
+            if pd.notnull(row[birth_col]):
+                return current_year - row[birth_col].year
+            if 'Idade' in row and pd.notnull(row['Idade']):
+                return row['Idade']
+            return None
+            
+        df['Idade'] = df.apply(calculate_age, axis=1).astype('Int64')
     
     def get_age_group(age):
-        if age is None: return "Não informado"
+        if pd.isna(age): return "Não informado"
         if age < 18: return "Menor que 18 anos"
         if age <= 30: return "18 a 30 anos"
         return "30 anos ou mais"
