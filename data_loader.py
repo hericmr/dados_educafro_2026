@@ -67,7 +67,13 @@ def load_data(filepath):
     return df
 
 if __name__ == "__main__":
-    data = load_data('entrevistas_educafro_2026-02-10.csv')
-    print(f"Loaded {len(data)} real records.")
+    import os
+    path = 'entrevistas_educafro_2026_clean.csv' if os.path.exists('entrevistas_educafro_2026_clean.csv') else 'entrevistas_educafro_2026-02-10.csv'
+    data = load_data(path)
+    print(f"Loaded {len(data)} real records from {path}.")
     if len(data) > 0:
-        print(data[['Nome Completo', 'Faixa Etária', 'Race_Group', 'Employment_Status']].head())
+        # Check if Name exists (it shouldn't in clean version)
+        name_col = 'Nome Completo' if 'Nome Completo' in data.columns else None
+        cols = [name_col, 'Faixa Etária', 'Race_Group', 'Employment_Status']
+        cols = [c for c in cols if c is not None]
+        print(data[cols].head())

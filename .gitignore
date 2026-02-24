@@ -3,4 +3,7 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 .streamlit/
-*.csv
+# Omitir o arquivo original com dados sensíveis
+entrevistas_educafro_2026-02-10.csv
+# Permitir o arquivo limpo (anonimizado)
+!entrevistas_educafro_2026_clean.csv

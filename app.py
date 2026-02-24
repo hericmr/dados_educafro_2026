@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from data_loader import load_data
 import visualizations as viz
+import os
 
 # Page config
 st.set_page_config(page_title="Perfil Educafro 2026", layout="wide")
@@ -46,7 +47,7 @@ section = st.sidebar.radio("Ir para:", [
 ])
 
 # Load Data
-CSV_PATH = 'entrevistas_educafro_2026-02-10.csv'
+CSV_PATH = 'entrevistas_educafro_2026_clean.csv' if os.path.exists('entrevistas_educafro_2026_clean.csv') else 'entrevistas_educafro_2026-02-10.csv'
 try:
     df = load_data(CSV_PATH)
 except Exception as e:
