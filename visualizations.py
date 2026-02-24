@@ -190,3 +190,113 @@ def chart_16_interests(df):
 def chart_17_courses(df):
     """17. Nuvem de Palavras: Cursos Desejados"""
     return generate_wordcloud(df['Qual curso pretende?'], "Cursos de Interesse (Graduação)")
+
+def chart_18_orientation(df):
+    """18. Distribuição de Orientação Sexual"""
+    counts = df['Orientação Sexual'].value_counts().reset_index()
+    counts.columns = ['Orientação', 'Total']
+    fig = px.pie(counts, values='Total', names='Orientação', hole=0.6,
+                 title="Diversidade: Orientação Sexual",
+                 color_discrete_sequence=px.colors.qualitative.Pastel)
+    return fig
+
+def chart_19_school_type(df):
+    """19. Tipo de Escola (Ensino Médio)"""
+    counts = df['Tipo de Escola'].value_counts().reset_index()
+    counts.columns = ['Tipo', 'Total']
+    fig = px.bar(counts, x='Tipo', y='Total', title="Trajetória: Tipo de Escola (EM)",
+                 color_discrete_sequence=[COLORS['secondary']])
+    return fig
+
+def chart_20_parental_education(df):
+    """20. Escolaridade Parental Comparada"""
+    mae = df['Escolaridade da Mãe'].value_counts().reset_index()
+    mae.columns = ['Escolaridade', 'Mãe']
+    pai = df['Escolaridade do Pai'].value_counts().reset_index()
+    pai.columns = ['Escolaridade', 'Pai']
+    
+    comp = pd.merge(mae, pai, on='Escolaridade', how='outer').fillna(0)
+    fig = px.bar(comp, x='Escolaridade', y=['Mãe', 'Pai'], barmode='group',
+                 title="Escolaridade dos Pais",
+                 color_discrete_map={'Mãe': COLORS['primary'], 'Pai': COLORS['dark']})
+    return fig
+
+def chart_21_health_access(df):
+    """21. Acesso à Saúde (Plano vs SUS)"""
+    counts = df['Plano de Saúde'].value_counts().reset_index()
+    counts.columns = ['Acesso', 'Total']
+    fig = px.pie(counts, values='Total', names='Acesso', hole=0.6,
+                 title="Acesso a Plano de Saúde",
+                 color_discrete_map={'Sim': COLORS['secondary'], 'Não': COLORS['primary'], 'Apenas SUS': COLORS['primary']})
+    return fig
+
+def chart_22_social_benefits(df):
+    """22. Recebimento de Benefícios Sociais"""
+    counts = df['Recebe Benefícios'].value_counts().reset_index()
+    counts.columns = ['Recebe', 'Total']
+    fig = px.pie(counts, values='Total', names='Recebe', hole=0.6,
+                 title="Estudantes que recebem Benefícios Sociais",
+                 color_discrete_sequence=[COLORS['dark'], COLORS['accent']])
+    return fig
+
+def chart_23_transport_modes(df):
+    """23. Meios de Transporte"""
+    counts = df['Meio de Transporte'].value_counts().reset_index()
+    counts.columns = ['Meio', 'Total']
+    fig = px.bar(counts, x='Meio', y='Total', title="Logística: Meio de Transporte",
+                 color_discrete_sequence=[COLORS['secondary']])
+    return fig
+
+def chart_25_internet_signal(df):
+    """25. Qualidade do Sinal de Internet"""
+    counts = df['Sinal de Internet'].value_counts().reset_index()
+    counts.columns = ['Sinal', 'Total']
+    fig = px.bar(counts, x='Sinal', y='Total', title="Qualidade do Sinal de Internet",
+                 color_discrete_sequence=[COLORS['accent']])
+    return fig
+
+def chart_26_housing_type(df):
+    """26. Tipo de Moradia (Construção)"""
+    counts = df['Tipo de Moradia'].value_counts().reset_index()
+    counts.columns = ['Tipo', 'Total']
+    fig = px.pie(counts, values='Total', names='Tipo', hole=0.6,
+                 title="Tipo de Construção da Moradia")
+    return fig
+
+def chart_27_parenthood(df):
+    """27. Estudantes com Filhos"""
+    counts = df['Tem Filhos?'].value_counts().reset_index()
+    counts.columns = ['Possui', 'Total']
+    fig = px.pie(counts, values='Total', names='Possui', hole=0.6,
+                 title="Estudantes com Filhos",
+                 color_discrete_sequence=[COLORS['dark'], COLORS['primary']])
+    return fig
+
+def chart_28_disability(df):
+    """28. Representação de Deficiências (Estudantes e Familiares)"""
+    estudante = df['Possui Deficiência?'].value_counts().get('Sim', 0)
+    familiar = df['Familiar com Deficiência?'].value_counts().get('Sim', 0)
+    
+    fig = go.Figure(data=[
+        go.Bar(name='Estudante', x=['Deficiência'], y=[estudante], marker_color=COLORS['primary']),
+        go.Bar(name='Familiar', x=['Deficiência'], y=[familiar], marker_color=COLORS['secondary'])
+    ])
+    fig.update_layout(title="Representação de Deficiências", barmode='group')
+    return fig
+
+def chart_29_blood_type(df):
+    """29. Distribuição de Tipo Sanguíneo"""
+    counts = df['Tipo Sanguíneo'].value_counts().reset_index()
+    counts.columns = ['Tipo', 'Total']
+    fig = px.bar(counts, x='Tipo', y='Total', title="Distribuição de Tipo Sanguíneo",
+                 color_discrete_sequence=[COLORS['primary']])
+    return fig
+
+def chart_30_interviewer_balance(df):
+    """30. Volume de Entrevistas por Entrevistador"""
+    counts = df['Entrevistador'].value_counts().reset_index()
+    counts.columns = ['Entrevistador', 'Total']
+    fig = px.bar(counts, y='Entrevistador', x='Total', orientation='h',
+                 title="Volume de Entrevistas por Voluntário",
+                 color_discrete_sequence=[COLORS['dark']])
+    return fig

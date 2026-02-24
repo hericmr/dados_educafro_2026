@@ -40,10 +40,12 @@ st.markdown("---")
 st.sidebar.image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_R0f8iI9RjV-mC09x8q8K_mX9y8j_H6D_9w&s", width=200) # Placeholder for Educafro Logo
 st.sidebar.title("Navegação")
 section = st.sidebar.radio("Ir para:", [
-    "Resumo Geral", 
+    "Resumo Geral",
     "Eixo 1: Perfil Sociodemográfico", 
     "Eixo 2: Trabalho, Renda e Infrequência", 
-    "Eixo 3: Interesses Formativos"
+    "Eixo 3: Interesses Formativos",
+    "Eixo 4: Saúde e Assistência",
+    "Gestão e Equipe"
 ])
 
 # Load Data
@@ -90,6 +92,12 @@ elif section == "Eixo 1: Perfil Sociodemográfico":
         
         st.plotly_chart(viz.chart_3_race_by_gender(df), use_container_width=True)
         
+        col_new1, col_new2 = st.columns(2)
+        with col_new1:
+            st.plotly_chart(viz.chart_18_orientation(df), use_container_width=True)
+        with col_new2:
+            st.plotly_chart(viz.chart_19_school_type(df), use_container_width=True)
+        
         col3, col4 = st.columns(2)
         with col3:
             st.plotly_chart(viz.chart_4_age_groups(df), use_container_width=True)
@@ -114,8 +122,10 @@ elif section == "Eixo 2: Trabalho, Renda e Infrequência":
         with col3:
             st.plotly_chart(viz.chart_9_household_income(df), use_container_width=True)
         with col4:
-            st.markdown("### Renda e Pobreza")
             st.write("Dados baseados nas respostas de renda familiar.")
+            st.plotly_chart(viz.chart_22_social_benefits(df), use_container_width=True)
+        
+        st.plotly_chart(viz.chart_20_parental_education(df), use_container_width=True)
 
         col5, col6 = st.columns(2)
         with col5:
@@ -124,6 +134,12 @@ elif section == "Eixo 2: Trabalho, Renda e Infrequência":
             st.plotly_chart(viz.chart_11b_device_quality(df), use_container_width=True)
             
         st.plotly_chart(viz.chart_12_housing(df), use_container_width=True)
+        
+        col_new3, col_new4 = st.columns(2)
+        with col_new3:
+            st.plotly_chart(viz.chart_26_housing_type(df), use_container_width=True)
+        with col_new4:
+            st.plotly_chart(viz.chart_27_parenthood(df), use_container_width=True)
         
         st.divider()
         st.subheader("Evasão e Infrequência")
@@ -152,6 +168,36 @@ elif section == "Eixo 3: Interesses Formativos":
                 st.image(wc_courses)
             else:
                 st.write("Sem dados suficientes para gerar a nuvem.")
+        
+        st.plotly_chart(viz.chart_23_transport_modes(df), use_container_width=True)
+
+elif section == "Eixo 4: Saúde e Assistência":
+    st.header("Eixo 4: Saúde e Assistência")
+    
+    if len(df) == 0:
+        st.warning("Nenhum dado completo encontrado no CSV.")
+    else:
+        col7, col8 = st.columns(2)
+        with col7:
+            st.plotly_chart(viz.chart_21_health_access(df), use_container_width=True)
+        with col8:
+            st.plotly_chart(viz.chart_25_internet_signal(df), use_container_width=True)
+            
+        col9, col10 = st.columns(2)
+        with col9:
+            st.plotly_chart(viz.chart_28_disability(df), use_container_width=True)
+        with col10:
+            st.plotly_chart(viz.chart_29_blood_type(df), use_container_width=True)
+            
+        st.info("A maioria das informações de saúde são qualitativas e podem ser consultadas na tabela de dados no Resumo Geral.")
+
+elif section == "Gestão e Equipe":
+    st.header("Gestão e Equipe")
+    
+    if len(df) == 0:
+        st.warning("Nenhum dado completo encontrado no CSV.")
+    else:
+        st.plotly_chart(viz.chart_30_interviewer_balance(df), use_container_width=True)
 
 st.sidebar.markdown("---")
 st.sidebar.caption("Desenvolvido para Educafro Santos © 2026")

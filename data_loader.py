@@ -57,12 +57,38 @@ def load_data(filepath):
         'internet_tipo': 'Tipo de Internet',
         'moradia_condicao': 'Condição de Moradia',
         'objetivo_temas': 'Temas de interesse',
-        'objetivo_curso': 'Qual curso pretende?'
+        'objetivo_curso': 'Qual curso pretende?',
+        'orientacao_sexual': 'Orientação Sexual',
+        'estado_civil': 'Estado Civil',
+        'escola_publica_privada': 'Tipo de Escola',
+        'escolaridade': 'Escolaridade',
+        'escolaridade_mae': 'Escolaridade da Mãe',
+        'escolaridade_pai': 'Escolaridade do Pai',
+        'saude_plano': 'Plano de Saúde',
+        'saude_psicoterapia': 'Psicoterapia',
+        'beneficios_recebe': 'Recebe Benefícios',
+        'transporte_meio': 'Meio de Transporte',
+        'trabalho_uso_dinheiro': 'Uso do Dinheiro (Trabalho)',
+        'trans_travesti': 'Identidade Trans/Travesti',
+        'internet_sinal': 'Sinal de Internet',
+        'moradia_tipo': 'Tipo de Moradia',
+        'filhos_tem': 'Tem Filhos?',
+        'saude_deficiencia': 'Possui Deficiência?',
+        'saude_familiar_deficiencia': 'Familiar com Deficiência?',
+        'saude_tipo_sanguineo': 'Tipo Sanguíneo',
+        'entrevistador': 'Entrevistador',
+        'saude_substancias': 'Uso de Substâncias',
+        'trabalho_ajuda_familiar': 'Ajuda no Sustento Familiar?'
     }
     
     for old_col, new_name in mapping.items():
         if old_col in df.columns:
             df[new_name] = df[old_col]
+            
+    # Move 'Nome Completo' to the first column if it exists
+    if 'Nome Completo' in df.columns:
+        cols = ['Nome Completo'] + [c for c in df.columns if c != 'Nome Completo']
+        df = df[cols]
             
     return df
 
