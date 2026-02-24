@@ -314,15 +314,41 @@ def chart_27_parenthood(df):
     return fig
 
 def chart_28_disability(df):
-    """28. Representação de Deficiências (Estudantes e Familiares)"""
-    estudante = df['Possui Deficiência?'].value_counts().get('Sim', 0)
-    familiar = df['Familiar com Deficiência?'].value_counts().get('Sim', 0)
+    """28. Representação de Deficiências (Estudantes e Familiares) com Nomes"""
+    # Use qualitative details if present, otherwise fall back to Sim/Não
+    def get_display_val(row, main_col, detail_col):
+        if pd.notnull(row.get(detail_col)) and str(row.get(detail_col)).strip() != '':
+            return str(row.get(detail_col))
+        return "Nenhuma/Não" if row.get(main_col) == 'Não' else row.get(main_col, 'Não informado')
+
+    df_estudante = df[df['Possui Deficiência?'] == 'Sim']
+    df_familiar = df[df['Familiar com Deficiência?'] == 'Sim']
     
-    fig = go.Figure(data=[
-        go.Bar(name='Estudante', x=['Deficiência'], y=[estudante], marker_color=COLORS['primary']),
-        go.Bar(name='Familiar', x=['Deficiência'], y=[familiar], marker_color=COLORS['secondary'])
-    ])
-    fig.update_layout(title="Representação de Deficiências", barmode='group')
+    # Count specific disabilities
+    est_counts = df_estudante['Detalhe Deficiência'].value_counts().reset_index()
+    est_counts.columns = ['Deficiência', 'Total']
+    est_counts['Tipo'] = 'Estudante'
+    
+    fam_counts = df_familiar['Detalhe Deficiência Familiar'].value_counts().reset_index()
+    fam_counts.columns = ['Deficiência', 'Total']
+    fam_counts['Tipo'] = 'Familiar'
+    
+    combined = pd.concat([est_counts, fam_counts])
+    
+    if combined.empty:
+        # Fallback if no specific details but still some 'Sim' counts
+        est_total = len(df_estudante)
+        fam_total = len(df_familiar)
+        fig = go.Figure(data=[
+            go.Bar(name='Estudante', x=['Sim (Geral)'], y=[est_total], marker_color=COLORS['primary']),
+            go.Bar(name='Familiar', x=['Sim (Geral)'], y=[fam_total], marker_color=COLORS['secondary'])
+        ])
+    else:
+        fig = px.bar(combined, x='Deficiência', y='Total', color='Tipo',
+                     barmode='group', title="Representação de Deficiências (Nomes Específicos)",
+                     color_discrete_map={'Estudante': COLORS['primary'], 'Familiar': COLORS['secondary']})
+        
+    fig.update_layout(title="Representação de Deficiências")
     return fig
 
 def chart_29_blood_type(df):

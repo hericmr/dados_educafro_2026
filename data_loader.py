@@ -105,13 +105,16 @@ def load_data(filepath):
         'moradia_tipo': 'Tipo de Moradia',
         'filhos_tem': 'Tem Filhos?',
         'saude_deficiencia': 'Possui Deficiência?',
+        'saude_deficiencia_qual': 'Detalhe Deficiência',
         'saude_familiar_deficiencia': 'Familiar com Deficiência?',
+        'saude_familia_deficiencia_qual': 'Detalhe Deficiência Familiar',
         'saude_tipo_sanguineo': 'Tipo Sanguíneo',
         'entrevistador': 'Entrevistador',
         'saude_substancias': 'Uso de Substâncias',
         'trabalho_ajuda_familiar': 'Ajuda no Sustento Familiar?',
         'beneficios_cadunico': 'CadÚnico',
-        'trabalho_vinculo_outro': 'Vínculo de Trabalho (Outro)'
+        'trabalho_vinculo_outro': 'Vínculo de Trabalho (Outro)',
+        'saude_psicoterapia_atual': 'Psicoterapia (Atual)'
     }
     
     # 4. Rename columns using the mapping
@@ -124,7 +127,7 @@ def load_data(filepath):
         'Recebe Benefícios', 'Escolaridade', 'Tipo de Escola', 'Qual curso pretende?', 
         'Temas de interesse', 'Cidade', 'Bairro', 'Telefone', 'Email', 
         'Orientação Sexual', 'Estado Civil', 'Escolaridade da Mãe', 'Escolaridade do Pai', 
-        'Plano de Saúde', 'Psicoterapia', 'Meio de Transporte', 'Uso do Dinheiro (Trabalho)', 
+        'Plano de Saúde', 'Psicoterapia', 'Psicoterapia (Atual)', 'Meio de Transporte', 'Uso do Dinheiro (Trabalho)', 
         'Sinal de Internet', 'Tipo de Moradia', 'Tem Filhos?', 'Possui Deficiência?', 
         'Familiar com Deficiência?', 'Tipo Sanguíneo', 'Entrevistador', 
         'Uso de Substâncias', 'Ajuda no Sustento Familiar?'

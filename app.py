@@ -244,4 +244,4 @@ elif section == "Gestão e Equipe":
         render_chart_with_stats(viz.chart_30_interviewer_balance, df, 'Entrevistador')
 
 st.sidebar.markdown("---")
-st.sidebar.caption("Desenvolvido para Educafro Santos © 2026")
+st.sidebar.caption("Desenvolvido por Heric Moura para Educafro Valongo © 2026")
