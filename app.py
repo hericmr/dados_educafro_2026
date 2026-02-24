@@ -4,6 +4,8 @@ from data_loader import load_data
 import visualizations as viz
 import os
 
+# v1.1 - Added data captions
+
 # Page config
 st.set_page_config(page_title="Perfil Educafro 2026", layout="wide")
 
@@ -56,6 +58,21 @@ except Exception as e:
     st.error(f"Erro ao carregar os dados: {e}")
     st.stop()
 
+def render_chart_with_stats(chart_func, df, column_name=None, custom_stats=None, **kwargs):
+    """Renderiza um gráfico e adiciona uma legenda com estatísticas em baixo."""
+    fig = chart_func(df)
+    st.plotly_chart(fig, use_container_width=True, **kwargs)
+    
+    if custom_stats:
+        stats_text = custom_stats
+    elif column_name:
+        stats_text = viz.get_summary_stats(df, column_name)
+    else:
+        stats_text = None
+        
+    if stats_text:
+        st.caption(f"**Dados:** {stats_text}")
+
 if section == "Resumo Geral":
     st.header("Visão Geral do Cursinho")
     col1, col2, col3, col4 = st.columns(4)
@@ -101,23 +118,23 @@ elif section == "Eixo 1: Perfil Sociodemográfico":
     else:
         col1, col2 = st.columns(2)
         with col1:
-            st.plotly_chart(viz.chart_1_race_composition(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_1_race_composition, df, 'Race_Group')
         with col2:
-            st.plotly_chart(viz.chart_2_gender_distribution(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_2_gender_distribution, df, 'Identidade de Gênero')
         
-        st.plotly_chart(viz.chart_3_race_by_gender(df), use_container_width=True)
+        render_chart_with_stats(viz.chart_3_race_by_gender, df) # Custom logic needed later or simple chart
         
         col_new1, col_new2 = st.columns(2)
         with col_new1:
-            st.plotly_chart(viz.chart_18_orientation(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_18_orientation, df, 'Orientação Sexual')
         with col_new2:
-            st.plotly_chart(viz.chart_19_school_type(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_19_school_type, df, 'Tipo de Escola')
         
         col3, col4 = st.columns(2)
         with col3:
-            st.plotly_chart(viz.chart_4_age_groups(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_4_age_groups, df, 'Faixa Etária')
         with col4:
-            st.plotly_chart(viz.chart_5_geography(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_5_geography, df, 'Cidade')
 
 elif section == "Eixo 2: Trabalho, Renda e Infrequência":
     st.header("Eixo 2: Trabalho, Renda e Infrequência")
@@ -127,13 +144,13 @@ elif section == "Eixo 2: Trabalho, Renda e Infrequência":
     else:
         col1, col2 = st.columns(2)
         with col1:
-            st.plotly_chart(viz.chart_6_employment_general(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_6_employment_general, df, 'Employment_Status')
         with col2:
-            st.plotly_chart(viz.chart_7_employment_by_gender(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_7_employment_by_gender, df)
         
         col_job1, col_job2 = st.columns(2)
         with col_job1:
-            st.plotly_chart(viz.chart_8_job_categories(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_8_job_categories, df, 'Vínculo de Trabalho')
         with col_job2:
             st.subheader("Vínculos Diversos")
             wc_jobs = viz.chart_8b_job_wordcloud(df)
@@ -144,29 +161,29 @@ elif section == "Eixo 2: Trabalho, Renda e Infrequência":
         
         col3, col4 = st.columns(2)
         with col3:
-            st.plotly_chart(viz.chart_9_household_income(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_9_household_income, df, 'Renda Familiar')
         with col4:
             st.write("Dados baseados nas respostas de renda familiar.")
-            st.plotly_chart(viz.chart_22_social_benefits(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_22_social_benefits, df, 'Recebe Benefícios')
         
-        st.plotly_chart(viz.chart_20_parental_education(df), use_container_width=True)
+        render_chart_with_stats(viz.chart_20_parental_education, df)
 
         col5, col6 = st.columns(2)
         with col5:
-            st.plotly_chart(viz.chart_11_tech_access(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_11_tech_access, df, 'Possui Internet?')
         with col6:
-            st.plotly_chart(viz.chart_11b_device_quality(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_11b_device_quality, df, 'Tipo de Internet')
             
-        st.plotly_chart(viz.chart_12_housing(df), use_container_width=True)
+        render_chart_with_stats(viz.chart_12_housing, df, 'Condição de Moradia')
         
         col_new3, col_new4 = st.columns(2)
         with col_new3:
-            st.plotly_chart(viz.chart_26_housing_type(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_26_housing_type, df, 'Tipo de Moradia')
         with col_new4:
-            st.plotly_chart(viz.chart_27_parenthood(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_27_parenthood, df, 'Tem Filhos?')
             
-        st.plotly_chart(viz.chart_10_money_usage(df), use_container_width=True)
-        st.plotly_chart(viz.chart_10b_cadunico(df), use_container_width=True)
+        render_chart_with_stats(viz.chart_10_money_usage, df, 'Uso do Dinheiro (Trabalho)')
+        render_chart_with_stats(viz.chart_10b_cadunico, df, 'CadÚnico')
         
         st.divider()
         st.subheader("Evasão e Infrequência")
@@ -196,7 +213,7 @@ elif section == "Eixo 3: Interesses Formativos":
             else:
                 st.write("Sem dados suficientes para gerar a nuvem.")
         
-        st.plotly_chart(viz.chart_23_transport_modes(df), use_container_width=True)
+        render_chart_with_stats(viz.chart_23_transport_modes, df, 'Meio de Transporte')
 
 elif section == "Eixo 4: Saúde e Assistência":
     st.header("Eixo 4: Saúde e Assistência")
@@ -206,15 +223,15 @@ elif section == "Eixo 4: Saúde e Assistência":
     else:
         col7, col8 = st.columns(2)
         with col7:
-            st.plotly_chart(viz.chart_21_health_access(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_21_health_access, df, 'Plano de Saúde')
         with col8:
-            st.plotly_chart(viz.chart_25_internet_signal(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_25_internet_signal, df, 'Sinal de Internet')
             
         col9, col10 = st.columns(2)
         with col9:
-            st.plotly_chart(viz.chart_28_disability(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_28_disability, df) # Special chart
         with col10:
-            st.plotly_chart(viz.chart_29_blood_type(df), use_container_width=True)
+            render_chart_with_stats(viz.chart_29_blood_type, df, 'Tipo Sanguíneo')
             
         st.info("A maioria das informações de saúde são qualitativas e podem ser consultadas na tabela de dados no Resumo Geral.")
 
@@ -224,7 +241,7 @@ elif section == "Gestão e Equipe":
     if len(df) == 0:
         st.warning("Nenhum dado completo encontrado no CSV.")
     else:
-        st.plotly_chart(viz.chart_30_interviewer_balance(df), use_container_width=True)
+        render_chart_with_stats(viz.chart_30_interviewer_balance, df, 'Entrevistador')
 
 st.sidebar.markdown("---")
 st.sidebar.caption("Desenvolvido para Educafro Santos © 2026")

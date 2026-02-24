@@ -19,6 +19,21 @@ COLORS = {
     'race_branco': '#D3D3D3'
 }
 
+def get_summary_stats(df, column_name):
+    """Retorna uma string formatada com os valores reais e percentuais de uma coluna."""
+    if column_name not in df.columns:
+        return ""
+    
+    counts = df[column_name].value_counts()
+    total = len(df)
+    
+    stats_list = []
+    for label, count in counts.items():
+        percent = (count / total * 100)
+        stats_list.append(f"{label}: {count} ({percent:.1f}%)")
+    
+    return " | ".join(stats_list)
+
 def chart_1_race_composition(df):
     """1. Gráfico de Composição Racial (Raça/Povo)"""
     counts = df['Race_Group'].value_counts().reset_index()

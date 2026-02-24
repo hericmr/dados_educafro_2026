@@ -1,0 +1,130 @@
+RELATÓRIO DE DADOS - EDUCAFRO 2026
+===================================
+Total de Entrevistados: 11
+
+
+Eixo 1: Perfil Sociodemográfico
+-------------------------------
+
+Composição Racial:
+  - Brancos/as/es: 6 (54.5%)
+  - Pretos/as/es: 3 (27.3%)
+  - Pardos/as/es: 2 (18.2%)
+
+Identidade de Gênero:
+  - Feminina: 8 (72.7%)
+  - Masculina: 3 (27.3%)
+
+Orientação Sexual:
+  - Heterossexual: 9 (81.8%)
+  - Lésbica: 1 (9.1%)
+  - Outra: 1 (9.1%)
+
+Tipo de Escola:
+  - Sempre Pública: 9 (81.8%)
+  - Sempre Particular (com bolsa): 1 (9.1%)
+  - Mista (Parte Pública / Parte Particular): 1 (9.1%)
+
+Faixa Etária:
+  - 18 a 30 anos: 6 (54.5%)
+  - 30 anos ou mais: 3 (27.3%)
+  - Menor que 18 anos: 2 (18.2%)
+
+Localização (Cidade):
+  - Santos: 9 (81.8%)
+  - São Vicente: 1 (9.1%)
+  - Cubatão: 1 (9.1%)
+
+Eixo 2: Trabalho, Renda e Infrequência
+--------------------------------------
+
+Situação de Trabalho:
+  - Fora da força de trabalho: 8 (72.7%)
+  - Empregado: 3 (27.3%)
+
+Vínculo de Trabalho:
+  - Do lar: 1 (9.1%)
+  - Contrato: 1 (9.1%)
+  - Estágio/Bolsa: 1 (9.1%)
+  - Registrado CLT: 1 (9.1%)
+  - Outro: 1 (9.1%)
+
+Renda Familiar:
+  - De R$ 2081,00 a R$ 3.120,00: 6 (54.5%)
+  - De R$ 1.046,00 R$ 2080,00: 3 (27.3%)
+  - De R$ 3.120,00 a R$ 4.160,00: 2 (18.2%)
+
+Benefícios Sociais:
+  - Não: 10 (90.9%)
+  - Sim: 1 (9.1%)
+
+Acesso à Internet:
+  - Sim: 10 (90.9%)
+  - Não: 1 (9.1%)
+
+Tipo de Internet:
+  - Wi-Fi (Banda Larga): 9 (81.8%)
+  - Dados móveis e wi-fi: 1 (9.1%)
+
+Condição de Moradia:
+  - Alugada: 6 (54.5%)
+  - Própria: 4 (36.4%)
+  - Cedida: 1 (9.1%)
+
+Tipo de Moradia:
+  - Alvenaria: 11 (100.0%)
+
+Estudantes com Filhos:
+  - Não: 9 (81.8%)
+  - Sim (1): 2 (18.2%)
+
+Uso do Dinheiro:
+  - Despesas da casa: 2 (18.2%)
+  - Gastos pessoais: 1 (9.1%)
+
+Inscritos no CadÚnico:
+  - Não: 10 (90.9%)
+  - Sim: 1 (9.1%)
+
+Eixo 3: Interesses Formativos
+-----------------------------
+
+Meios de Transporte:
+  - Transporte público (ônibus, VLT): 7 (63.6%)
+  - Bicicleta: 2 (18.2%)
+  - Carona de amigos/familiares: 1 (9.1%)
+  - Motocicleta: 1 (9.1%)
+
+Eixo 4: Saúde e Assistência
+---------------------------
+
+Plano de Saúde:
+  - Apenas plano de saúde: 6 (54.5%)
+  - Apenas SUS: 5 (45.5%)
+
+Sinal de Internet:
+  - Sim: 9 (81.8%)
+  - Não: 1 (9.1%)
+
+Tipo Sanguíneo:
+  - Não sei: 6 (54.5%)
+  - O+: 1 (9.1%)
+  - A+: 1 (9.1%)
+  - B+: 1 (9.1%)
+  - A-: 1 (9.1%)
+  - O-: 1 (9.1%)
+
+Possui Deficiência:
+  - Não: 10 (90.9%)
+  - Sim: 1 (9.1%)
+
+Familiar com Deficiência:
+  - Não: 1 (9.1%)
+
+Gestão
+------
+
+Volume por Entrevistador:
+  - Ana Lucia Fernandes: 8 (72.7%)
+  - Luzinete Reis: 2 (18.2%)
+  - Ana Lucia Fernandes, Luzinete Reis: 1 (9.1%)
