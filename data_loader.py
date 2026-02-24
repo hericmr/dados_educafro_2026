@@ -19,6 +19,31 @@ def load_data(filepath):
     if 'pronomes' in df.columns:
         df = df.drop(columns=['pronomes'])
 
+    # Merge 'Outro' columns with their specific descriptions
+    outro_pairs = [
+        ('internet_tipo', 'internet_tipo_outro'),
+        ('trabalho_vinculo', 'trabalho_vinculo_outro'),
+        ('moradia_tipo', 'moradia_tipo_outro'),
+        ('moradia_condicao', 'moradia_condicao_outro'),
+        ('transporte_meio', 'transporte_meio_outro'),
+        ('genero', 'genero_outro'),
+        ('escolaridade', 'escolaridade_outro'),
+        ('escolaridade_mae', 'escolaridade_mae_outro'),
+        ('escolaridade_pai', 'escolaridade_pai_outro'),
+        ('saude_servicos', 'saude_servicos_outro'),
+        ('saude_psicoterapia', 'saude_psicoterapia_outro'),
+        ('internet_sinal', 'internet_sinal_outro'),
+        ('beneficios', 'beneficios_outro')
+    ]
+    
+    for main_col, outro_col in outro_pairs:
+        if main_col in df.columns and outro_col in df.columns:
+            # Replace 'Outro' or 'Outra' (case insensitive) with the value from the outro column
+            mask = df[main_col].astype(str).str.contains('Outro|Outra', case=False, na=False)
+            df.loc[mask, main_col] = df.loc[mask, outro_col].fillna(df.loc[mask, main_col])
+            # Clean up: strip whitespace
+            df[main_col] = df[main_col].astype(str).str.strip().replace('nan', np.nan)
+
     # 1. Processing Age
     birth_col = 'data_nascimento' if 'data_nascimento' in df.columns else 'Data de Nascimento'
     df[birth_col] = pd.to_datetime(df[birth_col], errors='coerce')
