@@ -15,6 +15,10 @@ def load_data(filepath):
     elif 'Status' in df.columns:
         df = df[df['Status'] == 'completo']
 
+    # Remove 'pronomes' column as requested
+    if 'pronomes' in df.columns:
+        df = df.drop(columns=['pronomes'])
+
     # 1. Processing Age
     birth_col = 'data_nascimento' if 'data_nascimento' in df.columns else 'Data de Nascimento'
     df[birth_col] = pd.to_datetime(df[birth_col], errors='coerce')
@@ -48,7 +52,7 @@ def load_data(filepath):
     # Map other columns for visualizations.py to stay consistent or update visualizations.py
     # We'll use a mapping dict to ensure compatibility
     mapping = {
-        'nome_completo': 'Nome Completo',
+        'nome_completo': 'nome_completo',
         'genero': 'Identidade de Gênero',
         'cidade': 'Cidade',
         'trabalho_vinculo': 'Vínculo de Trabalho',
@@ -78,17 +82,37 @@ def load_data(filepath):
         'saude_tipo_sanguineo': 'Tipo Sanguíneo',
         'entrevistador': 'Entrevistador',
         'saude_substancias': 'Uso de Substâncias',
-        'trabalho_ajuda_familiar': 'Ajuda no Sustento Familiar?'
+        'trabalho_ajuda_familiar': 'Ajuda no Sustento Familiar?',
+        'beneficios_cadunico': 'CadÚnico',
+        'trabalho_vinculo_outro': 'Vínculo de Trabalho (Outro)'
     }
     
-    for old_col, new_name in mapping.items():
-        if old_col in df.columns:
-            df[new_name] = df[old_col]
+    # 4. Rename columns using the mapping
+    df = df.rename(columns=mapping)
             
-    # Move 'Nome Completo' to the first column if it exists
-    if 'Nome Completo' in df.columns:
-        cols = ['Nome Completo'] + [c for c in df.columns if c != 'Nome Completo']
-        df = df[cols]
+    # Define Column Priority for Display
+    priority_cols = [
+        'nome_completo', 'Idade', 'Faixa Etária', 'Identidade de Gênero', 'Race_Group', 
+        'Employment_Status', 'Vínculo de Trabalho', 'Renda Familiar', 'CadÚnico', 
+        'Recebe Benefícios', 'Escolaridade', 'Tipo de Escola', 'Qual curso pretende?', 
+        'Temas de interesse', 'Cidade', 'Bairro', 'Telefone', 'Email', 
+        'Orientação Sexual', 'Estado Civil', 'Escolaridade da Mãe', 'Escolaridade do Pai', 
+        'Plano de Saúde', 'Psicoterapia', 'Meio de Transporte', 'Uso do Dinheiro (Trabalho)', 
+        'Sinal de Internet', 'Tipo de Moradia', 'Tem Filhos?', 'Possui Deficiência?', 
+        'Familiar com Deficiência?', 'Tipo Sanguíneo', 'Entrevistador', 
+        'Uso de Substâncias', 'Ajuda no Sustento Familiar?'
+    ]
+    
+    # Metadata and other technical columns to move to the end
+    metadata_cols = ['id', 'created_at', 'updated_at', 'status_formulario', 'form_uuid']
+    
+    # Reorder columns: Priority first, then everything else not in metadata, then metadata last
+    existing_priority = [c for c in priority_cols if c in df.columns]
+    existing_metadata = [c for c in metadata_cols if c in df.columns]
+    remaining = [c for c in df.columns if c not in existing_priority and c not in existing_metadata]
+    
+    new_order = existing_priority + remaining + existing_metadata
+    df = df[new_order]
             
     return df
 

@@ -73,10 +73,25 @@ if section == "Resumo Geral":
     
     col4.metric("Frequência Média", "N/A") 
 
-    st.info("Este dashboard exibe dados extraídos exclusivamente do formulário de 2026.")
+    st.info("Esta é uma análise de dados inicial com base nas entrevistas do cursinho Educafro de 2026.")
+    st.subheader("Tabela de dados coletados até o momento - 24/02/2026")
+    
+    # Function to highlight workers (anyone with a work tie/link)
+    def highlight_workers(row):
+        is_worker = pd.notnull(row['Vínculo de Trabalho']) and row['Vínculo de Trabalho'] != 'Não'
+        return ['background-color: #ffe6e6'] * len(row) if is_worker else [''] * len(row)
 
-    st.subheader("Tabela de Dados Completa")
-    st.dataframe(df, use_container_width=True)
+    # Apply styling and set index for sticky column
+    if 'nome_completo' in df.columns:
+        # Bold the index (nome_completo) using set_table_styles
+        styled_df = df.set_index('nome_completo').style.apply(highlight_workers, axis=1)\
+            .set_table_styles([{'selector': 'th.row_heading', 'props': [('font-weight', 'bold')]}])
+        st.dataframe(styled_df, use_container_width=True)
+    else:
+        styled_df = df.style.apply(highlight_workers, axis=1)
+        st.dataframe(styled_df, use_container_width=True)
+        
+    st.markdown("<small>* alunos marcados em vermelho são os estudantes trabalhadores que sabemos que podem apresentar maior taxa de infrequência</small>", unsafe_allow_html=True)
 
 elif section == "Eixo 1: Perfil Sociodemográfico":
     st.header("Eixo 1: Perfil Sociodemográfico")
@@ -116,7 +131,16 @@ elif section == "Eixo 2: Trabalho, Renda e Infrequência":
         with col2:
             st.plotly_chart(viz.chart_7_employment_by_gender(df), use_container_width=True)
         
-        st.plotly_chart(viz.chart_8_job_categories(df), use_container_width=True)
+        col_job1, col_job2 = st.columns(2)
+        with col_job1:
+            st.plotly_chart(viz.chart_8_job_categories(df), use_container_width=True)
+        with col_job2:
+            st.subheader("Vínculos Diversos")
+            wc_jobs = viz.chart_8b_job_wordcloud(df)
+            if wc_jobs:
+                st.image(wc_jobs)
+            else:
+                st.write("Sem detalhes adicionais de vínculos.")
         
         col3, col4 = st.columns(2)
         with col3:
@@ -140,6 +164,9 @@ elif section == "Eixo 2: Trabalho, Renda e Infrequência":
             st.plotly_chart(viz.chart_26_housing_type(df), use_container_width=True)
         with col_new4:
             st.plotly_chart(viz.chart_27_parenthood(df), use_container_width=True)
+            
+        st.plotly_chart(viz.chart_10_money_usage(df), use_container_width=True)
+        st.plotly_chart(viz.chart_10b_cadunico(df), use_container_width=True)
         
         st.divider()
         st.subheader("Evasão e Infrequência")

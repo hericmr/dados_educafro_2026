@@ -96,19 +96,45 @@ def chart_8_job_categories(df):
                  title="Categorias de Trabalho e Vínculo")
     return fig
 
+def chart_8b_job_wordcloud(df):
+    """8b. Nuvem de Palavras: Vínculos de Trabalho (Outros)"""
+    return generate_wordcloud(df['Vínculo de Trabalho (Outro)'], "Descrição de Vínculos de Trabalho (Outros)")
+
 def chart_9_household_income(df):
-    """9. Gráfico de Renda Familiar (Valores Brutos)"""
+    """9. Gráfico de Renda Familiar (Valores Brutos) - Sincronizado com CSV"""
     counts = df['Renda Familiar'].value_counts().reset_index()
     counts.columns = ['Faixa', 'Total']
-    # Sorting order for income
-    order = ["Sem renda", "Até 300,00", "De 301,00 a 600,00", "De 601,00 a 1.200,00", 
-             "De 1.201,00 a 2.400,00", "De 2.401,00 a 5.200,00", "Acima de 5.201,00"]
+    
+    # Actual categories found in CSV
+    order = ["Sem renda", "Até R$ 1.045,00", "De R$ 1.046,00 R$ 2080,00", 
+             "De R$ 2081,00 a R$ 3.120,00", "De R$ 3.120,00 a R$ 4.160,00", 
+             "Acima de R$ 4.161,00"]
+    
+    # Filter to only keep categories present in order
     counts['Faixa'] = pd.Categorical(counts['Faixa'], categories=order, ordered=True)
-    counts = counts.sort_values('Faixa')
+    counts = counts.dropna(subset=['Faixa']).sort_values('Faixa')
     
     fig = px.bar(counts, y='Faixa', x='Total', orientation='h',
-                 title="Renda Familiar Mensal (Valores Brutos)",
+                 title="Renda Familiar Mensal (Categorias do Formulário)",
                  color_discrete_sequence=[COLORS['secondary']])
+    return fig
+
+def chart_10_money_usage(df):
+    """10. Destino da Renda (Uso do Dinheiro)"""
+    counts = df['Uso do Dinheiro (Trabalho)'].dropna().value_counts().reset_index()
+    counts.columns = ['Uso', 'Total']
+    fig = px.pie(counts, values='Total', names='Uso', hole=0.6,
+                 title="Destino da Renda (Estudantes que Trabalham)",
+                 color_discrete_sequence=[COLORS['primary'], COLORS['dark']])
+    return fig
+
+def chart_10b_cadunico(df):
+    """10b. Inscrição no CadÚnico"""
+    counts = df['CadÚnico'].value_counts().reset_index()
+    counts.columns = ['Inscrito', 'Total']
+    fig = px.pie(counts, values='Total', names='Inscrito', hole=0.6,
+                 title="Inscritos no CadÚnico",
+                 color_discrete_map={'Sim': COLORS['primary'], 'Não': COLORS['dark']})
     return fig
 
 def chart_11_tech_access(df):
