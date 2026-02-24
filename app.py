@@ -3,6 +3,7 @@ import pandas as pd
 from data_loader import load_data
 import visualizations as viz
 import os
+from datetime import datetime
 
 # v1.1 - Added data captions
 
@@ -36,6 +37,7 @@ st.markdown("""
 
 # App Title and Description
 st.title("Perfil Educafro 2026")
+st.markdown(f"**Última atualização:** {datetime.now().strftime('%d/%m/%Y %H:%M')}")
 st.markdown("---")
 
 # Sidebar
