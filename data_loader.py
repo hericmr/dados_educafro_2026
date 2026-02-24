@@ -33,7 +33,9 @@ def load_data(filepath):
         ('saude_servicos', 'saude_servicos_outro'),
         ('saude_psicoterapia', 'saude_psicoterapia_outro'),
         ('internet_sinal', 'internet_sinal_outro'),
-        ('beneficios', 'beneficios_outro')
+        ('beneficios', 'beneficios_outro'),
+        ('orientacao_sexual', 'orientacao_sexual_outra'),
+        ('cidade', 'cidade_outra')
     ]
     
     for main_col, outro_col in outro_pairs:
