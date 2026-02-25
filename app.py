@@ -35,7 +35,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # App Title and Description
-st.title("Perfil Estudantes Educafro 2026")
+st.title("Educafro | Base Parcial de Entrevistas - 2026")
 st.markdown("---")
 
 # Sidebar
