@@ -94,8 +94,8 @@ def load_data(filepath):
     })
     
     df['Race_Supergroup'] = df['Race_Group'].replace({
-        'Pretos/as/es': 'Negros (Pretos + Pardos)',
-        'Pardos/as/es': 'Negros (Pretos + Pardos)',
+        'Pretos/as/es': 'Negros(as)(es)',
+        'Pardos/as/es': 'Negros(as)(es)',
         'Brancos/as/es': 'Brancos/as/es'
     })
     

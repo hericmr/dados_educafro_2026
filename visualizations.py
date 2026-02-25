@@ -14,10 +14,10 @@ COLORS = {
     'light': '#F1FAEE',     # Off White
     'black': '#000000',
     'white': '#FFFFFF',
-    'race_negro': '#2D2D2D',
-    'race_preto': '#2D2D2D',
-    'race_pardo': '#B5651D',
-    'race_branco': '#D3D3D3'
+    'race_negro': '#E63946',  # Strong Red
+    'race_preto': '#000000',  # Pure Black
+    'race_pardo': '#8B4513',  # Saddle Brown
+    'race_branco': '#E5E5E5'  # Solid Gray
 }
 
 def get_summary_stats(df, column_name):
@@ -36,15 +36,16 @@ def get_summary_stats(df, column_name):
     return " | ".join(stats_list)
 
 def chart_1_race_composition(df):
-    """1. Gráfico de Composição Racial (Raça/Povo) - Hierárquico (Negros)"""
-    fig = px.sunburst(df, path=['Race_Supergroup', 'Race_Group'], 
+    """1. Gráfico de Composição Racial - Negros(as)(es) na Rosca Externa"""
+    fig = px.sunburst(df, path=['Race_Group', 'Race_Supergroup'], 
                      color='Race_Group',
                      color_discrete_map={
                          'Pretos/as/es': COLORS['race_preto'],
                          'Pardos/as/es': COLORS['race_pardo'],
-                         'Brancos/as/es': COLORS['race_branco']
+                         'Brancos/as/es': COLORS['race_branco'],
+                         'Negros(as)(es)': COLORS['race_negro']
                      },
-                     title="Composição Racial (Negros = Pretos + Pardos)")
+                     title="Composição Racial (Negros na Rosca Externa)")
     fig.update_traces(textinfo="label+percent entry")
     return fig
 
