@@ -79,14 +79,11 @@ if section == "Resumo Geral":
     
     st.markdown("""
     Esta síntese apresenta os principais indicadores sociodemográficos dos estudantes do cursinho Educafro 2026, com base nas entrevistas realizadas até o momento.
-    
-    Os dados aqui consolidados subsidiam o acompanhamento institucional, a formulação de estratégias pedagógicas e a identificação de potenciais vulnerabilidades sociais.
-    """)
+   """)
     
     st.info("""
-    **Status da Base de Dados**
-    - Base atualizada em: 24 de fevereiro de 2026
-    - Amostra parcial em processo de ampliação.
+    **Base de dados atualizada em: 24 de fevereiro de 2026**
+
     """)
 
     st.divider()
