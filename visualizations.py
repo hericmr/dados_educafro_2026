@@ -142,7 +142,7 @@ def chart_2_gender_distribution(df):
     counts.columns = ['Gênero', 'Total']
     fig = px.pie(counts, values='Total', names='Gênero', hole=0.6,
                  color_discrete_sequence=[COLORS['secondary'], COLORS['primary'], COLORS['accent']],
-                 title="Distribuição por Gênero")
+                 title="Distribuição por Identidade de Gênero")
     return fig
 
 def chart_3_race_by_gender(df):
@@ -212,7 +212,7 @@ def chart_5_geography(df):
     """5. Mapa Infográfico de Localização Geográfica (as Bar Chart)"""
     counts = df['Cidade'].value_counts().reset_index()
     counts.columns = ['Cidade', 'Total']
-    fig = px.bar(counts, x='Cidade', y='Total', title="Distribuição Geográfica (Baixada Santista)",
+    fig = px.bar(counts, x='Cidade', y='Total', title="Distribuição Geográfica dos Estudantes",
                  color_discrete_sequence=[COLORS['dark']])
     return fig
 
@@ -222,7 +222,7 @@ def chart_6_employment_general(df):
     counts.columns = ['Situação', 'Total']
     fig = px.pie(counts, values='Total', names='Situação', hole=0.6,
                  color_discrete_sequence=[COLORS['primary'], COLORS['dark']],
-                 title="Situação de Trabalho (Geral)")
+                 title="Situação Atual no Mercado de Trabalho")
     return fig
 
 def chart_7_employment_by_gender(df):
@@ -243,7 +243,7 @@ def chart_8_job_categories(df):
     counts = df['Vínculo de Trabalho'].value_counts().reset_index()
     counts.columns = ['Vínculo', 'Total']
     fig = px.pie(counts, values='Total', names='Vínculo', hole=0.6,
-                 title="Categorias de Trabalho e Vínculo")
+                 title="Natureza do Vínculo de Trabalho")
     return fig
 
 def chart_8b_job_wordcloud(df):
@@ -265,7 +265,7 @@ def chart_9_household_income(df):
     counts = counts.dropna(subset=['Faixa']).sort_values('Faixa')
     
     fig = px.bar(counts, y='Faixa', x='Total', orientation='h',
-                 title="Renda Familiar Mensal (Categorias do Formulário)",
+                 title="Faixa de Renda Familiar",
                  color_discrete_sequence=[COLORS['secondary']])
     return fig
 
@@ -274,7 +274,7 @@ def chart_10_money_usage(df):
     counts = df['Uso do Dinheiro (Trabalho)'].dropna().value_counts().reset_index()
     counts.columns = ['Uso', 'Total']
     fig = px.pie(counts, values='Total', names='Uso', hole=0.6,
-                 title="Destino da Renda (Estudantes que Trabalham)",
+                 title="Destinação Principal da Renda Individual",
                  color_discrete_sequence=[COLORS['primary'], COLORS['dark']])
     return fig
 
@@ -283,7 +283,7 @@ def chart_10b_cadunico(df):
     counts = df['CadÚnico'].value_counts().reset_index()
     counts.columns = ['Inscrito', 'Total']
     fig = px.pie(counts, values='Total', names='Inscrito', hole=0.6,
-                 title="Inscritos no CadÚnico",
+                 title="Inscrição no Cadastro Único (CadÚnico)",
                  color_discrete_map={'Sim': COLORS['primary'], 'Não': COLORS['dark']})
     return fig
 
@@ -292,7 +292,7 @@ def chart_11_tech_access(df):
     counts = df['Possui Internet?'].value_counts().reset_index()
     counts.columns = ['Internet', 'Total']
     fig = px.pie(counts, values='Total', names='Internet', hole=0.6,
-                 title="Acesso à Internet", color_discrete_sequence=[COLORS['secondary'], COLORS['primary']])
+                 title="Acesso à Internet no Domicílio", color_discrete_sequence=[COLORS['secondary'], COLORS['primary']])
     return fig
 
 def chart_11b_device_quality(df):
@@ -372,7 +372,7 @@ def chart_18_orientation(df):
     counts = df['Orientação Sexual'].value_counts().reset_index()
     counts.columns = ['Orientação', 'Total']
     fig = px.pie(counts, values='Total', names='Orientação', hole=0.6,
-                 title="Diversidade: Orientação Sexual",
+                 title="Distribuição por Orientação Sexual",
                  color_discrete_sequence=px.colors.qualitative.Pastel)
     return fig
 
@@ -380,7 +380,7 @@ def chart_19_school_type(df):
     """19. Tipo de Escola (Ensino Médio)"""
     counts = df['Tipo de Escola'].value_counts().reset_index()
     counts.columns = ['Tipo', 'Total']
-    fig = px.bar(counts, x='Tipo', y='Total', title="Trajetória: Tipo de Escola (EM)",
+    fig = px.bar(counts, x='Tipo', y='Total', title="Trajetória Escolar (Tipo de Escola de Origem)",
                  color_discrete_sequence=[COLORS['secondary']])
     return fig
 
@@ -402,7 +402,7 @@ def chart_21_health_access(df):
     counts = df['Plano de Saúde'].value_counts().reset_index()
     counts.columns = ['Acesso', 'Total']
     fig = px.pie(counts, values='Total', names='Acesso', hole=0.6,
-                 title="Acesso a Plano de Saúde",
+                 title="Cobertura de Saúde (SUS e/ou Plano Privado)",
                  color_discrete_map={'Sim': COLORS['secondary'], 'Não': COLORS['primary'], 'Apenas SUS': COLORS['primary']})
     return fig
 
@@ -411,7 +411,7 @@ def chart_22_social_benefits(df):
     counts = df['Recebe Benefícios'].value_counts().reset_index()
     counts.columns = ['Recebe', 'Total']
     fig = px.pie(counts, values='Total', names='Recebe', hole=0.6,
-                 title="Estudantes que recebem Benefícios Sociais",
+                 title="Acesso a Benefícios Sociais",
                  color_discrete_sequence=[COLORS['dark'], COLORS['accent']])
     return fig
 
@@ -419,7 +419,7 @@ def chart_23_transport_modes(df):
     """23. Meios de Transporte"""
     counts = df['Meio de Transporte'].value_counts().reset_index()
     counts.columns = ['Meio', 'Total']
-    fig = px.bar(counts, x='Meio', y='Total', title="Logística: Meio de Transporte",
+    fig = px.bar(counts, x='Meio', y='Total', title="Meios de Transporte Utilizados",
                  color_discrete_sequence=[COLORS['secondary']])
     return fig
 
@@ -436,7 +436,7 @@ def chart_26_housing_type(df):
     counts = df['Tipo de Moradia'].value_counts().reset_index()
     counts.columns = ['Tipo', 'Total']
     fig = px.pie(counts, values='Total', names='Tipo', hole=0.6,
-                 title="Tipo de Construção da Moradia")
+                 title="Tipo de Moradia")
     return fig
 
 def chart_27_parenthood(df):
@@ -480,7 +480,7 @@ def chart_28_disability(df):
         ])
     else:
         fig = px.bar(combined, x='Deficiência', y='Total', color='Tipo',
-                     barmode='group', title="Representação de Deficiências (Nomes Específicos)",
+                     barmode='group', title="Representação de Deficiências (Estudantes e Familiares)",
                      color_discrete_map={'Estudante': COLORS['primary'], 'Familiar': COLORS['secondary']})
         
     fig.update_layout(title="Representação de Deficiências")
@@ -490,7 +490,7 @@ def chart_29_blood_type(df):
     """29. Distribuição de Tipo Sanguíneo"""
     counts = df['Tipo Sanguíneo'].value_counts().reset_index()
     counts.columns = ['Tipo', 'Total']
-    fig = px.bar(counts, x='Tipo', y='Total', title="Distribuição de Tipo Sanguíneo",
+    fig = px.bar(counts, x='Tipo', y='Total', title="Conhecimento do Tipo Sanguíneo",
                  color_discrete_sequence=[COLORS['primary']])
     return fig
 
@@ -499,6 +499,6 @@ def chart_30_interviewer_balance(df):
     counts = df['Entrevistador'].value_counts().reset_index()
     counts.columns = ['Entrevistador', 'Total']
     fig = px.bar(counts, y='Entrevistador', x='Total', orientation='h',
-                 title="Volume de Entrevistas por Voluntário",
+                 title="Distribuição de Entrevistas por Entrevistador(a)",
                  color_discrete_sequence=[COLORS['dark']])
     return fig

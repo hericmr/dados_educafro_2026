@@ -44,10 +44,10 @@ st.sidebar.title("Navegação")
 section = st.sidebar.radio("Ir para:", [
     "Resumo Geral",
     "Eixo 1: Perfil Sociodemográfico", 
-    "Eixo 2: Trabalho, Renda e Infrequência", 
-    "Eixo 3: Interesses Formativos",
+    "Eixo 2: Trabalho, Renda e Condições Socioeconômicas", 
+    "Eixo 3: Mobilidade e Interesses Formativos",
     "Eixo 4: Saúde e Assistência",
-    "Equipe"
+    "Gestão e Operacionalização da Pesquisa"
 ])
 
 # Load Data
@@ -136,8 +136,8 @@ elif section == "Eixo 1: Perfil Sociodemográfico":
         with col4:
             render_chart_with_stats(viz.chart_5_geography, df, 'Cidade')
 
-elif section == "Eixo 2: Trabalho, Renda e Infrequência":
-    st.header("Eixo 2: Trabalho, Renda e Infrequência")
+elif section == "Eixo 2: Trabalho, Renda e Condições Socioeconômicas":
+    st.header("🔹 EIXO 2 — Trabalho, Renda e Condições Socioeconômicas")
     
     if len(df) == 0:
         st.warning("Nenhum dado completo encontrado no CSV.")
@@ -189,8 +189,8 @@ elif section == "Eixo 2: Trabalho, Renda e Infrequência":
         st.subheader("Evasão e Infrequência")
         st.info("Os dados de infrequência não constam no formulário atual.")
 
-elif section == "Eixo 3: Interesses Formativos":
-    st.header("Eixo 3: Interesses Formativos")
+elif section == "Eixo 3: Mobilidade e Interesses Formativos":
+    st.header("🔹 EIXO 3 — Mobilidade e Interesses Formativos")
     
     if len(df) == 0:
         st.warning("Nenhum dado completo encontrado no CSV.")
@@ -216,7 +216,7 @@ elif section == "Eixo 3: Interesses Formativos":
         render_chart_with_stats(viz.chart_23_transport_modes, df, 'Meio de Transporte')
 
 elif section == "Eixo 4: Saúde e Assistência":
-    st.header("Eixo 4: Saúde e Assistência")
+    st.header("🔹 EIXO 4 — Saúde e Assistência")
     
     if len(df) == 0:
         st.warning("Nenhum dado completo encontrado no CSV.")
@@ -235,8 +235,8 @@ elif section == "Eixo 4: Saúde e Assistência":
             
         st.info("A maioria das informações de saúde são qualitativas e podem ser consultadas na tabela de dados no Resumo Geral.")
 
-elif section == "Equipe":
-    st.header("Equipe")
+elif section == "Gestão e Operacionalização da Pesquisa":
+    st.header("🔹 Gestão e Operacionalização da Pesquisa")
     
     if len(df) == 0:
         st.warning("Nenhum dado completo encontrado no CSV.")
