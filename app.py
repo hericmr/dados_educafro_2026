@@ -103,22 +103,31 @@ if section == "Resumo Geral":
 
     st.subheader("Tabela de Dados Consolidados")
     
-    # Function to highlight workers (anyone with a work tie/link)
-    def highlight_workers(row):
-        is_worker = pd.notnull(row['Vínculo de Trabalho']) and row['Vínculo de Trabalho'] != 'Não'
-        return ['background-color: #ffe6e6'] * len(row) if is_worker else [''] * len(row)
+    # Combined Styling Function
+    def style_row(row):
+        # 1. Background logic (Workers)
+        is_worker = pd.notnull(row.get('Vínculo de Trabalho')) and row.get('Vínculo de Trabalho') != 'Não'
+        row_bg = 'background-color: #FFF5F5' if is_worker else '' # Even lighter red for background
 
-    # Apply styling and set index for sticky column
-    if 'nome_completo' in df.columns:
-        # Bold and Black index (nome_completo) using set_table_styles
-        styled_df = df.set_index('nome_completo').style.apply(highlight_workers, axis=1)\
-            .set_table_styles([{'selector': 'th.row_heading', 'props': [('font-weight', 'bold'), ('color', 'black')]}])
-        st.dataframe(styled_df, use_container_width=True)
-    else:
-        styled_df = df.style.apply(highlight_workers, axis=1)
-        st.dataframe(styled_df, use_container_width=True)
+        # 2. Text Color logic (Benefits)
+        receives_benefits = pd.notnull(row.get('Recebe Benefícios')) and str(row.get('Recebe Benefícios')).strip() == 'Sim'
+        name_color = 'color: #D63031; font-weight: bold' if receives_benefits else 'color: #2D3436; font-weight: bold'
+
+        # Apply to all columns
+        styles = [row_bg] * len(row)
         
-    st.markdown("<small>* alunos marcados em vermelho são os estudantes trabalhadores que sabemos que podem apresentar maior taxa de infrequência</small>", unsafe_allow_html=True)
+        # Specific override for 'nome_completo' column
+        if 'nome_completo' in row.index:
+            name_idx = row.index.get_loc('nome_completo')
+            styles[name_idx] = f"{row_bg}; {name_color}"
+            
+        return styles
+
+    # Apply the styling
+    styled_df = df.style.apply(style_row, axis=1)
+    st.dataframe(styled_df, use_container_width=True, hide_index=True)
+        
+    st.markdown("<small>* <b>Nomes em vermelho</b>: estudantes que recebem benefícios sociais. <br> * <b>Fundo rosado</b>: estudantes trabalhadores (maior risco de infrequência).</small>", unsafe_allow_html=True)
 
 elif section == "Eixo 1: Perfil Sociodemográfico":
     st.header("Eixo 1: Perfil Sociodemográfico")
