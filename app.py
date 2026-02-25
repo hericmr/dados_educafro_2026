@@ -47,7 +47,7 @@ section = st.sidebar.radio("Ir para:", [
     "Eixo 2: Trabalho, Renda e Infrequência", 
     "Eixo 3: Interesses Formativos",
     "Eixo 4: Saúde e Assistência",
-    "Gestão e Equipe"
+    "Equipe"
 ])
 
 # Load Data
@@ -235,8 +235,8 @@ elif section == "Eixo 4: Saúde e Assistência":
             
         st.info("A maioria das informações de saúde são qualitativas e podem ser consultadas na tabela de dados no Resumo Geral.")
 
-elif section == "Gestão e Equipe":
-    st.header("Gestão e Equipe")
+elif section == "Equipe":
+    st.header("Equipe")
     
     if len(df) == 0:
         st.warning("Nenhum dado completo encontrado no CSV.")
