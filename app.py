@@ -35,7 +35,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # App Title and Description
-st.title("Perfil Educafro 2026")
+st.title("Perfil Estudantes Educafro 2026")
 st.markdown("---")
 
 # Sidebar
@@ -74,7 +74,6 @@ def render_chart_with_stats(chart_func, df, column_name=None, custom_stats=None,
         st.caption(f"**Dados:** {stats_text}")
 
 if section == "Resumo Geral":
-    st.header("PERFIL ESTUDANTES 2026")
     st.subheader("Educafro | Base Parcial de Entrevistas")
     
     st.markdown("""
