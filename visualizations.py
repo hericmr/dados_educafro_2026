@@ -15,6 +15,8 @@ COLORS = {
     'black': '#000000',
     'white': '#FFFFFF',
     'race_negro': '#2D2D2D',
+    'race_preto': '#2D2D2D',
+    'race_pardo': '#B5651D',
     'race_branco': '#D3D3D3'
 }
 
@@ -34,13 +36,16 @@ def get_summary_stats(df, column_name):
     return " | ".join(stats_list)
 
 def chart_1_race_composition(df):
-    """1. Gráfico de Composição Racial (Raça/Povo)"""
-    counts = df['Race_Group'].value_counts().reset_index()
-    counts.columns = ['Raça', 'Total']
-    fig = px.pie(counts, values='Total', names='Raça', hole=0.6,
-                 color_discrete_sequence=[COLORS['race_negro'], COLORS['race_branco']],
-                 title="Composição Racial (Raça/Povo)")
-    fig.update_traces(textposition='inside', textinfo='percent+label')
+    """1. Gráfico de Composição Racial (Raça/Povo) - Hierárquico (Negros)"""
+    fig = px.sunburst(df, path=['Race_Supergroup', 'Race_Group'], 
+                     color='Race_Group',
+                     color_discrete_map={
+                         'Pretos/as/es': COLORS['race_preto'],
+                         'Pardos/as/es': COLORS['race_pardo'],
+                         'Brancos/as/es': COLORS['race_branco']
+                     },
+                     title="Composição Racial (Negros = Pretos + Pardos)")
+    fig.update_traces(textinfo="label+percent entry")
     return fig
 
 def chart_2_gender_distribution(df):
@@ -57,7 +62,8 @@ def chart_3_race_by_gender(df):
     fig = px.bar(df, x="Identidade de Gênero", color="Race_Group",
                  title="Composição Raça/Povo por Gênero",
                  labels={'Race_Group': 'Raça/Povo'},
-                 color_discrete_map={'Negros (Pretos e Pardos)': COLORS['race_negro'], 
+                 color_discrete_map={'Pretos/as/es': COLORS['race_preto'], 
+                                   'Pardos/as/es': COLORS['race_pardo'], 
                                    'Brancos/as/es': COLORS['race_branco']})
     fig.update_layout(barmode='stack')
     return fig

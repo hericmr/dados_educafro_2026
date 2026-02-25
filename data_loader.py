@@ -88,9 +88,15 @@ def load_data(filepath):
     # 2. Race Mapping
     race_col = 'raca_cor' if 'raca_cor' in df.columns else 'Raça/Cor'
     df['Race_Group'] = df[race_col].replace({
-        'Preto/a/e': 'Negros (Pretos e Pardos)',
-        'Pardo/a/e': 'Negros (Pretos e Pardos)',
+        'Preto/a/e': 'Pretos/as/es',
+        'Pardo/a/e': 'Pardos/as/es',
         'Branco/a/e': 'Brancos/as/es'
+    })
+    
+    df['Race_Supergroup'] = df['Race_Group'].replace({
+        'Pretos/as/es': 'Negros (Pretos + Pardos)',
+        'Pardos/as/es': 'Negros (Pretos + Pardos)',
+        'Brancos/as/es': 'Brancos/as/es'
     })
     
     # 3. Employment
