@@ -133,7 +133,6 @@ def chart_1_race_composition(df):
             dict(
                 x=0, y=-0.15,
                 showarrow=False,
-                text="Fonte: Registro Institucional Educafro 2026",
                 xref="paper", yref="paper",
                 font=dict(size=10, color="gray")
             )
