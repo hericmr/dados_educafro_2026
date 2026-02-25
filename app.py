@@ -101,25 +101,23 @@ if section == "Resumo Geral":
     
     col4.metric("Frequência Média", "N/A") 
 
-    st.subheader("Tabela de Dados Consolidados")
-    
-    # Function to generate indicator icons
+    # Function to generate indicator tags (professional)
     def get_indicators(row):
-        icons = []
+        tags = []
         if pd.notnull(row.get('Tem Filhos?')) and str(row.get('Tem Filhos?')).strip() == 'Sim':
-            icons.append("🍼") # Children
+            tags.append("[FIL]") # Children
         if (pd.notnull(row.get('Possui Deficiência?')) and str(row.get('Possui Deficiência?')).strip() == 'Sim') or \
            (pd.notnull(row.get('Familiar com Deficiência?')) and str(row.get('Familiar com Deficiência?')).strip() == 'Sim'):
-            icons.append("♿") # Disability
+            tags.append("[PCD]") # Disability
         if pd.notnull(row.get('Recebe Benefícios')) and str(row.get('Recebe Benefícios')).strip() == 'Sim':
-            icons.append("💰") # Benefits
-        if row.get('Employment_Status') == 'Empregado':
-            icons.append("💼") # Employment
-        return "".join(icons)
+            tags.append("[BEN]") # Benefits
+        if row.get('Status_Emprego_Simplificado') == 'Empregado' or row.get('Employment_Status') == 'Empregado':
+            tags.append("[TRB]") # Employment
+        return " ".join(tags)
 
     # Prepare DataFrame for Display
     display_df = df.copy()
-    display_df.insert(0, 'Sinais', display_df.apply(get_indicators, axis=1))
+    display_df.insert(0, 'Perfil', display_df.apply(get_indicators, axis=1))
 
     # Combined Styling Function
     def style_row(row):
@@ -148,8 +146,8 @@ if section == "Resumo Geral":
     st.markdown("""
     <div style='background-color: #F8F9FA; padding: 10px; border-radius: 5px; border: 1px solid #E9ECEF;'>
         <small>
-            <b>Legenda de Indicadores:</b><br>
-            🍼 Tem Filhos | ♿ Deficiência (Estudante/Família) | 💰 Recebe Benefícios | 💼 Estudante Trabalhador<br>
+            <b>Legenda de Perfil:</b><br>
+            <b>[FIL]</b> Tem Filhos | <b>[PCD]</b> Deficiência (Estudante/Família) | <b>[BEN]</b> Recebe Benefícios | <b>[TRB]</b> Estudante Trabalhador<br>
             <span style='color: #D63031;'><b>Nomes em Vermelho</b></span>: Recebe Benefícios Sociais | 
             <span style='background-color: #FED7D7; padding: 2px;'><b>Fundo Rosado</b></span>: Estudante Trabalhador (Risco de Infrequência)
         </small>
