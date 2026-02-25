@@ -116,17 +116,17 @@ def chart_1_race_composition(df):
     ))
 
     # Layout Improvement
-fig.update_layout(
-    title={
-        'text': (
-            "<b>Composição Racial dos Estudantes</b>"
-            "<br><span style='font-size:12px; color:gray'>"
-            "Autodeclaração racial. "
-            f"N = {total_samples}. "
-            "Negros(as) corresponde à agregação de Pretos(as) e Pardos(as)."
-            "</span>"
-        ),
-         },
+    fig.update_layout(
+        title={
+            'text': (
+                "<b>Composição Racial dos Estudantes</b>"
+                "<br><span style='font-size:12px; color:gray'>"
+                "Autodeclaração racial. "
+                f"N = {total_samples}. "
+                "Negros(as) corresponde à agregação de Pretos(as) e Pardos(as)."
+                "</span>"
+            ),
+            },
         xaxis=dict(title="Percentual (%)", range=[0, max(plot_df['Percentual']) * 1.15]),
         yaxis=dict(autorange="reversed"), # To keep order from top to bottom
         margin=dict(l=100, r=20, t=80, b=40),
