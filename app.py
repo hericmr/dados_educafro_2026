@@ -74,7 +74,23 @@ def render_chart_with_stats(chart_func, df, column_name=None, custom_stats=None,
         st.caption(f"**Dados:** {stats_text}")
 
 if section == "Resumo Geral":
-    st.header("Visão Geral do Cursinho")
+    st.header("PERFIL ESTUDANTES 2026")
+    st.subheader("Educafro | Base Parcial de Entrevistas")
+    
+    st.markdown("""
+    Esta síntese apresenta os principais indicadores sociodemográficos dos estudantes do cursinho Educafro 2026, com base nas entrevistas realizadas até o momento.
+    
+    Os dados aqui consolidados subsidiam o acompanhamento institucional, a formulação de estratégias pedagógicas e a identificação de potenciais vulnerabilidades sociais.
+    """)
+    
+    st.info("""
+    **Status da Base de Dados**
+    - Base atualizada em: 24 de fevereiro de 2026
+    - Amostra parcial em processo de ampliação.
+    """)
+
+    st.divider()
+    
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("Estudantes", len(df))
     
@@ -90,8 +106,7 @@ if section == "Resumo Geral":
     
     col4.metric("Frequência Média", "N/A") 
 
-    st.info("Esta é uma análise de dados inicial com base nas entrevistas do cursinho Educafro de 2026.")
-    st.subheader("Tabela de dados coletados até o momento - 24/02/2026")
+    st.subheader("Tabela de Dados Consolidados")
     
     # Function to highlight workers (anyone with a work tie/link)
     def highlight_workers(row):
