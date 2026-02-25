@@ -126,11 +126,7 @@ fig.update_layout(
             "Negros(as) corresponde à agregação de Pretos(as) e Pardos(as)."
             "</span>"
         ),
-        'y': 0.95,
-        'x': 0.5,
-        'xanchor': 'center',
-        'yanchor': 'top'
-    },
+         },
         xaxis=dict(title="Percentual (%)", range=[0, max(plot_df['Percentual']) * 1.15]),
         yaxis=dict(autorange="reversed"), # To keep order from top to bottom
         margin=dict(l=100, r=20, t=80, b=40),
