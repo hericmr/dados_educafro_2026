@@ -93,12 +93,6 @@ def load_data(filepath):
         'Branco/a/e': 'Brancos/as/es'
     })
     
-    df['Race_Supergroup'] = df['Race_Group'].replace({
-        'Pretos/as/es': 'Negros (Pretos + Pardos)',
-        'Pardos/as/es': 'Negros (Pretos + Pardos)',
-        'Brancos/as/es': 'Brancos/as/es'
-    })
-    
     # 3. Employment
     emp_col = 'trabalho_renda_semana' if 'trabalho_renda_semana' in df.columns else 'Trabalhou na última semana?'
     df['Employment_Status'] = df[emp_col].replace({'Sim': 'Empregado', 'Não': 'Fora da força de trabalho'})

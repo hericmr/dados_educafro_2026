@@ -79,7 +79,7 @@ if section == "Resumo Geral":
     col1.metric("Estudantes", len(df))
     
     # Race percentage calculation
-    negros_count = len(df[df['Race_Supergroup'] == 'Negros (Pretos + Pardos)'])
+    negros_count = len(df[df['Race_Group'].isin(['Pretos/as/es', 'Pardos/as/es'])])
     negros_pct = (negros_count / len(df) * 100) if len(df) > 0 else 0
     col2.metric("Negros (Pretos/Pardos)", f"{negros_pct:.1f}%")
     
