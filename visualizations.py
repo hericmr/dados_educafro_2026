@@ -42,81 +42,63 @@ def chart_1_race_composition(df):
     # 1. Normalização e contagem
     counts = df['Race_Group'].value_counts()
     
-    # 2. Preparar categorias individuais
-    individual_labels = ['Brancos(as)', 'Pretos(as)', 'Pardos(as)']
-    # Filter only those that exist in the data to avoid errors if some category is empty
-    individual_labels = [l for l in individual_labels if l in counts.index]
-    
-    # Sort individual categories by value (descending)
-    individual_counts = counts[individual_labels].sort_values(ascending=False)
-    
-    # 3. Calcular categoria agregada Negros(as)
+    # 2. Dados básicos
     pretos_val = counts.get('Pretos(as)', 0)
     pardos_val = counts.get('Pardos(as)', 0)
+    brancos_val = counts.get('Brancos(as)', 0)
     negros_val = pretos_val + pardos_val
     total_samples = len(df)
     
-    # 4. Criar estrutura para o gráfico
-    # Vamos usar uma lista de dicts para construir o dataframe final do gráfico
-    plot_data = []
-    
-    # Adicionar individuais
-    for label, val in individual_counts.items():
-        pct = (val / total_samples * 100)
-        plot_data.append({
-            'Categoria': label,
-            'Total': val,
-            'Percentual': pct,
-            'Texto': f"{pct:.1f}% ({val})",
-            'Tipo': 'Individual',
-            'Cor': COLORS['race_preto'] if label == 'Pretos(as)' else (COLORS['race_pardo'] if label == 'Pardos(as)' else COLORS['race_branco'])
-        })
-        
-    # Adicionar Agregado Negros(as) com destaque
-    negros_pct = (negros_val / total_samples * 100)
-    plot_data.append({
-        'Categoria': 'Negros(as)',
-        'Total': negros_val,
-        'Percentual': negros_pct,
-        'Texto': f"<b>{negros_pct:.1f}% ({negros_val})</b>",
-        'Tipo': 'Agregado',
-        'Cor': COLORS['race_negro']
-    })
-    
-    plot_df = pd.DataFrame(plot_data)
-    
-    # 5. Criar Gráfico usando Graph Objects para controle total
+    # 3. Criar gráfico empilhado institucional
     fig = go.Figure()
-    
-    # Categorias Individuais
-    ind_df = plot_df[plot_df['Tipo'] == 'Individual']
-    fig.add_trace(go.Bar(
-        y=ind_df['Categoria'],
-        x=ind_df['Percentual'],
-        orientation='h',
-        marker_color=ind_df['Cor'],
-        text=ind_df['Texto'],
-        textposition='auto',
-        name='Categorias Individuais',
-        showlegend=False
-    ))
-    
-    # Adicionar linha divisória (usando uma forma ou anotação, mas aqui vamos apenas dar espaço)
-    # Categorias Agregadas
-    agg_df = plot_df[plot_df['Tipo'] == 'Agregado']
-    fig.add_trace(go.Bar(
-        y=agg_df['Categoria'],
-        x=agg_df['Percentual'],
-        orientation='h',
-        marker_color=agg_df['Cor'],
-        text=agg_df['Texto'],
-        textposition='auto',
-        name='Agregação Institucional',
-        showlegend=False
-    ))
 
-    # Layout Improvement
+    # --- Barra Brancos (simples) ---
+    if 'Brancos(as)' in counts.index:
+        brancos_pct = brancos_val / total_samples * 100
+
+        fig.add_trace(go.Bar(
+            y=['Brancos(as)'],
+            x=[brancos_pct],
+            orientation='h',
+            marker_color=COLORS['race_branco'],
+            text=[f"{brancos_pct:.1f}% ({brancos_val})"],
+            textposition='inside',
+            name='Brancos(as)',
+            showlegend=False
+        ))
+
+    # --- Barra Negros (empilhada: Pretos + Pardos) ---
+    if negros_val > 0:
+        pretos_pct = pretos_val / total_samples * 100
+        pardos_pct = pardos_val / total_samples * 100
+
+        # Parte Pretos
+        fig.add_trace(go.Bar(
+            y=['Negros(as)'],
+            x=[pretos_pct],
+            orientation='h',
+            marker_color=COLORS['race_preto'],
+            text=[f"{pretos_pct:.1f}% ({pretos_val})"],
+            textposition='inside',
+            name='Pretos(as)',
+            showlegend=True
+        ))
+
+        # Parte Pardos
+        fig.add_trace(go.Bar(
+            y=['Negros(as)'],
+            x=[pardos_pct],
+            orientation='h',
+            marker_color=COLORS['race_pardo'],
+            text=[f"{pardos_pct:.1f}% ({pardos_val})"],
+            textposition='inside',
+            name='Pardos(as)',
+            showlegend=True
+        ))
+
+    # 4. Ajustar Layout
     fig.update_layout(
+        barmode='stack',
         title={
             'text': (
                 "<b>Composição Racial dos Estudantes</b>"
@@ -126,15 +108,30 @@ def chart_1_race_composition(df):
                 "Negros(as) corresponde à agregação de Pretos(as) e Pardos(as)."
                 "</span>"
             ),
-            },
-        xaxis=dict(title="Percentual (%)", range=[0, max(plot_df['Percentual']) * 1.15]),
-        yaxis=dict(autorange="reversed"), # To keep order from top to bottom
-        margin=dict(l=100, r=20, t=80, b=40),
-        height=400,
+            'y': 0.95,
+            'x': 0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'
+        },
+        xaxis=dict(
+            title="Percentual (%)",
+            range=[0, 100],
+            ticksuffix="%"
+        ),
+        yaxis=dict(
+            categoryorder='array',
+            categoryarray=['Brancos(as)', 'Negros(as)']
+        ),
+        margin=dict(l=120, r=20, t=90, b=40),
+        height=420,
         plot_bgcolor='rgba(0,0,0,0)',
-        annotations=[
-
-        ]
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        )
     )
     
     return fig
