@@ -107,7 +107,7 @@ if section == "Resumo Geral":
     def style_row(row):
         # 1. Background logic (Workers)
         is_worker = pd.notnull(row.get('Vínculo de Trabalho')) and row.get('Vínculo de Trabalho') != 'Não'
-        row_bg = 'background-color: #FFF5F5' if is_worker else '' # Even lighter red for background
+        row_bg = 'background-color: #FED7D7' if is_worker else '' # Slightly darker red/pink (Tailwind Red 100-ish)
 
         # 2. Text Color logic (Benefits)
         receives_benefits = pd.notnull(row.get('Recebe Benefícios')) and str(row.get('Recebe Benefícios')).strip() == 'Sim'
