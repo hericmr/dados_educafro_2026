@@ -86,17 +86,30 @@ def load_data(filepath):
     df['Faixa Etária'] = df['Idade'].apply(get_age_group)
     
     # 2. Race Mapping
+    def normalize_race(val):
+        if not isinstance(val, str): return "Não informado"
+        v = val.lower().strip()
+        # Remove common gender and plural suffixes
+        for frag in ["/as/es", "/a/e", "/as", "/es", "(as)(es)", "(a)(e)", "(as)", "(es)", "(a)", "(e)"]:
+            v = v.replace(frag, "")
+        
+        # Map based on semantic roots
+        if any(root in v for root in ["preto", "negro"]):
+            return "Negros(as)"
+        if "pardo" in v:
+            return "Pardos(as)"
+        if "branco" in v:
+            return "Brancos(as)"
+        return "Outro/Não informado"
+
     race_col = 'raca_cor' if 'raca_cor' in df.columns else 'Raça/Cor'
-    df['Race_Group'] = df[race_col].replace({
-        'Preto/a/e': 'Pretos/as/es',
-        'Pardo/a/e': 'Pardos/as/es',
-        'Branco/a/e': 'Brancos/as/es'
-    })
+    df['Race_Group'] = df[race_col].apply(normalize_race)
     
+    # Consolidation umbrella
     df['Race_Supergroup'] = df['Race_Group'].replace({
-        'Pretos/as/es': 'Negros(as)(es)',
-        'Pardos/as/es': 'Negros(as)(es)',
-        'Brancos/as/es': 'Brancos/as/es'
+        'Negros(as)': 'Negros(as)',
+        'Pardos(as)': 'Negros(as)',
+        'Brancos(as)': 'Brancos(as)'
     })
     
     # 3. Employment
