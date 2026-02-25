@@ -46,6 +46,19 @@ def load_data(filepath):
             # Clean up: strip whitespace
             df[main_col] = df[main_col].astype(str).str.strip().replace('nan', np.nan)
 
+    # 0. Global Normalization of common responses
+    # Mapping various forms of "Sim" and "Não" to standard versions
+    sim_regex = r'^(?i)sim(\s*\(.*\))?$' # Matches "sim", "Sim", "Sim (1)", "SIM"
+    nao_regex = r'^(?i)n[ãa]o$' # Matches "não", "Não", "NAO"
+    
+    # We apply this to all string columns
+    for col in df.select_dtypes(include=['object']).columns:
+        df[col] = df[col].astype(str).str.strip()
+        df[col] = df[col].replace(sim_regex, 'Sim', regex=True)
+        df[col] = df[col].replace(nao_regex, 'Não', regex=True)
+        # Convert back 'nan' string to actual NaN
+        df[col] = df[col].replace('nan', np.nan)
+
     # Normalization of values
     if 'genero' in df.columns:
         df['genero'] = df['genero'].replace({
@@ -53,13 +66,7 @@ def load_data(filepath):
             'Homem Cis': 'Masculina',
             'Feminino': 'Feminina',
             'Masculino': 'Masculina'
-        }).str.strip()
-
-    if 'internet_tipo' in df.columns:
-        df['internet_tipo'] = df['internet_tipo'].replace({
-            'Wi-fi': 'Wi-Fi (Banda Larga)',
-            'Dados móveis e wi-fi': 'Wi-Fi (Banda Larga)' # Or keep separate? User highlighted repetition.
-        }).str.strip()
+        })
 
     # 1. Processing Age
     birth_col = 'data_nascimento' if 'data_nascimento' in df.columns else 'Data de Nascimento'
