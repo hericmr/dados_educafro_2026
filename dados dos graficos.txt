@@ -1,130 +1,152 @@
 RELATÓRIO DE DADOS - EDUCAFRO 2026
 ===================================
-Total de Entrevistados: 11
+Total de Entrevistados: 16
 
 
 Eixo 1: Perfil Sociodemográfico
 -------------------------------
 
 Composição Racial:
-  - Brancos/as/es: 6 (54.5%)
-  - Pretos/as/es: 3 (27.3%)
-  - Pardos/as/es: 2 (18.2%)
+  - Brancos(as): 9 (56.2%)
+  - Pretos(as): 4 (25.0%)
+  - Pardos(as): 3 (18.8%)
 
 Identidade de Gênero:
-  - Feminina: 8 (72.7%)
-  - Masculina: 3 (27.3%)
+  - Feminina: 11 (68.8%)
+  - Masculina: 5 (31.2%)
 
 Orientação Sexual:
-  - Heterossexual: 9 (81.8%)
-  - Lésbica: 1 (9.1%)
-  - Pansexual: 1 (9.1%)
+  - Heterossexual: 14 (87.5%)
+  - Lésbica: 1 (6.2%)
+  - Pansexual: 1 (6.2%)
 
 Tipo de Escola:
-  - Sempre Pública: 9 (81.8%)
-  - Sempre Particular (com bolsa): 1 (9.1%)
-  - Mista (Parte Pública / Parte Particular): 1 (9.1%)
+  - Sempre Pública: 9 (56.2%)
+  - Sempre Particular (com bolsa): 1 (6.2%)
+  - Mista (Parte Pública / Parte Particular): 1 (6.2%)
 
 Faixa Etária:
-  - 18 a 30 anos: 6 (54.5%)
-  - 30 anos ou mais: 3 (27.3%)
-  - Menor que 18 anos: 2 (18.2%)
+  - 18 a 30 anos: 8 (50.0%)
+  - Não informado: 3 (18.8%)
+  - 30 anos ou mais: 3 (18.8%)
+  - Menor que 18 anos: 2 (12.5%)
 
 Localização (Cidade):
-  - Santos: 9 (81.8%)
-  - São Vicente: 1 (9.1%)
-  - Cubatão: 1 (9.1%)
+  - Santos: 11 (68.8%)
+  - São Vicente: 2 (12.5%)
+  - Cubatão: 2 (12.5%)
+  - Praia Grande: 1 (6.2%)
 
 Eixo 2: Trabalho, Renda e Infrequência
 --------------------------------------
 
 Situação de Trabalho:
-  - Fora da força de trabalho: 8 (72.7%)
-  - Empregado: 3 (27.3%)
+  - Fora da força de trabalho: 11 (68.8%)
+  - Empregado: 5 (31.2%)
 
 Vínculo de Trabalho:
-  - Do lar: 1 (9.1%)
-  - Contrato: 1 (9.1%)
-  - Estágio/Bolsa: 1 (9.1%)
-  - Registrado CLT: 1 (9.1%)
-  - Outro: 1 (9.1%)
+  - Não: 2 (12.5%)
+  - Do lar: 1 (6.2%)
+  - Estágio/Bolsa: 1 (6.2%)
+  - Contrato: 1 (6.2%)
+  - Registrado CLT: 1 (6.2%)
+  - Outro: 1 (6.2%)
+  - Autônomo: 1 (6.2%)
+  - CAMPS- Administrativo financeiro: 1 (6.2%)
 
 Renda Familiar:
-  - De R$ 2081,00 a R$ 3.120,00: 6 (54.5%)
-  - De R$ 1.046,00 R$ 2080,00: 3 (27.3%)
-  - De R$ 3.120,00 a R$ 4.160,00: 2 (18.2%)
+  - De R$ 2081,00 a R$ 3.120,00: 7 (43.8%)
+  - De R$ 1.046,00 R$ 2080,00: 4 (25.0%)
+  - De R$ 3.120,00 a R$ 4.160,00: 2 (12.5%)
+  - Outro:: 1 (6.2%)
+  - Acima de R$ 5.201,00: 1 (6.2%)
+  - De R$ 4.161,00 a 5.200,00: 1 (6.2%)
 
 Benefícios Sociais:
-  - Não: 10 (90.9%)
-  - Sim: 1 (9.1%)
+  - Não: 15 (93.8%)
+  - Sim: 1 (6.2%)
 
 Acesso à Internet:
-  - Sim: 10 (90.9%)
-  - Não: 1 (9.1%)
+  - Sim: 10 (62.5%)
+  - sim: 5 (31.2%)
+  - Não: 1 (6.2%)
 
 Tipo de Internet:
-  - Wi-Fi (Banda Larga): 9 (81.8%)
-  - Dados móveis e wi-fi: 1 (9.1%)
+  - Wi-Fi (Banda Larga): 15 (93.8%)
 
 Condição de Moradia:
-  - Alugada: 6 (54.5%)
-  - Própria: 4 (36.4%)
-  - Cedida: 1 (9.1%)
+  - Alugada: 7 (43.8%)
+  - Própria: 6 (37.5%)
+  - Cedida: 2 (12.5%)
+  - Outro:: 1 (6.2%)
 
 Tipo de Moradia:
-  - Alvenaria: 11 (100.0%)
+  - Alvenaria: 16 (100.0%)
 
 Estudantes com Filhos:
-  - Não: 9 (81.8%)
-  - Sim (1): 2 (18.2%)
+  - Não: 13 (81.2%)
+  - Sim (1): 2 (12.5%)
+  - Sim: 1 (6.2%)
 
 Uso do Dinheiro:
-  - Despesas da casa: 2 (18.2%)
-  - Gastos pessoais: 1 (9.1%)
+  - Despesas da casa: 2 (12.5%)
+  - Gastos pessoais: 1 (6.2%)
 
 Inscritos no CadÚnico:
-  - Não: 10 (90.9%)
-  - Sim: 1 (9.1%)
+  - Não: 14 (87.5%)
+  - Sim: 2 (12.5%)
 
 Eixo 3: Interesses Formativos
 -----------------------------
 
 Meios de Transporte:
-  - Transporte público (ônibus, VLT): 7 (63.6%)
-  - Bicicleta: 2 (18.2%)
-  - Carona de amigos/familiares: 1 (9.1%)
-  - Motocicleta: 1 (9.1%)
+  - Transporte público (ônibus, VLT): 11 (68.8%)
+  - Bicicleta: 3 (18.8%)
+  - Carona de amigos/familiares: 1 (6.2%)
+  - Motocicleta: 1 (6.2%)
 
 Eixo 4: Saúde e Assistência
 ---------------------------
 
 Plano de Saúde:
-  - Apenas plano de saúde: 6 (54.5%)
-  - Apenas SUS: 5 (45.5%)
+  - Apenas SUS: 7 (43.8%)
+  - Apenas plano de saúde: 7 (43.8%)
+  - Uso os dois: 2 (12.5%)
 
 Sinal de Internet:
-  - Sim: 9 (81.8%)
-  - Não: 1 (9.1%)
+  - Sim: 14 (87.5%)
+  - Não: 1 (6.2%)
 
 Tipo Sanguíneo:
-  - Não sei: 6 (54.5%)
-  - O+: 1 (9.1%)
-  - A+: 1 (9.1%)
-  - B+: 1 (9.1%)
-  - A-: 1 (9.1%)
-  - O-: 1 (9.1%)
+  - Não sei: 9 (56.2%)
+  - A+: 2 (12.5%)
+  - O+: 1 (6.2%)
+  - B+: 1 (6.2%)
+  - A-: 1 (6.2%)
+  - O-: 1 (6.2%)
+  - AB+: 1 (6.2%)
 
 Possui Deficiência:
-  - Não: 10 (90.9%)
-  - Sim: 1 (9.1%)
+  - Não: 12 (75.0%)
+  - Sim: 4 (25.0%)
+
+Detalhe Deficiência:
+  - Autismo : 1 (6.2%)
 
 Familiar com Deficiência:
-  - Não: 1 (9.1%)
+  - Não: 1 (6.2%)
+  - Autosmo: 1 (6.2%)
+  - Deficiência Auditiva: 1 (6.2%)
+  - Irmã, autista, 21 anos.: 1 (6.2%)
+
+Detalhe Deficiência Familiar:
+
 
 Gestão
 ------
 
 Volume por Entrevistador:
-  - Ana Lucia Fernandes: 8 (72.7%)
-  - Luzinete Reis: 2 (18.2%)
-  - Ana Lucia Fernandes, Luzinete Reis: 1 (9.1%)
+  - Ana Lucia Fernandes: 8 (50.0%)
+  - Leticia Yumy: 3 (18.8%)
+  - Luzinete Reis: 2 (12.5%)
+  - Ana Lucia Fernandes, Luzinete Reis: 1 (6.2%)
