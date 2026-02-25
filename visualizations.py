@@ -130,12 +130,7 @@ def chart_1_race_composition(df):
         height=400,
         plot_bgcolor='rgba(0,0,0,0)',
         annotations=[
-            dict(
-                x=0, y=-0.15,
-                showarrow=False,
-                xref="paper", yref="paper",
-                font=dict(size=10, color="gray")
-            )
+
         ]
     )
     
