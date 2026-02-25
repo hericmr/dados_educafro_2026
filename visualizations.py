@@ -7,16 +7,19 @@ import pandas as pd
 
 # Core Color Palette (Premium)
 COLORS = {
-    'primary': '#E63946',  # Deep Red/Coral
+    'primary': '#1D3557',  # Prussian Blue (Institutional Primary)
     'secondary': '#457B9D', # Steel Blue
     'accent': '#A8DADC',    # Powder Blue
-    'dark': '#1D3557',      # Prussian Blue
-    'light': '#F1FAEE',     # Off White
+    'neutral': '#6C757D',   # Gray
+    'neutral_light': '#E9ECEF',
+    'dark': '#1D3557',     
+    'light': '#F8F9FA',
     'black': '#000000',
     'white': '#FFFFFF',
-    'race_preto': '#2D2D2D',
-    'race_pardo': '#B5651D',
-    'race_branco': '#D3D3D3'
+    'race_preto': '#343A40',
+    'race_pardo': '#6C757D',
+    'race_branco': '#ADB5BD',
+    'race_negro': '#1D3557' # Highlighted color for Negros(as)
 }
 
 def get_summary_stats(df, column_name):
@@ -35,13 +38,108 @@ def get_summary_stats(df, column_name):
     return " | ".join(stats_list)
 
 def chart_1_race_composition(df):
-    """1. Gráfico de Composição Racial (Raça/Povo)"""
-    counts = df['Race_Group'].value_counts().reset_index()
-    counts.columns = ['Raça', 'Total']
-    fig = px.pie(counts, values='Total', names='Raça', hole=0.6,
-                 color_discrete_sequence=[COLORS['race_preto'], COLORS['race_pardo'], COLORS['race_branco']],
-                 title="Composição Racial (Raça/Povo)")
-    fig.update_traces(textposition='inside', textinfo='percent+label')
+    """1. Gráfico de Composição Racial (Raça/Povo) - Padrão Institucional"""
+    # 1. Normalização e contagem
+    counts = df['Race_Group'].value_counts()
+    
+    # 2. Preparar categorias individuais
+    individual_labels = ['Brancos(as)', 'Pretos(as)', 'Pardos(as)']
+    # Filter only those that exist in the data to avoid errors if some category is empty
+    individual_labels = [l for l in individual_labels if l in counts.index]
+    
+    # Sort individual categories by value (descending)
+    individual_counts = counts[individual_labels].sort_values(ascending=False)
+    
+    # 3. Calcular categoria agregada Negros(as)
+    pretos_val = counts.get('Pretos(as)', 0)
+    pardos_val = counts.get('Pardos(as)', 0)
+    negros_val = pretos_val + pardos_val
+    total_samples = len(df)
+    
+    # 4. Criar estrutura para o gráfico
+    # Vamos usar uma lista de dicts para construir o dataframe final do gráfico
+    plot_data = []
+    
+    # Adicionar individuais
+    for label, val in individual_counts.items():
+        pct = (val / total_samples * 100)
+        plot_data.append({
+            'Categoria': label,
+            'Total': val,
+            'Percentual': pct,
+            'Texto': f"{pct:.1f}% ({val})",
+            'Tipo': 'Individual',
+            'Cor': COLORS['race_preto'] if label == 'Pretos(as)' else (COLORS['race_pardo'] if label == 'Pardos(as)' else COLORS['race_branco'])
+        })
+        
+    # Adicionar Agregado Negros(as) com destaque
+    negros_pct = (negros_val / total_samples * 100)
+    plot_data.append({
+        'Categoria': 'Negros(as)',
+        'Total': negros_val,
+        'Percentual': negros_pct,
+        'Texto': f"<b>{negros_pct:.1f}% ({negros_val})</b>",
+        'Tipo': 'Agregado',
+        'Cor': COLORS['race_negro']
+    })
+    
+    plot_df = pd.DataFrame(plot_data)
+    
+    # 5. Criar Gráfico usando Graph Objects para controle total
+    fig = go.Figure()
+    
+    # Categorias Individuais
+    ind_df = plot_df[plot_df['Tipo'] == 'Individual']
+    fig.add_trace(go.Bar(
+        y=ind_df['Categoria'],
+        x=ind_df['Percentual'],
+        orientation='h',
+        marker_color=ind_df['Cor'],
+        text=ind_df['Texto'],
+        textposition='auto',
+        name='Categorias Individuais',
+        showlegend=False
+    ))
+    
+    # Adicionar linha divisória (usando uma forma ou anotação, mas aqui vamos apenas dar espaço)
+    # Categorias Agregadas
+    agg_df = plot_df[plot_df['Tipo'] == 'Agregado']
+    fig.add_trace(go.Bar(
+        y=agg_df['Categoria'],
+        x=agg_df['Percentual'],
+        orientation='h',
+        marker_color=agg_df['Cor'],
+        text=agg_df['Texto'],
+        textposition='auto',
+        name='Agregação Institucional',
+        showlegend=False
+    ))
+
+    # Layout Improvement
+    fig.update_layout(
+        title={
+            'text': f"<b>Composição Racial dos Estudantes</b><br><span style='font-size:12px; color:gray'>Autodeclaração. N = {total_samples}. Negros(as) = Pretos(as) + Pardos(as).</span>",
+            'y': 0.95,
+            'x': 0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'
+        },
+        xaxis=dict(title="Percentual (%)", range=[0, max(plot_df['Percentual']) * 1.15]),
+        yaxis=dict(autorange="reversed"), # To keep order from top to bottom
+        margin=dict(l=100, r=20, t=80, b=40),
+        height=400,
+        plot_bgcolor='rgba(0,0,0,0)',
+        annotations=[
+            dict(
+                x=0, y=-0.15,
+                showarrow=False,
+                text="Fonte: Registro Institucional Educafro 2026",
+                xref="paper", yref="paper",
+                font=dict(size=10, color="gray")
+            )
+        ]
+    )
+    
     return fig
 
 def chart_2_gender_distribution(df):
@@ -58,9 +156,9 @@ def chart_3_race_by_gender(df):
     fig = px.bar(df, x="Identidade de Gênero", color="Race_Group",
                  title="Composição Raça/Povo por Gênero",
                  labels={'Race_Group': 'Raça/Povo'},
-                 color_discrete_map={'Pretos/as/es': COLORS['race_preto'], 
-                                   'Pardos/as/es': COLORS['race_pardo'], 
-                                   'Brancos/as/es': COLORS['race_branco']})
+                 color_discrete_map={'Pretos(as)': COLORS['race_preto'], 
+                                   'Pardos(as)': COLORS['race_pardo'], 
+                                   'Brancos(as)': COLORS['race_branco']})
     fig.update_layout(barmode='stack')
     return fig
 
