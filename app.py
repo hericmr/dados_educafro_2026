@@ -74,8 +74,7 @@ def render_chart_with_stats(chart_func, df, column_name=None, custom_stats=None,
         st.caption(f"**Dados:** {stats_text}")
 
 if section == "Resumo Geral":
-    st.subheader("Educafro | Base Parcial de Entrevistas")
-    
+
     st.markdown("""
     Esta síntese apresenta os principais indicadores sociodemográficos dos estudantes do cursinho Educafro 2026, com base nas entrevistas realizadas até o momento.
    """)
