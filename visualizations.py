@@ -146,14 +146,57 @@ def chart_2_gender_distribution(df):
     return fig
 
 def chart_3_race_by_gender(df):
-    """3. Gráfico de Composição Raça/Povo por Gênero"""
-    fig = px.bar(df, x="Identidade de Gênero", color="Race_Group",
-                 title="Composição Raça/Povo por Gênero",
-                 labels={'Race_Group': 'Raça/Povo'},
-                 color_discrete_map={'Pretos(as)': COLORS['race_preto'], 
-                                   'Pardos(as)': COLORS['race_pardo'], 
-                                   'Brancos(as)': COLORS['race_branco']})
-    fig.update_layout(barmode='stack')
+    """3. Composição Raça/Povo por Gênero (Percentual Empilhado Institucional)"""
+
+    # Tabela cruzada com percentual dentro de cada gênero
+    df_cross = (
+        pd.crosstab(df['Identidade de Gênero'], df['Race_Group'], normalize='index') * 100
+    )
+
+    # Garantir ordem institucional das colunas
+    ordered_cols = ['Brancos(as)', 'Pretos(as)', 'Pardos(as)']
+    df_cross = df_cross.reindex(columns=[c for c in ordered_cols if c in df_cross.columns])
+
+    df_cross = df_cross.reset_index()
+
+    fig = go.Figure()
+
+    # Adicionar cada grupo racial como segmento empilhado
+    for col in df_cross.columns[1:]:
+        fig.add_trace(go.Bar(
+            x=df_cross['Identidade de Gênero'],
+            y=df_cross[col],
+            name=col,
+            text=df_cross[col].round(1).astype(str) + "%",
+            textposition='inside',
+            marker_color={
+                'Brancos(as)': COLORS['race_branco'],
+                'Pretos(as)': COLORS['race_preto'],
+                'Pardos(as)': COLORS['race_pardo']
+            }.get(col, COLORS['neutral'])
+        ))
+
+    fig.update_layout(
+        barmode='stack',
+        title={
+            'text': (
+                "<b>Composição Raça/Povo por Gênero</b>"
+                "<br><span style='font-size:12px; color:gray'>"
+                "Percentual dentro de cada grupo de gênero. "
+                "Negros(as) corresponde à agregação de Pretos(as) e Pardos(as)."
+                "</span>"
+            )
+        },
+        yaxis=dict(
+            title="Percentual (%)",
+            range=[0, 100]
+        ),
+        xaxis=dict(title="Identidade de Gênero"),
+        legend_title="Raça/Povo",
+        plot_bgcolor='rgba(0,0,0,0)',
+        height=450
+    )
+
     return fig
 
 def chart_4_age_groups(df):
