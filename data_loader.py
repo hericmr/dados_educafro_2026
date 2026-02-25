@@ -48,8 +48,8 @@ def load_data(filepath):
 
     # 0. Global Normalization of common responses
     # Mapping various forms of "Sim" and "Não" to standard versions
-    sim_regex = r'^(?i)sim(\s*\(.*\))?$' # Matches "sim", "Sim", "Sim (1)", "SIM"
-    nao_regex = r'^(?i)n[ãa]o$' # Matches "não", "Não", "NAO"
+    sim_regex = r'(?i)^sim(\s*\(.*\))?$' # Matches "sim", "Sim", "Sim (1)", "SIM"
+    nao_regex = r'(?i)^n[ãa]o$' # Matches "não", "Não", "NAO"
     
     # We apply this to all string columns
     for col in df.select_dtypes(include=['object']).columns:
