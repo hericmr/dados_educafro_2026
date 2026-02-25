@@ -14,10 +14,10 @@ COLORS = {
     'light': '#F1FAEE',     # Off White
     'black': '#000000',
     'white': '#FFFFFF',
-    'race_negro': '#E63946',  # Strong Red (Umbrella)
-    'race_preto': '#000000',  # Pure Black (Negros(as))
-    'race_pardo': '#8B4513',  # Saddle Brown (Pardos(as))
-    'race_branco': '#E5E5E5'  # Solid Gray (Brancos(as))
+    'race_negro': '#2D2D2D',
+    'race_preto': '#2D2D2D',
+    'race_pardo': '#B5651D',
+    'race_branco': '#D3D3D3'
 }
 
 def get_summary_stats(df, column_name):
@@ -36,15 +36,15 @@ def get_summary_stats(df, column_name):
     return " | ".join(stats_list)
 
 def chart_1_race_composition(df):
-    """1. Gráfico de Composição Racial - Negros(as) na Rosca Externa Consolidados"""
-    fig = px.sunburst(df, path=['Race_Group', 'Race_Supergroup'], 
+    """1. Gráfico de Composição Racial (Raça/Povo) - Hierárquico (Negros)"""
+    fig = px.sunburst(df, path=['Race_Supergroup', 'Race_Group'], 
                      color='Race_Group',
                      color_discrete_map={
-                         'Negros(as)': COLORS['race_preto'],
-                         'Pardos(as)': COLORS['race_pardo'],
-                         'Brancos(as)': COLORS['race_branco']
+                         'Pretos/as/es': COLORS['race_preto'],
+                         'Pardos/as/es': COLORS['race_pardo'],
+                         'Brancos/as/es': COLORS['race_branco']
                      },
-                     title="Composição Racial (Consolidada)")
+                     title="Composição Racial (Negros = Pretos + Pardos)")
     fig.update_traces(textinfo="label+percent entry")
     return fig
 
@@ -62,9 +62,9 @@ def chart_3_race_by_gender(df):
     fig = px.bar(df, x="Identidade de Gênero", color="Race_Group",
                  title="Composição Raça/Povo por Gênero",
                  labels={'Race_Group': 'Raça/Povo'},
-                 color_discrete_map={'Negros(as)': COLORS['race_preto'], 
-                                   'Pardos(as)': COLORS['race_pardo'], 
-                                   'Brancos(as)': COLORS['race_branco']})
+                 color_discrete_map={'Pretos/as/es': COLORS['race_preto'], 
+                                   'Pardos/as/es': COLORS['race_pardo'], 
+                                   'Brancos/as/es': COLORS['race_branco']})
     fig.update_layout(barmode='stack')
     return fig
 
