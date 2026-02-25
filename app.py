@@ -103,11 +103,29 @@ if section == "Resumo Geral":
 
     st.subheader("Tabela de Dados Consolidados")
     
+    # Function to generate indicator icons
+    def get_indicators(row):
+        icons = []
+        if pd.notnull(row.get('Tem Filhos?')) and str(row.get('Tem Filhos?')).strip() == 'Sim':
+            icons.append("🍼") # Children
+        if (pd.notnull(row.get('Possui Deficiência?')) and str(row.get('Possui Deficiência?')).strip() == 'Sim') or \
+           (pd.notnull(row.get('Familiar com Deficiência?')) and str(row.get('Familiar com Deficiência?')).strip() == 'Sim'):
+            icons.append("♿") # Disability
+        if pd.notnull(row.get('Recebe Benefícios')) and str(row.get('Recebe Benefícios')).strip() == 'Sim':
+            icons.append("💰") # Benefits
+        if row.get('Employment_Status') == 'Empregado':
+            icons.append("💼") # Employment
+        return "".join(icons)
+
+    # Prepare DataFrame for Display
+    display_df = df.copy()
+    display_df.insert(0, 'Sinais', display_df.apply(get_indicators, axis=1))
+
     # Combined Styling Function
     def style_row(row):
         # 1. Background logic (Workers)
         is_worker = pd.notnull(row.get('Vínculo de Trabalho')) and row.get('Vínculo de Trabalho') != 'Não'
-        row_bg = 'background-color: #FED7D7' if is_worker else '' # Slightly darker red/pink (Tailwind Red 100-ish)
+        row_bg = 'background-color: #FED7D7' if is_worker else '' 
 
         # 2. Text Color logic (Benefits)
         receives_benefits = pd.notnull(row.get('Recebe Benefícios')) and str(row.get('Recebe Benefícios')).strip() == 'Sim'
@@ -124,10 +142,19 @@ if section == "Resumo Geral":
         return styles
 
     # Apply the styling
-    styled_df = df.style.apply(style_row, axis=1)
+    styled_df = display_df.style.apply(style_row, axis=1)
     st.dataframe(styled_df, use_container_width=True, hide_index=True)
         
-    st.markdown("<small>* <b>Nomes em vermelho</b>: estudantes que recebem benefícios sociais. <br> * <b>Fundo rosado</b>: estudantes trabalhadores (maior risco de infrequência).</small>", unsafe_allow_html=True)
+    st.markdown("""
+    <div style='background-color: #F8F9FA; padding: 10px; border-radius: 5px; border: 1px solid #E9ECEF;'>
+        <small>
+            <b>Legenda de Indicadores:</b><br>
+            🍼 Tem Filhos | ♿ Deficiência (Estudante/Família) | 💰 Recebe Benefícios | 💼 Estudante Trabalhador<br>
+            <span style='color: #D63031;'><b>Nomes em Vermelho</b></span>: Recebe Benefícios Sociais | 
+            <span style='background-color: #FED7D7; padding: 2px;'><b>Fundo Rosado</b></span>: Estudante Trabalhador (Risco de Infrequência)
+        </small>
+    </div>
+    """, unsafe_allow_html=True)
 
 elif section == "Eixo 1: Perfil Sociodemográfico":
     st.header("Eixo 1: Perfil Sociodemográfico")
