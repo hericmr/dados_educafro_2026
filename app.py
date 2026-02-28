@@ -99,8 +99,13 @@ if section == "Resumo Geral":
     mulheres_pct = (mulheres_count / len(df) * 100) if len(df) > 0 else 0
     col3.metric("Mulheres", f"{mulheres_pct:.1f}%")
 
-    # Workers
-    trabalhadores_count = len(df[df['Employment_Status'] == 'Empregado'])
+    # Workers (Including paid, unpaid/family help or any work link)
+    is_worker = (
+        (df['Employment_Status'] == 'Empregado') | 
+        (df['Ajuda no Sustento Familiar?'] == 'Sim') |
+        (df['Vínculo de Trabalho'].notna() & (df['Vínculo de Trabalho'] != 'nan') & (df['Vínculo de Trabalho'] != ''))
+    )
+    trabalhadores_count = len(df[is_worker])
     col4.metric("Trabalhadores", trabalhadores_count)
 
     # PCD
