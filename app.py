@@ -249,7 +249,7 @@ elif section == "Eixo 2: Trabalho, Renda e Condições Socioeconômicas":
         with col_sust2:
             render_chart_with_stats(viz.chart_33_benefits_breakdown, df)
 
-        st.subheader("🍲 Segurança Alimentar e Trabalho")
+        st.subheader("Segurança Alimentar e Trabalho")
         col_vulner1, col_vulner2 = st.columns(2)
         with col_vulner1:
             render_chart_with_stats(viz.chart_39_food_security, df)
