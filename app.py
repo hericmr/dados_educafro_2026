@@ -181,6 +181,12 @@ elif section == "Eixo 1: Perfil Sociodemográfico":
         with col4:
             render_chart_with_stats(viz.chart_5_geography, df, 'Cidade')
 
+        col5, col6 = st.columns(2)
+        with col5:
+            render_chart_with_stats(viz.chart_31_marital_status, df, 'Estado Civil')
+        with col6:
+            render_chart_with_stats(viz.chart_32_naturalidade, df)
+
 elif section == "Eixo 2: Trabalho, Renda e Condições Socioeconômicas":
     st.header("🔹 EIXO 2 — Trabalho, Renda e Condições Socioeconômicas")
     
@@ -212,6 +218,12 @@ elif section == "Eixo 2: Trabalho, Renda e Condições Socioeconômicas":
             render_chart_with_stats(viz.chart_22_social_benefits, df, 'Recebe Benefícios')
         
         render_chart_with_stats(viz.chart_20_parental_education, df)
+        
+        col_sust1, col_sust2 = st.columns(2)
+        with col_sust1:
+            render_chart_with_stats(viz.chart_36_household_sustenance, df, 'Ajuda no Sustento Familiar?')
+        with col_sust2:
+            render_chart_with_stats(viz.chart_33_benefits_breakdown, df)
 
         col5, col6 = st.columns(2)
         with col5:
@@ -259,6 +271,7 @@ elif section == "Eixo 3: Mobilidade e Interesses Formativos":
                 st.write("Sem dados suficientes para gerar a nuvem.")
         
         render_chart_with_stats(viz.chart_23_transport_modes, df, 'Meio de Transporte')
+        render_chart_with_stats(viz.chart_37_transport_subsidy, df, 'transporte_auxilio')
 
 elif section == "Eixo 4: Saúde e Assistência":
     st.header("🔹 EIXO 4 — Saúde e Assistência")
@@ -279,6 +292,12 @@ elif section == "Eixo 4: Saúde e Assistência":
             render_chart_with_stats(viz.chart_29_blood_type, df, 'Tipo Sanguíneo')
             
         st.info("A maioria das informações de saúde são qualitativas e podem ser consultadas na tabela de dados no Resumo Geral.")
+        
+        col11, col12 = st.columns(2)
+        with col11:
+            render_chart_with_stats(viz.chart_34_substance_use, df, 'Uso de Substâncias')
+        with col12:
+            render_chart_with_stats(viz.chart_35_family_context, df)
 
 elif section == "Gestão e Operacionalização da Pesquisa":
     st.header("🔹 Gestão e Operacionalização da Pesquisa")

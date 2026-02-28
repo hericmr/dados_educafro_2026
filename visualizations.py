@@ -502,3 +502,85 @@ def chart_30_interviewer_balance(df):
                  title="Distribuição de Entrevistas por Entrevistador(a)",
                  color_discrete_sequence=[COLORS['dark']])
     return fig
+
+def chart_31_marital_status(df):
+    """31. Distribuição de Estado Civil"""
+    counts = df['Estado Civil'].value_counts().reset_index()
+    counts.columns = ['Estado Civil', 'Total']
+    fig = px.pie(counts, values='Total', names='Estado Civil', 
+                 title="Perfil por Estado Civil",
+                 color_discrete_sequence=px.colors.qualitative.Prism)
+    fig.update_traces(textposition='inside', textinfo='percent+label')
+    return fig
+
+def chart_32_naturalidade(df):
+    """32. Naturalidade dos Estudantes (Top 10)"""
+    counts = df['naturalidade'].value_counts().head(10).reset_index()
+    counts.columns = ['Naturalidade', 'Total']
+    fig = px.bar(counts, x='Total', y='Naturalidade', orientation='h',
+                 title="Top 10 Cidades de Origem (Naturalidade)",
+                 color_discrete_sequence=[COLORS['secondary']])
+    fig.update_layout(yaxis={'categoryorder':'total ascending'})
+    return fig
+
+def chart_33_benefits_breakdown(df):
+    """33. Detalhamento dos Benefícios Sociais"""
+    # beneficios_tipo is often a string representation of a list like '["PBF", "Outro"]'
+    # We need to flatten it
+    all_benefits = []
+    for val in df['beneficios_tipo'].dropna():
+        if isinstance(val, str) and val.startswith('['):
+            try:
+                # Basic parsing for JSON-like strings
+                items = val.strip('[]').replace('"', '').split(',')
+                all_benefits.extend([i.strip() for i in items if i.strip()])
+            except:
+                all_benefits.append(val)
+        else:
+            all_benefits.append(str(val))
+    
+    if not all_benefits:
+        return None
+        
+    counts = pd.Series(all_benefits).value_counts().reset_index()
+    counts.columns = ['Benefício', 'Total']
+    fig = px.bar(counts, x='Benefício', y='Total', 
+                 title="Tipos de Benefícios Recebidos",
+                 color_discrete_sequence=[COLORS['accent']])
+    return fig
+
+def chart_34_substance_use(df):
+    """34. Uso de Substâncias (Álcool, Cigarro, etc.)"""
+    counts = df['Uso de Substâncias'].value_counts().reset_index()
+    counts.columns = ['Uso', 'Total']
+    fig = px.bar(counts, x='Uso', y='Total', title="Relato de Uso de Substâncias",
+                 color_discrete_sequence=[COLORS['danger']])
+    return fig
+
+def chart_35_family_context(df):
+    """35. Configuração Familiar (Com quem mora)"""
+    counts = df['cotidiano_mora_com_quem'].value_counts().head(8).reset_index()
+    counts.columns = ['Com quem mora', 'Total']
+    fig = px.bar(counts, x='Total', y='Com quem mora', orientation='h',
+                 title="Configuração Familiar (Principais Arranjos)",
+                 color_discrete_sequence=[COLORS['primary']])
+    fig.update_layout(yaxis={'categoryorder':'total ascending'})
+    return fig
+
+def chart_36_household_sustenance(df):
+    """36. Estudantes que ajudam no sustento familiar"""
+    counts = df['Ajuda no Sustento Familiar?'].value_counts().reset_index()
+    counts.columns = ['Ajuda?', 'Total']
+    fig = px.pie(counts, values='Total', names='Ajuda?', 
+                 title="Estudantes que Ajudam no Sustento da Casa",
+                 color_discrete_map={'Sim': COLORS['accent'], 'Não': COLORS['light']})
+    return fig
+
+def chart_37_transport_subsidy(df):
+    """37. Necessidade de Auxílio Transporte"""
+    counts = df['transporte_auxilio'].value_counts().reset_index()
+    counts.columns = ['Necessita Auxílio?', 'Total']
+    fig = px.bar(counts, x='Necessita Auxílio?', y='Total', 
+                 title="Necessidade de Auxílio Transporte",
+                 color_discrete_sequence=[COLORS['secondary']])
+    return fig
