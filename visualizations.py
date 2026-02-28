@@ -594,3 +594,70 @@ def chart_37_transport_subsidy(df):
                  title="Necessidade de Auxílio Transporte",
                  color_discrete_sequence=[COLORS['secondary']])
     return fig
+
+def chart_38_parental_professions_cloud(df):
+    """38. Nuvem de Palavras: Profissões dos Pais"""
+    professions = []
+    for col in ['profissao_mae', 'profissao_pai']:
+        if col in df.columns:
+            professions.extend(df[col].dropna().astype(str).tolist())
+    
+    if not professions:
+        return None
+        
+    return generate_wordcloud(professions, "Origem Profissional Familiar")
+
+def chart_39_food_security(df):
+    """39. Segurança Alimentar (Recebimento de Cesta Básica)"""
+    counts = df['cesta_basica'].value_counts().reset_index()
+    counts.columns = ['Recebe Cesta Básica?', 'Total']
+    fig = px.bar(counts, x='Recebe Cesta Básica?', y='Total', 
+                 title="Segurança Alimentar: Recebimento de Cesta Básica",
+                 color_discrete_sequence=[COLORS['accent']])
+    return fig
+
+def chart_40_study_availability(df):
+    """40. Disponibilidade para Estudo (Frequência)"""
+    counts = df['objetivo_frequencia'].value_counts().reset_index()
+    counts.columns = ['Frequência Preferida', 'Total']
+    fig = px.bar(counts, x='Frequência Preferida', y='Total', 
+                 title="Disponibilidade para Estudo (Frequência)",
+                 color_discrete_sequence=[COLORS['primary']])
+    return fig
+
+def chart_41_health_needs_cloud(df):
+    """41. Nuvem de Palavras: Necessidades de Saúde (Medicamentos/Alergias)"""
+    health_notes = []
+    for col in ['saude_medicamentos_qual', 'saude_alergias_qual', 'saude_problemas_qual']:
+        if col in df.columns:
+            health_notes.extend(df[col].dropna().astype(str).tolist())
+            
+    if not health_notes:
+        return None
+        
+    return generate_wordcloud(health_notes, "Perfil de Medicamentos e Alergias")
+
+def chart_42_work_start_hours(df):
+    """42. Histograma de Horário de Início do Trabalho"""
+    if 'trabalho_horario_inicio' not in df.columns:
+        return None
+        
+    times = df['trabalho_horario_inicio'].dropna().astype(str)
+    # Clean up common patterns like "09:00", "08:00" etc.
+    # We'll just take the hour for simplicity if it looks like a time
+    hours = []
+    for t in times:
+        if ':' in t:
+            try:
+                hours.append(int(t.split(':')[0]))
+            except:
+                pass
+                
+    if not hours:
+        return None
+        
+    fig = px.histogram(hours, nbins=24, title="Horário de Início da Jornada de Trabalho",
+                       labels={'value': 'Hora do Dia (0-24)'},
+                       color_discrete_sequence=[COLORS['dark']])
+    fig.update_layout(xaxis=dict(tickmode='linear', tick0=0, dtick=1))
+    return fig

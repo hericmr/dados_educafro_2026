@@ -99,12 +99,9 @@ if section == "Resumo Geral":
     mulheres_pct = (mulheres_count / len(df) * 100) if len(df) > 0 else 0
     col3.metric("Mulheres", f"{mulheres_pct:.1f}%")
 
-    # Workers (Including paid, unpaid/family help or any work link)
-    is_worker = (
-        (df['Employment_Status'] == 'Empregado') | 
-        (df['Ajuda no Sustento Familiar?'] == 'Sim') |
-        (df['Vínculo de Trabalho'].notna() & (df['Vínculo de Trabalho'] != 'nan') & (df['Vínculo de Trabalho'] != ''))
-    )
+    # Workers (Synchronized with pink background condition in the table)
+    # Highlighted if they have any work link that is not "Não"
+    is_worker = df['Vínculo de Trabalho'].notna() & (df['Vínculo de Trabalho'] != 'Não') & (df['Vínculo de Trabalho'] != 'nan') & (df['Vínculo de Trabalho'] != '')
     trabalhadores_count = len(df[is_worker])
     col4.metric("Trabalhadores", trabalhadores_count)
 
@@ -201,6 +198,9 @@ elif section == "Eixo 1: Perfil Sociodemográfico":
             render_chart_with_stats(viz.chart_31_marital_status, df, 'Estado Civil')
         with col6:
             render_chart_with_stats(viz.chart_32_naturalidade, df)
+        
+        st.subheader("🧬 Origem Profissional Familiar")
+        render_chart_with_stats(viz.chart_38_parental_professions_cloud, df)
 
 elif section == "Eixo 2: Trabalho, Renda e Condições Socioeconômicas":
     st.header("🔹 EIXO 2 — Trabalho, Renda e Condições Socioeconômicas")
@@ -239,6 +239,13 @@ elif section == "Eixo 2: Trabalho, Renda e Condições Socioeconômicas":
             render_chart_with_stats(viz.chart_36_household_sustenance, df, 'Ajuda no Sustento Familiar?')
         with col_sust2:
             render_chart_with_stats(viz.chart_33_benefits_breakdown, df)
+
+        st.subheader("🍲 Segurança Alimentar e Trabalho")
+        col_vulner1, col_vulner2 = st.columns(2)
+        with col_vulner1:
+            render_chart_with_stats(viz.chart_39_food_security, df)
+        with col_vulner2:
+            render_chart_with_stats(viz.chart_42_work_start_hours, df)
 
         col5, col6 = st.columns(2)
         with col5:
@@ -287,6 +294,9 @@ elif section == "Eixo 3: Mobilidade e Interesses Formativos":
         
         render_chart_with_stats(viz.chart_23_transport_modes, df, 'Meio de Transporte')
         render_chart_with_stats(viz.chart_37_transport_subsidy, df, 'transporte_auxilio')
+        
+        st.subheader("📚 Disponibilidade para o Preparatório")
+        render_chart_with_stats(viz.chart_40_study_availability, df)
 
 elif section == "Eixo 4: Saúde e Assistência":
     st.header("🔹 EIXO 4 — Saúde e Assistência")
@@ -313,6 +323,9 @@ elif section == "Eixo 4: Saúde e Assistência":
             render_chart_with_stats(viz.chart_34_substance_use, df, 'Uso de Substâncias')
         with col12:
             render_chart_with_stats(viz.chart_35_family_context, df)
+            
+        st.subheader("💊 Perfil de Necessidades de Saúde")
+        render_chart_with_stats(viz.chart_41_health_needs_cloud, df)
 
 elif section == "Gestão e Operacionalização da Pesquisa":
     st.header("🔹 Gestão e Operacionalização da Pesquisa")
