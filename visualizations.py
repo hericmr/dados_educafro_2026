@@ -148,26 +148,38 @@ def chart_2_gender_distribution(df):
 def chart_3_race_by_gender(df):
     """3. Composição Raça/Povo por Gênero (Percentual Empilhado Institucional)"""
 
-    # Tabela cruzada com percentual dentro de cada gênero
-    df_cross = (
-        pd.crosstab(df['Identidade de Gênero'], df['Race_Group'], normalize='index') * 100
-    )
+    # 1. Tabela de frequências absolutas
+    df_counts = pd.crosstab(df['Identidade de Gênero'], df['Race_Group'])
+    
+    # 2. Tabela de percentuais para os rótulos
+    df_pct = (df_counts.div(df_counts.sum(axis=1), axis=0) * 100).round(1)
 
     # Garantir ordem institucional das colunas
     ordered_cols = ['Brancos(as)', 'Pretos(as)', 'Pardos(as)']
-    df_cross = df_cross.reindex(columns=[c for c in ordered_cols if c in df_cross.columns])
-
-    df_cross = df_cross.reset_index()
+    cols_present = [c for c in ordered_cols if c in df_counts.columns]
+    
+    df_counts = df_counts.reindex(columns=cols_present).reset_index()
+    df_pct = df_pct.reindex(columns=cols_present).reset_index()
 
     fig = go.Figure()
 
     # Adicionar cada grupo racial como segmento empilhado
-    for col in df_cross.columns[1:]:
+    for col in cols_present:
+        # Texto do rótulo: "Count (Pct%)"
+        text_labels = []
+        for i in range(len(df_counts)):
+            cnt = df_counts.iloc[i][col]
+            pct = df_pct.iloc[i][col]
+            if cnt > 0:
+                text_labels.append(f"{int(cnt)} ({pct}%)")
+            else:
+                text_labels.append("")
+
         fig.add_trace(go.Bar(
-            x=df_cross['Identidade de Gênero'],
-            y=df_cross[col],
+            x=df_counts['Identidade de Gênero'],
+            y=df_counts[col],
             name=col,
-            text=df_cross[col].round(1).astype(str) + "%",
+            text=text_labels,
             textposition='inside',
             marker_color={
                 'Brancos(as)': COLORS['race_branco'],
@@ -182,14 +194,12 @@ def chart_3_race_by_gender(df):
             'text': (
                 "<b>Composição Raça/Povo por Gênero</b>"
                 "<br><span style='font-size:12px; color:gray'>"
-                "Percentual dentro de cada grupo de gênero. "
-                "Negros(as) corresponde à agregação de Pretos(as) e Pardos(as)."
+                "Exibindo números absolutos e percentual dentro de cada gênero."
                 "</span>"
             )
         },
         yaxis=dict(
-            title="Percentual (%)",
-            range=[0, 100]
+            title="Número de Pessoas (Frequência Absoluta)",
         ),
         xaxis=dict(title="Identidade de Gênero"),
         legend_title="Raça/Povo",
