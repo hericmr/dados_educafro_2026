@@ -19,7 +19,10 @@ COLORS = {
     'race_preto': '#343A40',
     'race_pardo': '#6C757D',
     'race_branco': '#ADB5BD',
-    'race_negro': '#1D3557' # Highlighted color for Negros(as)
+    'race_negro': '#1D3557', # Highlighted color for Negros(as)
+    'danger': '#E63946',     # Red for alerts/substances
+    'success': '#2A9D8F',    # Teal for positive indicators
+    'warning': '#F4A261'     # Orange for warnings
 }
 
 def get_summary_stats(df, column_name):

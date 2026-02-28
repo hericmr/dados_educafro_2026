@@ -295,7 +295,7 @@ elif section == "Eixo 3: Mobilidade e Interesses Formativos":
         render_chart_with_stats(viz.chart_23_transport_modes, df, 'Meio de Transporte')
         render_chart_with_stats(viz.chart_37_transport_subsidy, df, 'transporte_auxilio')
         
-        st.subheader("📚 Disponibilidade para o Preparatório")
+        st.subheader("Disponibilidade de presença")
         render_chart_with_stats(viz.chart_40_study_availability, df)
 
 elif section == "Eixo 4: Saúde e Assistência":
