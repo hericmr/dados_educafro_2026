@@ -117,6 +117,7 @@ if section == "Resumo Geral":
 
     # Prepare DataFrame for Display
     display_df = df.copy()
+    display_df['nome_completo'] = display_df['nome_completo'].str.title()
     display_df.insert(0, 'Perfil', display_df.apply(get_indicators, axis=1))
 
     # Combined Styling Function
