@@ -61,7 +61,16 @@ except Exception as e:
 def render_chart_with_stats(chart_func, df, column_name=None, custom_stats=None, **kwargs):
     """Renderiza um gráfico e adiciona uma legenda com estatísticas em baixo."""
     fig = chart_func(df)
-    st.plotly_chart(fig, use_container_width=True, **kwargs)
+    
+    if fig is None:
+        st.warning("Gráfico indisponível para os filtros selecionados.")
+        return
+
+    # Check if fig is a Plotly figure or an image buffer (WordCloud)
+    if hasattr(fig, 'to_json'): # Plotly figure
+        st.plotly_chart(fig, use_container_width=True, **kwargs)
+    else: # Matplotlib/WordCloud buffer
+        st.image(fig, use_container_width=True)
     
     if custom_stats:
         stats_text = custom_stats
@@ -324,7 +333,7 @@ elif section == "Eixo 4: Saúde e Assistência":
         with col12:
             render_chart_with_stats(viz.chart_35_family_context, df)
             
-        st.subheader("💊 Perfil de Necessidades de Saúde")
+        st.subheader("Necessidades de Saúde")
         render_chart_with_stats(viz.chart_41_health_needs_cloud, df)
 
 elif section == "Gestão e Operacionalização da Pesquisa":
