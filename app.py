@@ -86,20 +86,30 @@ if section == "Resumo Geral":
 
     st.divider()
     
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3, col4, col5, col6 = st.columns(6)
     col1.metric("Estudantes", len(df))
     
     # Race percentage calculation
     negros_count = len(df[df['Race_Group'].isin(['Pretos(as)', 'Pardos(as)'])])
     negros_pct = (negros_count / len(df) * 100) if len(df) > 0 else 0
-    col2.metric("Negros (Pretos/Pardos)", f"{negros_pct:.1f}%")
+    col2.metric("Pretos/Pardos", f"{negros_pct:.1f}%")
     
     # Gender percentage calculation
     mulheres_count = len(df[df['Identidade de Gênero'] == 'Feminina'])
     mulheres_pct = (mulheres_count / len(df) * 100) if len(df) > 0 else 0
     col3.metric("Mulheres", f"{mulheres_pct:.1f}%")
-    
-    col4.metric("Frequência Média", "N/A") 
+
+    # Workers
+    trabalhadores_count = len(df[df['Employment_Status'] == 'Empregado'])
+    col4.metric("Trabalhadores", trabalhadores_count)
+
+    # PCD
+    pcd_count = len(df[df['Possui Deficiência?'] == 'Sim'])
+    col5.metric("PCD", pcd_count)
+
+    # Children
+    filhos_count = len(df[df['Tem Filhos?'] == 'Sim'])
+    col6.metric("Com Filhos", filhos_count)
 
     # Function to generate indicator tags (professional)
     def get_indicators(row):
