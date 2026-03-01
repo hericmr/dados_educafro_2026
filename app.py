@@ -208,7 +208,7 @@ elif section == "Eixo 1: Perfil Sociodemográfico":
         with col6:
             render_chart_with_stats(viz.chart_32_naturalidade, df)
         
-        st.subheader("🧬 Origem Profissional Familiar")
+        st.subheader("Origem Profissional Familiar")
         render_chart_with_stats(viz.chart_38_parental_professions_cloud, df)
 
 elif section == "Eixo 2: Trabalho, Renda e Condições Socioeconômicas":
