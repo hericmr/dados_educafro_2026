@@ -41,7 +41,15 @@ def check_password():
     """Returns True if the user had the correct password."""
     def password_entered():
         """Checks whether a password entered by the user is correct."""
-        if st.session_state["password"] == st.secrets["password"]:
+        # Get password from secrets, or use a default/show error if missing
+        try:
+            correct_password = st.secrets["password"]
+        except KeyError:
+            st.error("Configuração de segurança ausente. Adicione 'password' nos Secrets do Streamlit.")
+            st.stop()
+            return
+
+        if st.session_state["password"] == correct_password:
             st.session_state["password_correct"] = True
             del st.session_state["password"]  # don't store password
         else:
