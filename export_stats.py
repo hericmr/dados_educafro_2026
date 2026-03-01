@@ -4,13 +4,15 @@ from data_loader import load_data
 import os
 
 # Caminho do CSV
-CSV_PATH = 'entrevistas_educafro_2026-02-10.csv'
+CSV_PATH = 'entrevistas_educafro_consolidated_20260228.csv'
 df = load_data(CSV_PATH)
 
 def get_stats(df, column_name):
     if column_name not in df.columns:
-        return "Sem dados"
+        return "  - Sem dados (Coluna não encontrada)"
     counts = df[column_name].value_counts()
+    if counts.empty:
+        return "  - Sem ocorrências"
     total = len(df)
     lines = []
     for label, count in counts.items():
@@ -23,34 +25,47 @@ sections = {
         ('Composição Racial', 'Race_Group'),
         ('Identidade de Gênero', 'Identidade de Gênero'),
         ('Orientação Sexual', 'Orientação Sexual'),
-        ('Tipo de Escola', 'Tipo de Escola'),
+        ('Estado Civil', 'Estado Civil'),
         ('Faixa Etária', 'Faixa Etária'),
-        ('Localização (Cidade)', 'Cidade')
+        ('Naturalidade', 'naturalidade'),
+        ('Localização (Cidade)', 'Cidade'),
+        ('Tipo de Escola', 'Tipo de Escola'),
+        ('Escolaridade da Mãe', 'Escolaridade da Mãe'),
+        ('Escolaridade do Pai', 'Escolaridade do Pai')
     ],
-    "Eixo 2: Trabalho, Renda e Infrequência": [
+    "Eixo 2: Trabalho, Renda e Condições Socioeconômicas": [
         ('Situação de Trabalho', 'Employment_Status'),
         ('Vínculo de Trabalho', 'Vínculo de Trabalho'),
         ('Renda Familiar', 'Renda Familiar'),
         ('Benefícios Sociais', 'Recebe Benefícios'),
+        ('Tipo de Benefício', 'beneficios_tipo'),
         ('Acesso à Internet', 'Possui Internet?'),
         ('Tipo de Internet', 'Tipo de Internet'),
+        ('Sinal de Internet', 'Sinal de Internet'),
         ('Condição de Moradia', 'Condição de Moradia'),
         ('Tipo de Moradia', 'Tipo de Moradia'),
         ('Estudantes com Filhos', 'Tem Filhos?'),
+        ('Ajuda no Sustento Familiar', 'Ajuda no Sustento Familiar?'),
+        ('Segurança Alimentar (Cesta Básica)', 'cesta_basica'),
         ('Uso do Dinheiro', 'Uso do Dinheiro (Trabalho)'),
-        ('Inscritos no CadÚnico', 'CadÚnico')
+        ('Inscritos no CadÚnico', 'CadÚnico'),
+        ('Início do Trabalho (Horário)', 'trabalho_horario_inicio')
     ],
-    "Eixo 3: Interesses Formativos": [
+    "Eixo 3: Mobilidade e Interesses Formativos": [
+        ('Meios de Transporte', 'Meio de Transporte'),
+        ('Necessidade de Auxílio Transporte', 'transporte_auxilio'),
+        ('Disponibilidade para Estudo', 'objetivo_frequencia'),
         ('Meios de Transporte', 'Meio de Transporte')
     ],
     "Eixo 4: Saúde e Assistência": [
         ('Plano de Saúde', 'Plano de Saúde'),
-        ('Sinal de Internet', 'Sinal de Internet'),
         ('Tipo Sanguíneo', 'Tipo Sanguíneo'),
+        ('Uso de Substâncias', 'Uso de Substâncias'),
         ('Possui Deficiência', 'Possui Deficiência?'),
         ('Detalhe Deficiência', 'Detalhe Deficiência'),
         ('Familiar com Deficiência', 'Familiar com Deficiência?'),
-        ('Detalhe Deficiência Familiar', 'Detalhe Deficiência Familiar')
+        ('Detalhe Deficiência Familiar', 'Detalhe Deficiência Familiar'),
+        ('Configuração Familiar (Mora com)', 'cotidiano_mora_com_quem')
     ],
     "Gestão": [
         ('Volume por Entrevistador', 'Entrevistador')
@@ -69,4 +84,4 @@ for section, charts in sections.items():
 with open('dados dos graficos.txt', 'w', encoding='utf-8') as f:
     f.write("\n".join(content))
 
-print("Arquivo 'dados dos graficos.txt' regerado com detalhes de deficiência.")
+print("Arquivo 'dados dos graficos.txt' regerado com todos os novos campos e gráficos.")

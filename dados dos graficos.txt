@@ -1,152 +1,286 @@
 RELATÓRIO DE DADOS - EDUCAFRO 2026
 ===================================
-Total de Entrevistados: 16
+Total de Entrevistados: 36
 
 
 Eixo 1: Perfil Sociodemográfico
 -------------------------------
 
 Composição Racial:
-  - Brancos(as): 9 (56.2%)
-  - Pretos(as): 4 (25.0%)
-  - Pardos(as): 3 (18.8%)
+  - Brancos(as): 18 (50.0%)
+  - Pretos(as): 10 (27.8%)
+  - Pardos(as): 8 (22.2%)
 
 Identidade de Gênero:
-  - Feminina: 11 (68.8%)
-  - Masculina: 5 (31.2%)
+  - Feminina: 27 (75.0%)
+  - Masculina: 7 (19.4%)
+  - Não binárie: 2 (5.6%)
 
 Orientação Sexual:
-  - Heterossexual: 14 (87.5%)
-  - Lésbica: 1 (6.2%)
-  - Pansexual: 1 (6.2%)
+  - Heterossexual: 28 (77.8%)
+  - Bissexual: 4 (11.1%)
+  - Pansexual: 2 (5.6%)
+  - Lésbica: 1 (2.8%)
+  - Prefiro não declarar: 1 (2.8%)
 
-Tipo de Escola:
-  - Sempre Pública: 9 (56.2%)
-  - Sempre Particular (com bolsa): 1 (6.2%)
-  - Mista (Parte Pública / Parte Particular): 1 (6.2%)
+Estado Civil:
+  - Solteiro(a): 30 (83.3%)
+  - Solteiro/a/e: 4 (11.1%)
+  - Divorciado(a): 1 (2.8%)
+  - Divorciado/a/e: 1 (2.8%)
 
 Faixa Etária:
-  - 18 a 30 anos: 8 (50.0%)
-  - Não informado: 3 (18.8%)
-  - 30 anos ou mais: 3 (18.8%)
-  - Menor que 18 anos: 2 (12.5%)
+  - 18 a 30 anos: 23 (63.9%)
+  - Menor que 18 anos: 6 (16.7%)
+  - 30 anos ou mais: 4 (11.1%)
+  - Não informado: 3 (8.3%)
+
+Naturalidade:
+  - Santos: 9 (25.0%)
+  - SANTOS: 7 (19.4%)
+  - GUARUJÁ: 3 (8.3%)
+  - OEIRAS: 2 (5.6%)
+  - São Paulo: 2 (5.6%)
+  - Santos/são paulo: 2 (5.6%)
+  - 82597: 1 (2.8%)
+  - Santos/sao Paulo: 1 (2.8%)
+  - Caminho são jorge: 1 (2.8%)
+  - Santos-SP: 1 (2.8%)
+  - São Paulo/SP: 1 (2.8%)
+  - Praia Grande/ São Paulo: 1 (2.8%)
+  - Guarujá/ são paulo: 1 (2.8%)
+  - $antos/São Paulo: 1 (2.8%)
+  - SÃO VICENTE: 1 (2.8%)
+  - Santos/são Paulo: 1 (2.8%)
+  - Santos/ são paulo: 1 (2.8%)
 
 Localização (Cidade):
-  - Santos: 11 (68.8%)
-  - São Vicente: 2 (12.5%)
-  - Cubatão: 2 (12.5%)
-  - Praia Grande: 1 (6.2%)
+  - Santos: 25 (69.4%)
+  - São Vicente: 4 (11.1%)
+  - Guarujá: 4 (11.1%)
+  - Cubatão: 2 (5.6%)
+  - Praia Grande: 1 (2.8%)
 
-Eixo 2: Trabalho, Renda e Infrequência
---------------------------------------
+Tipo de Escola:
+  - Sempre Pública: 22 (61.1%)
+  - Mista (Parte Pública / Parte Particular): 3 (8.3%)
+  - Sempre Particular (sem bolsa): 2 (5.6%)
+  - Sempre Particular (com bolsa): 1 (2.8%)
+
+Escolaridade da Mãe:
+  - Ensino Médio Completo: 15 (41.7%)
+  - Ensino superior completo: 7 (19.4%)
+  - Ensino Fundamental incompleto: 5 (13.9%)
+  - Ensino Médio incompleto: 3 (8.3%)
+  - Ensino superior incompleto: 2 (5.6%)
+  - Ensino Fundamental completo: 2 (5.6%)
+  - Prefiro não dizer: 1 (2.8%)
+  - Pós-graduação - Especialização: 1 (2.8%)
+
+Escolaridade do Pai:
+  - Ensino Médio Completo: 13 (36.1%)
+  - Ensino Fundamental incompleto: 6 (16.7%)
+  - Prefiro não dizer: 6 (16.7%)
+  - Ensino Médio incompleto: 6 (16.7%)
+  - Ensino superior completo: 2 (5.6%)
+  - Outro:: 2 (5.6%)
+
+Eixo 2: Trabalho, Renda e Condições Socioeconômicas
+---------------------------------------------------
 
 Situação de Trabalho:
-  - Fora da força de trabalho: 11 (68.8%)
-  - Empregado: 5 (31.2%)
+  - Fora da força de trabalho: 22 (61.1%)
+  - Empregado: 14 (38.9%)
 
 Vínculo de Trabalho:
-  - Não: 2 (12.5%)
-  - Do lar: 1 (6.2%)
-  - Estágio/Bolsa: 1 (6.2%)
-  - Contrato: 1 (6.2%)
-  - Registrado CLT: 1 (6.2%)
-  - Outro: 1 (6.2%)
-  - Autônomo: 1 (6.2%)
-  - CAMPS- Administrativo financeiro: 1 (6.2%)
+  - Registrado CLT: 6 (16.7%)
+  - Outro: 2 (5.6%)
+  - Não: 2 (5.6%)
+  - Autônomo: 2 (5.6%)
+  - Estágio/Bolsa: 1 (2.8%)
+  - Do lar: 1 (2.8%)
+  - Contrato: 1 (2.8%)
+  - CAMPS- Administrativo financeiro: 1 (2.8%)
+  - FREENLANCER: 1 (2.8%)
+  - VOLUNTÁRIO REMUNERADO: 1 (2.8%)
+  - Aprendiz: 1 (2.8%)
 
 Renda Familiar:
-  - De R$ 2081,00 a R$ 3.120,00: 7 (43.8%)
-  - De R$ 1.046,00 R$ 2080,00: 4 (25.0%)
-  - De R$ 3.120,00 a R$ 4.160,00: 2 (12.5%)
-  - Outro:: 1 (6.2%)
-  - Acima de R$ 5.201,00: 1 (6.2%)
-  - De R$ 4.161,00 a 5.200,00: 1 (6.2%)
+  - De R$ 1.046,00 R$ 2080,00: 14 (38.9%)
+  - De R$ 2081,00 a R$ 3.120,00: 10 (27.8%)
+  - De R$ 3.120,00 a R$ 4.160,00: 4 (11.1%)
+  - Acima de R$ 5.201,00: 3 (8.3%)
+  - De R$ 4.161,00 a 5.200,00: 2 (5.6%)
+  - Outro: 2 (5.6%)
+  - Outro:: 1 (2.8%)
 
 Benefícios Sociais:
-  - Não: 15 (93.8%)
-  - Sim: 1 (6.2%)
+  - Não: 30 (83.3%)
+  - Sim: 6 (16.7%)
+
+Tipo de Benefício:
+  - ["Outro"]: 2 (5.6%)
+  - ["Programa Bolsa Família (PBF)"]: 2 (5.6%)
+  - ["Programa Bolsa Família (PBF)","Outro"]: 2 (5.6%)
+  - Programa Bolsa Família (PBF): 1 (2.8%)
 
 Acesso à Internet:
-  - Sim: 10 (62.5%)
-  - sim: 5 (31.2%)
-  - Não: 1 (6.2%)
+  - Sim: 35 (97.2%)
+  - Não: 1 (2.8%)
 
 Tipo de Internet:
-  - Wi-Fi (Banda Larga): 15 (93.8%)
+  - Wi-Fi (Banda Larga): 28 (77.8%)
+  - Wi-fi: 5 (13.9%)
+  - Dados móveis e wi-fi: 1 (2.8%)
+  - DADOS MÓVEIS E WI-FI: 1 (2.8%)
+
+Sinal de Internet:
+  - Sim: 30 (83.3%)
+  - Não: 2 (5.6%)
 
 Condição de Moradia:
-  - Alugada: 7 (43.8%)
-  - Própria: 6 (37.5%)
-  - Cedida: 2 (12.5%)
-  - Outro:: 1 (6.2%)
+  - Própria: 19 (52.8%)
+  - Alugada: 14 (38.9%)
+  - Cedida: 2 (5.6%)
+  - Outro:: 1 (2.8%)
 
 Tipo de Moradia:
-  - Alvenaria: 16 (100.0%)
+  - Alvenaria: 31 (86.1%)
 
 Estudantes com Filhos:
-  - Não: 13 (81.2%)
-  - Sim (1): 2 (12.5%)
-  - Sim: 1 (6.2%)
+  - Não: 33 (91.7%)
+  - Sim: 3 (8.3%)
+
+Ajuda no Sustento Familiar:
+  - Não: 25 (69.4%)
+  - Sim: 5 (13.9%)
+
+Segurança Alimentar (Cesta Básica):
+  - Não: 26 (72.2%)
+  - Sim: 10 (27.8%)
 
 Uso do Dinheiro:
-  - Despesas da casa: 2 (12.5%)
-  - Gastos pessoais: 1 (6.2%)
+  - Despesas da casa: 8 (22.2%)
+  - Gastos pessoais: 3 (8.3%)
+  - Estudos: 1 (2.8%)
 
 Inscritos no CadÚnico:
-  - Não: 14 (87.5%)
-  - Sim: 2 (12.5%)
+  - Não: 26 (72.2%)
+  - Sim: 10 (27.8%)
 
-Eixo 3: Interesses Formativos
------------------------------
+Início do Trabalho (Horário):
+  - 09:00: 3 (8.3%)
+  - 08:00: 2 (5.6%)
+  - 14:00: 1 (2.8%)
+  - 07:00: 1 (2.8%)
+  - 10:00: 1 (2.8%)
+  - 13:00: 1 (2.8%)
+
+Eixo 3: Mobilidade e Interesses Formativos
+------------------------------------------
 
 Meios de Transporte:
-  - Transporte público (ônibus, VLT): 11 (68.8%)
-  - Bicicleta: 3 (18.8%)
-  - Carona de amigos/familiares: 1 (6.2%)
-  - Motocicleta: 1 (6.2%)
+  - Transporte público (ônibus, VLT): 27 (75.0%)
+  - Bicicleta: 4 (11.1%)
+  - Caminhada: 2 (5.6%)
+  - Carona de amigos/familiares: 1 (2.8%)
+  - Motocicleta: 1 (2.8%)
+  - Andando: 1 (2.8%)
+
+Necessidade de Auxílio Transporte:
+  - Não: 19 (52.8%)
+  - Sim: 14 (38.9%)
+  - Talvez: 1 (2.8%)
+
+Disponibilidade para Estudo:
+  - Intercalar entre dias de semana e fim de semana: 14 (38.9%)
+  - Sábados: 11 (30.6%)
+  - Dias de semana: 10 (27.8%)
+  - Todos os dias no começo e depois ajustar: 1 (2.8%)
+
+Meios de Transporte:
+  - Transporte público (ônibus, VLT): 27 (75.0%)
+  - Bicicleta: 4 (11.1%)
+  - Caminhada: 2 (5.6%)
+  - Carona de amigos/familiares: 1 (2.8%)
+  - Motocicleta: 1 (2.8%)
+  - Andando: 1 (2.8%)
 
 Eixo 4: Saúde e Assistência
 ---------------------------
 
 Plano de Saúde:
-  - Apenas SUS: 7 (43.8%)
-  - Apenas plano de saúde: 7 (43.8%)
-  - Uso os dois: 2 (12.5%)
-
-Sinal de Internet:
-  - Sim: 14 (87.5%)
-  - Não: 1 (6.2%)
+  - Apenas SUS: 18 (50.0%)
+  - Apenas plano de saúde: 16 (44.4%)
+  - Uso os dois: 2 (5.6%)
 
 Tipo Sanguíneo:
-  - Não sei: 9 (56.2%)
-  - A+: 2 (12.5%)
-  - O+: 1 (6.2%)
-  - B+: 1 (6.2%)
-  - A-: 1 (6.2%)
-  - O-: 1 (6.2%)
-  - AB+: 1 (6.2%)
+  - Não sei: 22 (61.1%)
+  - O+: 6 (16.7%)
+  - A+: 4 (11.1%)
+  - B+: 1 (2.8%)
+  - A-: 1 (2.8%)
+  - O-: 1 (2.8%)
+  - AB+: 1 (2.8%)
+
+Uso de Substâncias:
+  - Não: 32 (88.9%)
+  - Sim: 4 (11.1%)
 
 Possui Deficiência:
-  - Não: 12 (75.0%)
-  - Sim: 4 (25.0%)
+  - Não: 30 (83.3%)
+  - Sim: 6 (16.7%)
 
 Detalhe Deficiência:
-  - Autismo : 1 (6.2%)
+  - Autismo: 1 (2.8%)
+  - PRÉ-diagnóstico de transtorno bipolar: 1 (2.8%)
+  - Doença de von Willebrand (DVW): 1 (2.8%)
 
 Familiar com Deficiência:
-  - Não: 1 (6.2%)
-  - Autosmo: 1 (6.2%)
-  - Deficiência Auditiva: 1 (6.2%)
-  - Irmã, autista, 21 anos.: 1 (6.2%)
+  - Não: 2 (5.6%)
+  - Autosmo: 1 (2.8%)
+  - Deficiência Auditiva: 1 (2.8%)
+  - Irmã, autista, 21 anos.: 1 (2.8%)
+  - Sim: 1 (2.8%)
 
 Detalhe Deficiência Familiar:
+  - TEA (PRIMO): 1 (2.8%)
 
+Configuração Familiar (Mora com):
+  - MÃE E PAI: 3 (8.3%)
+  - Mãe: 2 (5.6%)
+  - Mãe e pai: 2 (5.6%)
+  - Sozinha: 1 (2.8%)
+  - Mãe,pai, irmão.: 1 (2.8%)
+  - Mãe.  Pai e irmão: 1 (2.8%)
+  - Tia,2 primos: 1 (2.8%)
+  - Mãe,pai e irmão: 1 (2.8%)
+  - Mãe é Pai: 1 (2.8%)
+  - Mãe e irmão: 1 (2.8%)
+  - Mora com o filho, 42 anos. Tem mais dois filhos casados, um mora em Itupeva e outra em Piracicaba.: 1 (2.8%)
+  - Pai: 1 (2.8%)
+  - Mãe, pai e irmã (20 anos): 1 (2.8%)
+  - Mora com avó e irmã (21 anos). Mãe, padrasto, 2 irmãos (12 e 7 anos).: 1 (2.8%)
+  - MÃE: 1 (2.8%)
+  - COM OS AVÓS: 1 (2.8%)
+  - MÃE E PAI E IRMÃO: 1 (2.8%)
+  - MÃE E PAI E IRMÃ: 1 (2.8%)
+  - Vó e tio materno: 1 (2.8%)
+  - MÃE,PAI MAIS 2 IRMÃOS: 1 (2.8%)
+  - MÃE E IRMÃO: 1 (2.8%)
+  - Mãe; padrasto  e dois irmãos: 1 (2.8%)
+  - SOGRA E NAMORADA E CUNHADA: 1 (2.8%)
+  - MÃE E PADRASTO E IRMÃO MAIS NOVO.: 1 (2.8%)
+  - Pai e avó: 1 (2.8%)
+  - MÃE E 2M IRMÃO: 1 (2.8%)
+  - MÃE  E PADRASTO: 1 (2.8%)
+  - Pa; mãe  e irmão: 1 (2.8%)
 
 Gestão
 ------
 
 Volume por Entrevistador:
-  - Ana Lucia Fernandes: 8 (50.0%)
-  - Leticia Yumy: 3 (18.8%)
-  - Luzinete Reis: 2 (12.5%)
-  - Ana Lucia Fernandes, Luzinete Reis: 1 (6.2%)
+  - Ana Lucia Fernandes: 21 (58.3%)
+  - Luzinete Reis: 9 (25.0%)
+  - Leticia Yumy: 3 (8.3%)
+  - Ana Lucia Fernandes, Luzinete Reis: 1 (2.8%)
