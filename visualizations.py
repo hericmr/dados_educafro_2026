@@ -142,7 +142,10 @@ def chart_1_race_composition(df):
 def chart_2_gender_distribution(df):
     """2. Gráfico de Distribuição por Gênero - Barras horizontais (Modelo A)"""
     col = 'Identidade de Gênero'
-    counts = df[col].value_counts().reset_index()
+    # Modelo A: agrupar variantes trans em 'Feminina' (ver nota metodológica)
+    trans_variantes = ['MULHER TRANS', 'Mulher trans', 'mulher trans', 'Mulher Trans']
+    genero = df[col].replace(trans_variantes, 'Feminina')
+    counts = genero.value_counts().reset_index()
     counts.columns = ['Gênero', 'Total']
     total = counts['Total'].sum()
 

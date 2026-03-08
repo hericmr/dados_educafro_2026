@@ -228,11 +228,14 @@ elif section == "Eixo 1: Perfil Sociodemográfico":
         with col1:
             render_chart_with_stats(viz.chart_1_race_composition, df, 'Race_Group')
         with col2:
-            # Gera estatísticas de gênero dinamicamente
-            _g = df['Identidade de Gênero'].value_counts()
-            _n = len(df)
-            _parts = [f"{lbl}: {cnt} ({cnt/_n*100:.1f}%)" for lbl, cnt in _g.items()]
-            gender_note = " | ".join(_parts)
+            # Gera estatísticas de gênero dinamicamente (Modelo A: MULHER TRANS agrupada em Feminina)
+            _trans = ['MULHER TRANS', 'Mulher trans', 'mulher trans', 'Mulher Trans']
+            _g_series = df['Identidade de Gênero'].replace(_trans, 'Feminina').value_counts()
+            _n = _g_series.sum()
+            _trans_count = df['Identidade de Gênero'].isin(_trans).sum()
+            _parts = [f"{lbl}: {cnt} ({cnt/_n*100:.1f}%)" for lbl, cnt in _g_series.items()]
+            _nota = f" — Nota: {_trans_count} estudante(s) se declarou mulher trans (inclusa em Feminina)." if _trans_count > 0 else ""
+            gender_note = " | ".join(_parts) + _nota
             render_chart_with_stats(viz.chart_2_gender_distribution, df, custom_stats=gender_note)
         
         render_chart_with_stats(viz.chart_3_race_by_gender, df) # Custom logic needed later or simple chart
