@@ -139,9 +139,10 @@ if section == "Resumo Geral":
     col1, col2, col3, col4, col5, col6 = st.columns(6)
     col1.metric("Estudantes", len(df))
     
-    # Race percentage calculation
-    negros_count = len(df[df['Race_Group'].isin(['Pretos(as)', 'Pardos(as)'])])
-    negros_pct = (negros_count / len(df) * 100) if len(df) > 0 else 0
+    # Race percentage calculation (same denominator as chart: only records with race data)
+    df_with_race = df[df['Race_Group'].notna() & (df['Race_Group'] != '')]
+    negros_count = len(df_with_race[df_with_race['Race_Group'].isin(['Pretos(as)', 'Pardos(as)'])])
+    negros_pct = (negros_count / len(df_with_race) * 100) if len(df_with_race) > 0 else 0
     col2.metric("Pretos/Pardos", f"{negros_pct:.1f}%")
     
     # Gender percentage calculation
@@ -227,7 +228,12 @@ elif section == "Eixo 1: Perfil Sociodemográfico":
         with col1:
             render_chart_with_stats(viz.chart_1_race_composition, df, 'Race_Group')
         with col2:
-            render_chart_with_stats(viz.chart_2_gender_distribution, df, 'Identidade de Gênero')
+            # Gera estatísticas de gênero dinamicamente
+            _g = df['Identidade de Gênero'].value_counts()
+            _n = len(df)
+            _parts = [f"{lbl}: {cnt} ({cnt/_n*100:.1f}%)" for lbl, cnt in _g.items()]
+            gender_note = " | ".join(_parts)
+            render_chart_with_stats(viz.chart_2_gender_distribution, df, custom_stats=gender_note)
         
         render_chart_with_stats(viz.chart_3_race_by_gender, df) # Custom logic needed later or simple chart
         

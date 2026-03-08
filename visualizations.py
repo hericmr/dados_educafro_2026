@@ -140,12 +140,58 @@ def chart_1_race_composition(df):
     return fig
 
 def chart_2_gender_distribution(df):
-    """2. Gráfico de Distribuição por Gênero"""
-    counts = df['Identidade de Gênero'].value_counts().reset_index()
+    """2. Gráfico de Distribuição por Gênero - Barras horizontais (Modelo A)"""
+    col = 'Identidade de Gênero'
+    counts = df[col].value_counts().reset_index()
     counts.columns = ['Gênero', 'Total']
-    fig = px.pie(counts, values='Total', names='Gênero', hole=0.6,
-                 color_discrete_sequence=[COLORS['secondary'], COLORS['primary'], COLORS['accent']],
-                 title="Distribuição por Identidade de Gênero")
+    total = counts['Total'].sum()
+
+    # Ordem fixa: feminina primeiro, depois masculina, depois demais
+    order = ['Feminina', 'Masculina', 'Não binárie', 'Outro']
+    counts['Gênero'] = pd.Categorical(counts['Gênero'], categories=order, ordered=True)
+    counts = counts.sort_values('Gênero', ascending=True)
+
+    counts['Percent'] = (counts['Total'] / total * 100).round(1)
+    counts['Label'] = counts.apply(lambda r: f"{r['Total']} ({r['Percent']}%)", axis=1)
+
+    # Paleta institucional por categoria
+    color_map = {
+        'Feminina':    COLORS['secondary'],
+        'Masculina':   COLORS['primary'],
+        'Não binárie': COLORS['accent'],
+        'Outro':       COLORS['neutral'],
+    }
+    colors = [color_map.get(g, COLORS['neutral']) for g in counts['Gênero']]
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        y=counts['Gênero'],
+        x=counts['Total'],
+        orientation='h',
+        text=counts['Label'],
+        textposition='outside',
+        marker_color=colors,
+        cliponaxis=False,
+    ))
+
+    fig.update_layout(
+        title={
+            'text': (
+                "<b>Distribuição por Identidade de Gênero</b>"
+                "<br><span style='font-size:12px; color:gray'>"
+                f"N = {total}. Autodeclaração."
+                "</span>"
+            ),
+            'y': 0.95, 'x': 0.5,
+            'xanchor': 'center', 'yanchor': 'top'
+        },
+        xaxis=dict(title="Número de Estudantes", showgrid=True, gridcolor='rgba(0,0,0,0.05)'),
+        yaxis=dict(title="", autorange="reversed"),
+        plot_bgcolor='rgba(0,0,0,0)',
+        margin=dict(l=120, r=100, t=90, b=40),
+        height=320,
+        showlegend=False,
+    )
     return fig
 
 def chart_3_race_by_gender(df):
