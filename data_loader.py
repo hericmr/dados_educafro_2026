@@ -156,6 +156,19 @@ def load_data(filepath):
             else:
                 return str(val).capitalize()
         df['internet_tipo'] = df['internet_tipo'].apply(group_internet_type)
+        
+    # Standardize Marital Status
+    if 'estado_civil' in df.columns:
+        def standardize_marital_status(val):
+            if pd.isna(val) or str(val).strip() == '': return np.nan
+            val_str = str(val).strip().lower()
+            if 'solteiro' in val_str: return 'Solteiro(a)'
+            if 'divorciado' in val_str or 'separado' in val_str: return 'Divorciado(a)'
+            if 'casado' in val_str: return 'Casado(a)'
+            if 'união estável' in val_str: return 'União estável'
+            if 'viúvo' in val_str or 'viúva' in val_str: return 'Viúvo(a)'
+            return str(val).capitalize()
+        df['estado_civil'] = df['estado_civil'].apply(standardize_marital_status)
     
     # 4. Initialize missing fields
     df['Frequência'] = "Sem dados"
