@@ -256,8 +256,6 @@ elif section == "Eixo 1: Perfil Sociodemográfico":
         col5, col6 = st.columns(2)
         with col5:
             render_chart_with_stats(viz.chart_31_marital_status, df, 'Estado Civil')
-        with col6:
-            render_chart_with_stats(viz.chart_32_naturalidade, df)
         
         st.subheader("Origem Profissional Familiar")
         render_chart_with_stats(viz.chart_38_parental_professions_cloud, df)

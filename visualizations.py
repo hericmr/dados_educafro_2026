@@ -579,15 +579,7 @@ def chart_31_marital_status(df):
     fig.update_traces(textposition='inside', textinfo='percent+label')
     return fig
 
-def chart_32_naturalidade(df):
-    """32. Naturalidade dos Estudantes (Top 10)"""
-    counts = df['naturalidade'].value_counts().head(10).reset_index()
-    counts.columns = ['Naturalidade', 'Total']
-    fig = px.bar(counts, x='Total', y='Naturalidade', orientation='h',
-                 title="Top 10 Cidades de Origem (Naturalidade)",
-                 color_discrete_sequence=[COLORS['secondary']])
-    fig.update_layout(yaxis={'categoryorder':'total ascending'})
-    return fig
+
 
 def chart_33_benefits_breakdown(df):
     """33. Detalhamento dos Benefícios Sociais"""
