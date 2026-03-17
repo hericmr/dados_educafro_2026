@@ -174,12 +174,57 @@ def load_data(filepath):
     df['Frequência'] = "Sem dados"
     df['Busca_Ativa_Result'] = "Sem dados"
     
+    # 5. Mapeamento de CRAS
+    cras_map_normalized = {
+        "alemoa": "CRAS Alemoa / Chico de Paula",
+        "saboo": "CRAS Alemoa / Chico de Paula",
+        "chico de paula": "CRAS Alemoa / Chico de Paula",
+        "sao manoel": "CRAS Alemoa / Chico de Paula / São Manoel",
+        "piratininga": "CRAS Alemoa / Chico de Paula",
+        "bom retiro": "CRAS Bom Retiro",
+        "castelo": "CRAS Bom Retiro",
+        "caneleira": "CRAS Bom Retiro",
+        "areia branca": "CRAS Bom Retiro",
+        "vila sao jorge": "CRAS Bom Retiro",
+        "santa maria": "CRAS Bom Retiro",
+        "radio clube": "CRAS Rádio Clube",
+        "nova cintra": "CRAS Nova Cintra",
+        "sao bento": "CRAS São Bento",
+        "centro": "CRAS Região Central",
+        "vila nova": "CRAS Região Central",
+        "paqueta": "CRAS Região Central",
+        "valongo": "CRAS Região Central",
+        "estuario": "CRAS Zona da Orla",
+        "macuco": "CRAS Zona da Orla",
+        "aparecida": "CRAS Zona da Orla",
+        "embare": "CRAS Zona da Orla",
+        "boqueirao": "CRAS Zona da Orla",
+        "gonzaga": "CRAS Zona da Orla",
+        "pompeia": "CRAS Zona da Orla",
+        "jose menino": "CRAS Zona da Orla",
+        "marape": "CRAS Zona da Orla",
+    }
+    
+    def normalize_and_map_bairro(val):
+        if pd.isna(val): return "CRAS não identificado"
+        import unicodedata
+        text = str(val).lower()
+        text = ''.join(c for c in unicodedata.normalize('NFD', text) if unicodedata.category(c) != 'Mn')
+        text = text.strip()
+        return cras_map_normalized.get(text, "CRAS não identificado")
+
+    if 'bairro' in df.columns:
+        df['CRAS de Referência'] = df['bairro'].apply(normalize_and_map_bairro)
+    else:
+        df['CRAS de Referência'] = "CRAS não identificado"
+    
     # Map other columns for visualizations.py to stay consistent or update visualizations.py
     # We'll use a mapping dict to ensure compatibility
     mapping = {
         'nome_completo': 'nome_completo',
         'genero': 'Identidade de Gênero',
         'cidade': 'Cidade',
+        'bairro': 'Bairro',
         'trabalho_vinculo': 'Vínculo de Trabalho',
         'renda_familiar': 'Renda Familiar',
         'internet_tem': 'Possui Internet?',
@@ -222,7 +267,7 @@ def load_data(filepath):
     priority_cols = [
         'nome_completo', 'Idade', 'Faixa Etária', 'Identidade de Gênero', 'Race_Group', 
         'Employment_Status', 'Vínculo de Trabalho', 'Renda Familiar', 'CadÚnico', 
-        'Recebe Benefícios', 'Escolaridade', 'Tipo de Escola', 'Qual curso pretende?', 
+        'CRAS de Referência', 'Recebe Benefícios', 'Escolaridade', 'Tipo de Escola', 'Qual curso pretende?', 
         'Temas de interesse', 'Cidade', 'Bairro', 'Telefone', 'Email', 
         'Orientação Sexual', 'Estado Civil', 'Escolaridade da Mãe', 'Escolaridade do Pai', 
         'Plano de Saúde', 'Psicoterapia', 'Psicoterapia (Atual)', 'Meio de Transporte', 'Uso do Dinheiro (Trabalho)', 

@@ -84,6 +84,7 @@ st.sidebar.image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_R0f8iI
 st.sidebar.title("Navegação")
 section = st.sidebar.radio("Ir para:", [
     "Resumo Geral",
+    "Eixo 0: Secras de Referência do Estudante",
     "Eixo 1: Perfil Sociodemográfico", 
     "Eixo 2: Trabalho, Renda e Condições Socioeconômicas", 
     "Eixo 3: Mobilidade e Interesses Formativos",
@@ -217,6 +218,41 @@ if section == "Resumo Geral":
         </small>
     </div>
     """, unsafe_allow_html=True)
+
+elif section == "Eixo 0: Secras de Referência do Estudante":
+    st.header("🔹 Eixo 0 — Secras de Referência do Estudante")
+
+    if len(df) == 0:
+        st.warning("Nenhum dado completo encontrado no CSV.")
+    else:
+        st.markdown("Esta seção acompanha o status e o CRAS de cada estudante para fins de inscrição no CadÚnico.")
+        
+        display_cols = ['nome_completo', 'Bairro', 'CRAS de Referência', 'CadÚnico']
+        available_cols = [c for c in display_cols if c in df.columns]
+        
+        subset_df = df[available_cols].copy()
+        if 'nome_completo' in subset_df.columns:
+            subset_df['nome_completo'] = subset_df['nome_completo'].str.title()
+            
+        def style_eixo_0(row):
+            styles = [''] * len(row)
+            if 'CadÚnico' in row.index:
+                # Se o valor é "Sim", e.g. CadÚnico = 'Sim' ou contém 'Sim'
+                has_cadunico = pd.notnull(row['CadÚnico']) and 'sim' in str(row['CadÚnico']).lower()
+                if has_cadunico:
+                    styles = ['background-color: #D4EDDA; color: #155724'] * len(row)
+            return styles
+            
+        styled_subset = subset_df.style.apply(style_eixo_0, axis=1)
+        st.dataframe(styled_subset, use_container_width=True, hide_index=True)
+
+        st.markdown("""
+        <div style='background-color: #F8F9FA; padding: 10px; border-radius: 5px; border: 1px solid #E9ECEF;'>
+            <small>
+                <span style='background-color: #D4EDDA; color: #155724; padding: 2px;'><b>Fundo Verde</b></span>: Já possui CadÚnico
+            </small>
+        </div>
+        """, unsafe_allow_html=True)
 
 elif section == "Eixo 1: Perfil Sociodemográfico":
     st.header("Eixo 1: Perfil Sociodemográfico")
