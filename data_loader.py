@@ -176,47 +176,71 @@ def load_data(filepath):
     
     # 5. Mapeamento de CRAS
     cras_map_normalized = {
-        "alemoa": "CRAS Alemoa / Chico de Paula",
-        "saboo": "CRAS Alemoa / Chico de Paula",
-        "chico de paula": "CRAS Alemoa / Chico de Paula",
-        "sao manoel": "CRAS Alemoa / Chico de Paula / São Manoel",
-        "piratininga": "CRAS Alemoa / Chico de Paula",
-        "bom retiro": "CRAS Bom Retiro",
-        "castelo": "CRAS Bom Retiro",
-        "caneleira": "CRAS Bom Retiro",
-        "areia branca": "CRAS Bom Retiro",
-        "vila sao jorge": "CRAS Bom Retiro",
-        "santa maria": "CRAS Bom Retiro",
-        "radio clube": "CRAS Rádio Clube",
-        "nova cintra": "CRAS Nova Cintra",
-        "sao bento": "CRAS São Bento",
-        "centro": "CRAS Região Central",
-        "vila nova": "CRAS Região Central",
-        "paqueta": "CRAS Região Central",
-        "valongo": "CRAS Região Central",
-        "estuario": "CRAS Zona da Orla",
-        "macuco": "CRAS Zona da Orla",
-        "aparecida": "CRAS Zona da Orla",
-        "embare": "CRAS Zona da Orla",
-        "boqueirao": "CRAS Zona da Orla",
-        "gonzaga": "CRAS Zona da Orla",
-        "pompeia": "CRAS Zona da Orla",
-        "jose menino": "CRAS Zona da Orla",
-        "marape": "CRAS Zona da Orla",
+        "alemoa": "SECRAS Chico de Paula",
+        "saboo": "SECRAS Chico de Paula",
+        "chico de paula": "SECRAS Chico de Paula",
+        "sao manoel": "SECRAS São Manoel",
+        "jardim sao manoel": "SECRAS São Manoel",
+        "piratininga": "SECRAS Chico de Paula",
+        "bom retiro": "SECRAS Bom Retiro",
+        "castelo": "SECRAS Bom Retiro",
+        "jardim castelo": "SECRAS Bom Retiro",
+        "caneleira": "SECRAS Bom Retiro",
+        "areia branca": "SECRAS Bom Retiro",
+        "vila sao jorge": "SECRAS Bom Retiro",
+        "santa maria": "SECRAS Bom Retiro",
+        "radio clube": "SECRAS Rádio Clube",
+        "nova cintra": "SECRAS Nova Cintra",
+        "morro nova cintra": "SECRAS Nova Cintra",
+        "sao bento": "SECRAS São Bento",
+        "morro sao bento": "SECRAS São Bento",
+        "morro do sao bento": "SECRAS São Bento",
+        "centro": "SECRAS Centro",
+        "vila nova": "SECRAS Centro",
+        "paqueta": "SECRAS Centro",
+        "valongo": "SECRAS Centro",
+        "estuario": "SECRAS ZOI",
+        "macuco": "SECRAS ZOI",
+        "aparecida": "SECRAS ZOI",
+        "embare": "SECRAS ZOI",
+        "boqueirao": "SECRAS ZOI",
+        "gonzaga": "SECRAS ZOI",
+        "pompeia": "SECRAS ZOI",
+        "jose menino": "SECRAS ZOI",
+        "marape": "SECRAS ZOI",
+        "campo grande": "SECRAS ZOI",
+        "encruzilhada": "SECRAS ZOI",
+        "humaita": "SECRAS Chico de Paula",
+        "humaita/morro sao bento": "SECRAS Chico de Paula (pode variar)",
+        "japui": "SECRAS Chico de Paula (Área Continental)",
+        "morro da penha": "SECRAS São Bento (aprox.)",
+        "morro do pacheco": "SECRAS São Bento (aprox.)",
+        "paecara": "SECRAS ZOI (São Vicente - verificar)",
+        "parque continental": "SECRAS Chico de Paula (Área Continental)",
+        "ponta da praia": "SECRAS ZOI",
+        "vila aurea": "SECRAS ZOI (São Vicente - verificar)",
+        "vila belmiro": "SECRAS ZOI",
+        "vila matias": "SECRAS ZOI",
+        "vila sao jose": "SECRAS ZOI",
+        "vila tupi": "SECRAS ZOI (Praia Grande - verificar)",
+        "vila tupi 332": "SECRAS ZOI (Praia Grande - verificar)",
+        "vila voturua": "SECRAS ZOI (São Vicente - verificar)",
+        "vila zilda": "SECRAS Chico de Paula (aprox.)",
+        "zona noroeste": "SECRAS Chico de Paula (genérico)"
     }
     
     def normalize_and_map_bairro(val):
-        if pd.isna(val): return "CRAS não identificado"
+        if pd.isna(val): return "SECRAS não identificado"
         import unicodedata
         text = str(val).lower()
         text = ''.join(c for c in unicodedata.normalize('NFD', text) if unicodedata.category(c) != 'Mn')
         text = text.strip()
-        return cras_map_normalized.get(text, "CRAS não identificado")
+        return cras_map_normalized.get(text, "SECRAS não identificado")
 
     if 'bairro' in df.columns:
         df['CRAS de Referência'] = df['bairro'].apply(normalize_and_map_bairro)
     else:
-        df['CRAS de Referência'] = "CRAS não identificado"
+        df['CRAS de Referência'] = "SECRAS não identificado"
     
     # Map other columns for visualizations.py to stay consistent or update visualizations.py
     # We'll use a mapping dict to ensure compatibility
