@@ -4,7 +4,7 @@ from data_loader import load_data
 import os
 
 # Caminho do CSV
-CSV_PATH = 'entrevistas_educafro_consolidated_20260228.csv'
+CSV_PATH = 'entrevistas_educafro_consolidated_final_20260308.csv'
 df = load_data(CSV_PATH)
 
 def get_stats(df, column_name):
