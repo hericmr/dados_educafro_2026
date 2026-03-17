@@ -129,6 +129,19 @@ def load_data(filepath):
     emp_col = 'trabalho_renda_semana' if 'trabalho_renda_semana' in df.columns else 'Trabalhou na última semana?'
     df['Employment_Status'] = df[emp_col].replace({'Sim': 'Empregado', 'Não': 'Fora da força de trabalho'})
     
+    # Group Job Categories (Vínculo de Trabalho)
+    if 'trabalho_vinculo' in df.columns:
+        def group_job_category(val):
+            if pd.isna(val): return np.nan
+            val_str = str(val).strip().lower()
+            if val_str in ['registrado clt', 'contrato']: return 'Emprego formal'
+            if val_str in ['autônomo', 'freenlancer']: return 'Trabalho informal / autônomo'
+            if val_str in ['aprendiz', 'estágio/bolsa'] or 'camps' in val_str: return 'Formação / inserção inicial'
+            if val_str in ['não', 'do lar']: return 'Fora do mercado de trabalho'
+            if val_str in ['outro', 'voluntário remunerado']: return 'Outros / mal definidos'
+            return 'Outros / mal definidos' # Fallback
+        df['trabalho_vinculo'] = df['trabalho_vinculo'].apply(group_job_category)
+    
     # 4. Initialize missing fields
     df['Frequência'] = "Sem dados"
     df['Busca_Ativa_Result'] = "Sem dados"

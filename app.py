@@ -139,8 +139,8 @@ if section == "Resumo Geral":
     col1, col2, col3, col4, col5, col6 = st.columns(6)
     col1.metric("Estudantes", len(df))
     
-    # Race percentage calculation (same denominator as chart: only records with race data)
-    df_with_race = df[df['Race_Group'].notna() & (df['Race_Group'] != '')]
+    # Race percentage calculation (excluding 'Indígena' to match chart 1 100% sum)
+    df_with_race = df[df['Race_Group'].isin(['Pretos(as)', 'Pardos(as)', 'Brancos(as)'])]
     negros_count = len(df_with_race[df_with_race['Race_Group'].isin(['Pretos(as)', 'Pardos(as)'])])
     negros_pct = (negros_count / len(df_with_race) * 100) if len(df_with_race) > 0 else 0
     col2.metric("Pretos/Pardos", f"{negros_pct:.1f}%")
