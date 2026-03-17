@@ -15,6 +15,31 @@ def load_data(filepath):
     elif 'Status' in df.columns:
         df = df[df['Status'] == 'completo']
 
+    # Deduplication by CPF or RA (keep the most recent record)
+    dedup_col = None
+    if 'cpf' in df.columns:
+        dedup_col = 'cpf'
+    elif 'ra' in df.columns:
+        dedup_col = 'ra'
+
+    if dedup_col:
+        # Normalize the key column: remove dots, dashes, spaces
+        df[dedup_col] = df[dedup_col].astype(str).str.replace(r'[\.\-\s]', '', regex=True).str.strip()
+        # Sort by date so the most recent comes last
+        date_col = None
+        for candidate in ['updated_at', 'created_at']:
+            if candidate in df.columns:
+                date_col = candidate
+                break
+        if date_col:
+            df[date_col] = pd.to_datetime(df[date_col], errors='coerce', utc=True)
+            df = df.sort_values(date_col, na_position='first')
+        # Keep only last (most recent) occurrence per CPF/RA, ignoring blanks/nan
+        valid_mask = df[dedup_col].notna() & (df[dedup_col] != '') & (df[dedup_col] != 'nan')
+        df_valid = df[valid_mask].drop_duplicates(subset=[dedup_col], keep='last')
+        df_invalid = df[~valid_mask]
+        df = pd.concat([df_valid, df_invalid], ignore_index=True)
+
     # Remove 'pronomes' column as requested
     if 'pronomes' in df.columns:
         df = df.drop(columns=['pronomes'])
