@@ -250,8 +250,7 @@ def chart_3_race_by_gender(df):
             'text': (
                 "<b>Composição Raça/Povo por Gênero</b>"
                 "<br><span style='font-size:12px; color:gray'>"
-                "Exibindo números absolutos e percentual dentro de cada gênero. "
-                "Nota: Estudantes que se declararam mulher trans estão inclusas em Feminina."
+                "Exibindo números absolutos e percentual dentro de cada gênero."
                 "</span>"
             )
         },

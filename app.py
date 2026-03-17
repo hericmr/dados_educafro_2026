@@ -238,7 +238,8 @@ elif section == "Eixo 1: Perfil Sociodemográfico":
             gender_note = " | ".join(_parts) + _nota
             render_chart_with_stats(viz.chart_2_gender_distribution, df, custom_stats=gender_note)
         
-        render_chart_with_stats(viz.chart_3_race_by_gender, df) # Custom logic needed later or simple chart
+        nota_chart3 = f"Nota: {_trans_count} estudante(s) se declarou mulher trans (inclusa em Feminina)." if _trans_count > 0 else ""
+        render_chart_with_stats(viz.chart_3_race_by_gender, df, custom_stats=nota_chart3 if nota_chart3 else None)
         
         col_new1, col_new2 = st.columns(2)
         with col_new1:
