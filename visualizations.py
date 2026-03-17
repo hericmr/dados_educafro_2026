@@ -200,8 +200,12 @@ def chart_2_gender_distribution(df):
 def chart_3_race_by_gender(df):
     """3. Composição Raça/Povo por Gênero (Percentual Empilhado Institucional)"""
 
+    # Agrupar variantes trans em 'Feminina'
+    trans_variantes = ['MULHER TRANS', 'Mulher trans', 'mulher trans', 'Mulher Trans']
+    genero_series = df['Identidade de Gênero'].replace(trans_variantes, 'Feminina')
+
     # 1. Tabela de frequências absolutas
-    df_counts = pd.crosstab(df['Identidade de Gênero'], df['Race_Group'])
+    df_counts = pd.crosstab(genero_series, df['Race_Group'])
     
     # 2. Tabela de percentuais para os rótulos
     df_pct = (df_counts.div(df_counts.sum(axis=1), axis=0) * 100).round(1)
@@ -246,7 +250,8 @@ def chart_3_race_by_gender(df):
             'text': (
                 "<b>Composição Raça/Povo por Gênero</b>"
                 "<br><span style='font-size:12px; color:gray'>"
-                "Exibindo números absolutos e percentual dentro de cada gênero."
+                "Exibindo números absolutos e percentual dentro de cada gênero. "
+                "Nota: Estudantes que se declararam mulher trans estão inclusas em Feminina."
                 "</span>"
             )
         },
