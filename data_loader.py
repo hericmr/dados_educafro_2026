@@ -141,6 +141,21 @@ def load_data(filepath):
             if val_str in ['outro', 'voluntário remunerado']: return 'Outros / mal definidos'
             return 'Outros / mal definidos' # Fallback
         df['trabalho_vinculo'] = df['trabalho_vinculo'].apply(group_job_category)
+        
+    # Group Internet Connection Quality/Type
+    if 'internet_tipo' in df.columns:
+        def group_internet_type(val):
+            if pd.isna(val) or str(val).strip() == '': return np.nan
+            val_str = str(val).strip().lower()
+            if 'dados móveis' in val_str and 'wi-fi' in val_str:
+                return 'Uso combinado'
+            elif 'wi-fi' in val_str:
+                return 'Wi-Fi predominante'
+            elif 'dados móveis' in val_str:
+                return 'Dados móveis'
+            else:
+                return str(val).capitalize()
+        df['internet_tipo'] = df['internet_tipo'].apply(group_internet_type)
     
     # 4. Initialize missing fields
     df['Frequência'] = "Sem dados"
