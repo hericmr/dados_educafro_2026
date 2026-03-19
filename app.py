@@ -226,33 +226,127 @@ elif section == "Eixo 0: Secras de Referência do Estudante":
         st.warning("Nenhum dado completo encontrado no CSV.")
     else:
         st.markdown("Esta seção acompanha o status e o CRAS de cada estudante para fins de inscrição no CadÚnico.")
-        
-        display_cols = ['nome_completo', 'Bairro', 'CRAS de Referência', 'CadÚnico']
-        available_cols = [c for c in display_cols if c in df.columns]
-        
-        subset_df = df[available_cols].copy()
+
+        # ── Elegibilidade ao CadÚnico ────────────────────────────────────────
+        # Salário mínimo 2026: R$ 1.518,00
+        # Critérios: renda familiar total ≤ 3 SM (R$ 4.554,00)
+        #            OU renda per capita ≤ ½ SM (R$ 759,00)
+        # Como não temos nº de pessoas por faixa de renda per capita com precisão,
+        # classificamos pela renda familiar total usando as faixas do formulário.
+
+        ELEGIVEL_RENDA = {
+            # Faixas claramente abaixo de 3 SM (R$ 4.554,00)
+            "De R$ 1.046,00 R$ 2080,00":    "✅ Elegível",
+            "De R$ 2081,00 a R$ 3.120,00":  "✅ Elegível",
+            "De R$ 3.120,00 a R$ 4.160,00": "✅ Elegível",
+            # R$ 4.161 a R$ 5.200 — parte inferior abaixo de 3 SM; marcamos como provável
+            "De R$ 4.161,00 a 5.200,00":    "⚠️ Verificar (pode ser elegível)",
+            # Acima de 3 SM
+            "Acima de R$ 5.201,00":          "❌ Não elegível",
+            # Declarados como Outro — requer análise manual
+            "Outro":                          "⚠️ Verificar",
+            "Outro:":                         "⚠️ Verificar",
+        }
+
+        def check_cadunico_elegibility(row):
+            # Se já tem CadÚnico, não precisa requerer
+            cadunico_val = str(row.get('CadÚnico', '')).strip().lower()
+            if 'sim' in cadunico_val:
+                return "✅ Já possui CadÚnico"
+            renda = str(row.get('Renda Familiar', '')).strip()
+            return ELEGIVEL_RENDA.get(renda, "⚠️ Verificar")
+
+        df_eixo0 = df.copy()
+        df_eixo0['Pode Requerer CadÚnico?'] = df_eixo0.apply(check_cadunico_elegibility, axis=1)
+
+        # ── Métricas de elegibilidade ────────────────────────────────────────
+        total = len(df_eixo0)
+        ja_tem    = (df_eixo0['Pode Requerer CadÚnico?'] == "✅ Já possui CadÚnico").sum()
+        elegiveis = (df_eixo0['Pode Requerer CadÚnico?'] == "✅ Elegível").sum()
+        verificar = df_eixo0['Pode Requerer CadÚnico?'].str.startswith("⚠️").sum()
+        nao_eleg  = (df_eixo0['Pode Requerer CadÚnico?'] == "❌ Não elegível").sum()
+
+        col_m1, col_m2, col_m3, col_m4 = st.columns(4)
+        col_m1.metric("👥 Total de Estudantes", total)
+        col_m2.metric("✅ Já possuem CadÚnico", ja_tem)
+        col_m3.metric("📋 Elegíveis (sem CadÚnico)", elegiveis)
+        col_m4.metric("⚠️ Verificar / Não elegíveis", verificar + nao_eleg)
+
+        st.info(
+            "**Critérios de Elegibilidade ao CadÚnico (Lei nº 10.836/2004):** "
+            "Renda familiar total de até **3 salários mínimos** (R\\$ 4.554,00 em 2026) "
+            "**ou** renda mensal per capita de até **meio salário mínimo** (R\\$ 759,00)."
+        )
+
+        st.divider()
+
+        # ── Tabela principal ─────────────────────────────────────────────────
+        display_cols = ['nome_completo', 'Bairro', 'CRAS de Referência', 'Renda Familiar',
+                        'CadÚnico', 'Pode Requerer CadÚnico?']
+        available_cols = [c for c in display_cols if c in df_eixo0.columns]
+
+        subset_df = df_eixo0[available_cols].copy()
         if 'nome_completo' in subset_df.columns:
             subset_df['nome_completo'] = subset_df['nome_completo'].str.title()
-            
+
         def style_eixo_0(row):
-            styles = [''] * len(row)
-            if 'CadÚnico' in row.index:
-                # Se o valor é "Sim", e.g. CadÚnico = 'Sim' ou contém 'Sim'
-                has_cadunico = pd.notnull(row['CadÚnico']) and 'sim' in str(row['CadÚnico']).lower()
-                if has_cadunico:
-                    styles = ['background-color: #D4EDDA; color: #155724'] * len(row)
-            return styles
-            
+            val = str(row.get('Pode Requerer CadÚnico?', ''))
+            if 'Já possui' in val:
+                return ['background-color: #D4EDDA; color: #155724'] * len(row)
+            elif val.startswith('✅'):
+                return ['background-color: #CCE5FF; color: #004085'] * len(row)
+            elif val.startswith('⚠️'):
+                return ['background-color: #FFF3CD; color: #856404'] * len(row)
+            elif val.startswith('❌'):
+                return ['background-color: #F8D7DA; color: #721C24'] * len(row)
+            return [''] * len(row)
+
         styled_subset = subset_df.style.apply(style_eixo_0, axis=1)
         st.dataframe(styled_subset, use_container_width=True, hide_index=True)
 
         st.markdown("""
         <div style='background-color: #F8F9FA; padding: 10px; border-radius: 5px; border: 1px solid #E9ECEF;'>
             <small>
-                <span style='background-color: #D4EDDA; color: #155724; padding: 2px;'><b>Fundo Verde</b></span>: Já possui CadÚnico
+                <span style='background-color: #D4EDDA; color: #155724; padding: 2px;'><b>Verde escuro</b></span> Já possui CadÚnico &nbsp;|&nbsp;
+                <span style='background-color: #CCE5FF; color: #004085; padding: 2px;'><b>Azul</b></span> Elegível (sem CadÚnico) — prioridade para inscrição &nbsp;|&nbsp;
+                <span style='background-color: #FFF3CD; color: #856404; padding: 2px;'><b>Amarelo</b></span> Verificar renda declarada &nbsp;|&nbsp;
+                <span style='background-color: #F8D7DA; color: #721C24; padding: 2px;'><b>Vermelho</b></span> Renda acima do limite
             </small>
         </div>
         """, unsafe_allow_html=True)
+
+        st.divider()
+        st.subheader("📍 Exportar para Google My Maps")
+        st.info(
+            "Baixe o CSV abaixo e importe no [Google My Maps](https://www.google.com/maps/d/) "
+            "em **Importar → Escolher arquivo**. O campo **Endereço** será usado para "
+            "geocodificar automaticamente cada estudante."
+        )
+
+        # Build the My Maps CSV
+        mymaps_cols = {}
+        if 'nome_completo' in df_eixo0.columns:
+            mymaps_cols['Nome'] = df_eixo0['nome_completo'].str.title()
+        if 'CRAS de Referência' in df_eixo0.columns:
+            mymaps_cols['CRAS de Referência'] = df_eixo0['CRAS de Referência']
+        if 'Bairro' in df_eixo0.columns:
+            mymaps_cols['Bairro'] = df_eixo0['Bairro']
+            # Address field helps Google My Maps geocode the point
+            mymaps_cols['Endereço'] = df_eixo0['Bairro'].fillna('') + ', Santos, SP, Brasil'
+        if 'CadÚnico' in df_eixo0.columns:
+            mymaps_cols['CadÚnico'] = df_eixo0['CadÚnico']
+        if 'Pode Requerer CadÚnico?' in df_eixo0.columns:
+            mymaps_cols['Pode Requerer CadÚnico?'] = df_eixo0['Pode Requerer CadÚnico?']
+
+        df_mymaps = pd.DataFrame(mymaps_cols)
+
+        csv_mymaps = df_mymaps.to_csv(index=False, encoding='utf-8-sig')
+        st.download_button(
+            label="⬇️ Baixar CSV para Google My Maps",
+            data=csv_mymaps,
+            file_name="educafro_mymaps.csv",
+            mime="text/csv",
+        )
 
 elif section == "Eixo 1: Perfil Sociodemográfico":
     st.header("Eixo 1: Perfil Sociodemográfico")
