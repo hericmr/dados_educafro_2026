@@ -93,7 +93,7 @@ section = st.sidebar.radio("Ir para:", [
 ])
 
 # Load Data
-CSV_PATH = 'entrevistas_educafro_consolidated_final_20260308.csv'
+CSV_PATH = 'data/entrevistas_consolidated.csv'
 try:
     df = load_data(CSV_PATH)
 except Exception as e:
@@ -314,39 +314,6 @@ elif section == "Eixo 0: Secras de Referência do Estudante":
             </small>
         </div>
         """, unsafe_allow_html=True)
-
-        st.divider()
-        st.subheader("📍 Exportar para Google My Maps")
-        st.info(
-            "Baixe o CSV abaixo e importe no [Google My Maps](https://www.google.com/maps/d/) "
-            "em **Importar → Escolher arquivo**. O campo **Endereço** será usado para "
-            "geocodificar automaticamente cada estudante."
-        )
-
-        # Build the My Maps CSV
-        mymaps_cols = {}
-        if 'nome_completo' in df_eixo0.columns:
-            mymaps_cols['Nome'] = df_eixo0['nome_completo'].str.title()
-        if 'CRAS de Referência' in df_eixo0.columns:
-            mymaps_cols['CRAS de Referência'] = df_eixo0['CRAS de Referência']
-        if 'Bairro' in df_eixo0.columns:
-            mymaps_cols['Bairro'] = df_eixo0['Bairro']
-            # Address field helps Google My Maps geocode the point
-            mymaps_cols['Endereço'] = df_eixo0['Bairro'].fillna('') + ', Santos, SP, Brasil'
-        if 'CadÚnico' in df_eixo0.columns:
-            mymaps_cols['CadÚnico'] = df_eixo0['CadÚnico']
-        if 'Pode Requerer CadÚnico?' in df_eixo0.columns:
-            mymaps_cols['Pode Requerer CadÚnico?'] = df_eixo0['Pode Requerer CadÚnico?']
-
-        df_mymaps = pd.DataFrame(mymaps_cols)
-
-        csv_mymaps = df_mymaps.to_csv(index=False, encoding='utf-8-sig')
-        st.download_button(
-            label="⬇️ Baixar CSV para Google My Maps",
-            data=csv_mymaps,
-            file_name="educafro_mymaps.csv",
-            mime="text/csv",
-        )
 
 elif section == "Eixo 1: Perfil Sociodemográfico":
     st.header("Eixo 1: Perfil Sociodemográfico")

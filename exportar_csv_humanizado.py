@@ -4,7 +4,7 @@ import os
 
 def export_humanized_csv():
     # 1. Carrega os dados exatos processados pelo Streamlit no app.py
-    CSV_PATH = 'entrevistas_educafro_consolidated_final_20260308.csv'
+    CSV_PATH = 'data/entrevistas_consolidated.csv'
     df = load_data(CSV_PATH)
     
     # 2. As colunas já foram renomeadas e reordenadas pelo `data_loader.py` na Priority List
@@ -23,7 +23,7 @@ def export_humanized_csv():
     df_clean = df_clean.fillna("Não informado")
     
     # 3. Exporta para CSV
-    output_filename = 'entrevistas_educafro_humanizado_2026.csv'
+    output_filename = 'data/entrevistas_educafro_humanizado_2026.csv'
     df_clean.to_csv(output_filename, index=False, encoding='utf-8-sig')
     print(f"Sucesso! Gerado arquivo '{output_filename}' com {len(df_clean)} registros e {len(df_clean.columns)} colunas formatadas.")
 
