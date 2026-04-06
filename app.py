@@ -131,7 +131,7 @@ if section == "Resumo Geral":
    """)
     
     st.info("""
-    **Base de dados atualizada em: 8 de março de 2026**
+    **Base de dados atualizada em: 6 de abril de 2026**
 
     """)
 
