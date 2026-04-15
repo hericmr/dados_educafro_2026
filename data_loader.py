@@ -96,7 +96,7 @@ def load_data(filepath):
     # 1. Processing Age
     birth_col = 'data_nascimento' if 'data_nascimento' in df.columns else 'Data de Nascimento'
     if birth_col in df.columns:
-        df[birth_col] = pd.to_datetime(df[birth_col], errors='coerce')
+        df[birth_col] = pd.to_datetime(df[birth_col], errors='coerce', dayfirst=True, format='mixed')
         current_year = datetime.now().year
         
         # Calculate age only for those with missing or null Idade, or recalculate if possible

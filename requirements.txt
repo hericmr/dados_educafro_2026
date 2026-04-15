@@ -4,3 +4,5 @@ numpy
 plotly
 wordcloud
 matplotlib
+fpdf2
+kaleido

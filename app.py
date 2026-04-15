@@ -3,6 +3,8 @@ import pandas as pd
 from data_loader import load_data
 import visualizations as viz
 import os
+from datetime import datetime
+from export_pdf import generate_student_profile_pdf
 
 # v1.1 - Added data captions
 
@@ -491,4 +493,20 @@ elif section == "Gestão e Operacionalização da Pesquisa":
         render_chart_with_stats(viz.chart_30_interviewer_balance, df, 'Entrevistador')
 
 st.sidebar.markdown("---")
-st.sidebar.caption("Desenvolvido por Heric Moura para Educafro Valongo © 2026")
+
+# PDF Export Button
+st.sidebar.subheader("Relat\u00f3rio")
+try:
+    if st.sidebar.button("📄 Gerar Relatório PDF"):
+        with st.spinner("Gerando PDF... Isso pode levar alguns segundos."):
+            pdf_bytes = generate_student_profile_pdf(df)
+            st.sidebar.download_button(
+                label="⬇️ Baixar Relatório PDF",
+                data=pdf_bytes,
+                file_name=f"Perfil_Educafro_2026_{datetime.now().strftime('%Y%m%d')}.pdf",
+                mime="application/pdf"
+            )
+except Exception as e:
+    st.sidebar.error(f"Erro ao gerar PDF: {e}")
+
+st.sidebar.caption("Desenvolvido por Heric Moura para Educafro Valongo \u00a9 2026")
