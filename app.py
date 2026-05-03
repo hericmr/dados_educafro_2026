@@ -95,7 +95,7 @@ section = st.sidebar.radio("Ir para:", [
 ])
 
 # Load Data
-CSV_PATH = 'data/entrevistas_consolidated.csv'
+CSV_PATH = 'data/entrevistas_rows_atualizado.csv'
 try:
     df = load_data(CSV_PATH)
 except Exception as e:
