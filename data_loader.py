@@ -15,6 +15,11 @@ def load_data(filepath):
     elif 'Status' in df.columns:
         df = df[df['Status'] == 'completo']
 
+    # Remove test records (nome_completo = "teste", "teste2", etc.)
+    if 'nome_completo' in df.columns:
+        test_mask = df['nome_completo'].astype(str).str.strip().str.lower().isin(['teste', 'teste2'])
+        df = df[~test_mask]
+
     # Deduplication by CPF or RA (keep the most recent record)
     dedup_col = None
     if 'cpf' in df.columns:

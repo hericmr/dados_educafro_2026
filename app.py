@@ -95,7 +95,7 @@ section = st.sidebar.radio("Ir para:", [
 ])
 
 # Load Data
-CSV_PATH = 'data/entrevistas_rows_atualizado.csv'
+CSV_PATH = 'data/entrevistas_backup.csv'
 try:
     df = load_data(CSV_PATH)
 except Exception as e:
@@ -133,7 +133,7 @@ if section == "Resumo Geral":
    """)
     
     st.info("""
-    **Base de dados atualizada em: 6 de abril de 2026**
+    **Base de dados atualizada em: 27 de maio de 2026**
 
     """)
 
