@@ -131,40 +131,43 @@ if section == "Resumo Geral":
     st.markdown("""
     Esta síntese apresenta os principais indicadores sociodemográficos dos estudantes do cursinho Educafro 2026, com base nas entrevistas realizadas até o momento.
    """)
-    
+
     st.info("""
     **Base de dados atualizada em: 27 de maio de 2026**
 
     """)
 
     st.divider()
-    
+
+    # Separar entrevistados dos que faltam
+    df_completo = df[df['status_formulario'] == 'completo'] if 'status_formulario' in df.columns else df
+    df_falta = df[df['status_formulario'] == 'falta entrevistar'] if 'status_formulario' in df.columns else pd.DataFrame()
+
     col1, col2, col3, col4, col5, col6 = st.columns(6)
-    col1.metric("Estudantes", len(df))
+    col1.metric("Entrevistados", len(df_completo))
     
     # Race percentage calculation (excluding 'Indígena' to match chart 1 totals)
-    df_with_race = df[df['Race_Group'].isin(['Pretos(as)', 'Pardos(as)', 'Brancos(as)'])]
+    df_with_race = df_completo[df_completo['Race_Group'].isin(['Pretos(as)', 'Pardos(as)', 'Brancos(as)'])]
     negros_count = len(df_with_race[df_with_race['Race_Group'].isin(['Pretos(as)', 'Pardos(as)'])])
     negros_pct = (negros_count / len(df_with_race) * 100) if len(df_with_race) > 0 else 0
     col2.metric("Pretos/Pardos", f"{negros_pct:.1f}%")
-    
+
     # Gender percentage calculation
-    mulheres_count = len(df[df['Identidade de Gênero'] == 'Feminina'])
-    mulheres_pct = (mulheres_count / len(df) * 100) if len(df) > 0 else 0
+    mulheres_count = len(df_completo[df_completo['Identidade de Gênero'] == 'Feminina'])
+    mulheres_pct = (mulheres_count / len(df_completo) * 100) if len(df_completo) > 0 else 0
     col3.metric("Mulheres", f"{mulheres_pct:.1f}%")
 
-    # Workers (Synchronized with pink background condition in the table)
-    # Highlighted if they have any work link that is not "Não"
-    is_worker = df['Vínculo de Trabalho'].notna() & (df['Vínculo de Trabalho'] != 'Não') & (df['Vínculo de Trabalho'] != 'nan') & (df['Vínculo de Trabalho'] != '')
-    trabalhadores_count = len(df[is_worker])
+    # Workers
+    is_worker = df_completo['Vínculo de Trabalho'].notna() & (df_completo['Vínculo de Trabalho'] != 'Não') & (df_completo['Vínculo de Trabalho'] != 'nan') & (df_completo['Vínculo de Trabalho'] != '')
+    trabalhadores_count = len(df_completo[is_worker])
     col4.metric("Trabalhadores", trabalhadores_count)
 
     # PCD
-    pcd_count = len(df[df['Possui Deficiência?'] == 'Sim'])
+    pcd_count = len(df_completo[df_completo['Possui Deficiência?'] == 'Sim'])
     col5.metric("PCD", pcd_count)
 
     # Children
-    filhos_count = len(df[df['Tem Filhos?'] == 'Sim'])
+    filhos_count = len(df_completo[df_completo['Tem Filhos?'] == 'Sim'])
     col6.metric("Com Filhos", filhos_count)
 
     # Function to generate indicator tags (professional)
@@ -184,26 +187,34 @@ if section == "Resumo Geral":
     # Prepare DataFrame for Display
     display_df = df.copy()
     display_df['nome_completo'] = display_df['nome_completo'].str.title()
-    display_df.insert(0, 'Perfil', display_df.apply(get_indicators, axis=1))
+
+    def get_indicators_full(row):
+        if str(row.get('status_formulario', '')).strip() == 'falta entrevistar':
+            return '[FALTA]'
+        return get_indicators(row)
+
+    display_df.insert(0, 'Perfil', display_df.apply(get_indicators_full, axis=1))
 
     # Combined Styling Function
     def style_row(row):
+        # Falta entrevistar — fundo cinza
+        if str(row.get('status_formulario', '')).strip() == 'falta entrevistar':
+            return ['background-color: #E2E8F0; color: #718096; font-style: italic'] * len(row)
+
         # 1. Background logic (Workers)
         is_worker = pd.notnull(row.get('Vínculo de Trabalho')) and row.get('Vínculo de Trabalho') != 'Não'
-        row_bg = 'background-color: #FED7D7' if is_worker else '' 
+        row_bg = 'background-color: #FED7D7' if is_worker else ''
 
         # 2. Text Color logic (Benefits)
         receives_benefits = pd.notnull(row.get('Recebe Benefícios')) and str(row.get('Recebe Benefícios')).strip() == 'Sim'
         name_color = 'color: #D63031; font-weight: bold' if receives_benefits else 'color: #2D3436; font-weight: bold'
 
-        # Apply to all columns
         styles = [row_bg] * len(row)
-        
-        # Specific override for 'nome_completo' column
+
         if 'nome_completo' in row.index:
             name_idx = row.index.get_loc('nome_completo')
             styles[name_idx] = f"{row_bg}; {name_color}"
-            
+
         return styles
 
     # Apply the styling
@@ -214,9 +225,10 @@ if section == "Resumo Geral":
     <div style='background-color: #F8F9FA; padding: 10px; border-radius: 5px; border: 1px solid #E9ECEF;'>
         <small>
             <b>Legenda de Perfil:</b><br>
-            <b>[FIL]</b> Tem Filhos | <b>[PCD]</b> Deficiência (Estudante/Família) | <b>[BEN]</b> Recebe Benefícios | <b>[TRB]</b> Estudante Trabalhador<br>
-            <span style='color: #D63031;'><b>Nomes em Vermelho</b></span>: Recebe Benefícios Sociais | 
-            <span style='background-color: #FED7D7; padding: 2px;'><b>Fundo Rosado</b></span>: Estudante Trabalhador (Risco de Infrequência)
+            <b>[FIL]</b> Tem Filhos | <b>[PCD]</b> Deficiência (Estudante/Família) | <b>[BEN]</b> Recebe Benefícios | <b>[TRB]</b> Estudante Trabalhador | <b>[FALTA]</b> Falta Entrevistar<br>
+            <span style='color: #D63031;'><b>Nomes em Vermelho</b></span>: Recebe Benefícios Sociais |
+            <span style='background-color: #FED7D7; padding: 2px;'><b>Fundo Rosado</b></span>: Estudante Trabalhador |
+            <span style='background-color: #E2E8F0; color: #718096; padding: 2px;'><b>Fundo Cinza</b></span>: Falta Entrevistar
         </small>
     </div>
     """, unsafe_allow_html=True)

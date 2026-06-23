@@ -9,11 +9,11 @@ def load_data(filepath):
     # Cleaning column names
     df.columns = [c.strip() for c in df.columns]
     
-    # Filter for completed forms only
+    # Filter for completed forms and "falta entrevistar" records
     if 'status_formulario' in df.columns:
-        df = df[df['status_formulario'] == 'completo']
+        df = df[df['status_formulario'].isin(['completo', 'falta entrevistar'])]
     elif 'Status' in df.columns:
-        df = df[df['Status'] == 'completo']
+        df = df[df['Status'].isin(['completo', 'falta entrevistar'])]
 
     # Remove test records (nome_completo = "teste", "teste2", etc.)
     if 'nome_completo' in df.columns:
